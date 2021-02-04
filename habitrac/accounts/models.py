@@ -6,10 +6,12 @@ from . import managers
 
 
 class CustomUser(AbstractUser):
-    username = models.CharField(max_length=100, help_text=_("The username of the user."))
-    email = models.EmailField(help_text=_("The email address of the user."), unique=True)
+    username = models.CharField(
+        max_length=150, help_text=_("The username of the user."), unique=True
+    )
+    email = None
 
-    USERNAME_FIELD = "email"
+    USERNAME_FIELD = "username"
     REQUIRED_FIELDS = []
 
     objects = managers.CustomUserManager()
@@ -18,4 +20,4 @@ class CustomUser(AbstractUser):
         ordering = ("id",)
 
     def __str__(self):
-        return self.email
+        return f"{self.username}'s account"
