@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+# This script will be used to install dependencies for all the habitrac applications
+
+# setup the git identities
+git config --global user.name "IgnisDa"
+git config --global user.email "ignisda2001@gmail.com"
+
+# remove the default fish shell prompt
+set fish_greeting
+
+# install Gitzer to the system
+curl -sSL https://raw.githubusercontent.com/IgnisDa/Gitzer/main/get-gitzer.py | python3
+
+# replace the default file content viewer (cat) with bat
+sudo ln -s /usr/bin/batcat /usr/bin/bat
+
+# load all my system configs
+rm -rf $HOME/.config
+git clone https://github.com/IgnisDa/linux-configs.git $HOME/.config
+
+# use the starship prompt
+curl -fsSL https://starship.rs/install.sh > /tmp/install.sh
+chmod +x /tmp/install.sh
+/tmp/install.sh --force
+
+# set the default interactive shell as fish
+echo "if [[ \$(ps --no-header --pid=\$PPID --format=cmd) != \"fish\" ]]" >> $HOME/.bashrc
+echo "then" >> $HOME/.bashrc
+echo "   exec fish" >> $HOME/.bashrc
+echo "fi" >> $HOME/.bashrc
+
+# directory path of django development server
+backend_folder="habitrac"
+# directory path of nuxt development server
+frontend_folder="habitrac-frontend"
+# directory path of documentation development server
+documentation_folder="habitrac-docs"
+
+
+# change to the project folder
+cd "$HOME/habitrac"
+# install the dependencies for the frontend application
+cd "$frontend_folder" && yarn
+
+# change to the project folder
+cd "$HOME/habitrac"
+# install the dependencies for the documentation application
+cd "$documentation_folder" && yarn
+
+# change to the project folder
+cd "$HOME/habitrac"
+# install the dependencies for the django application
+cd "$backend_folder"
+poetry config virtualenvs.in-project "true"
+poetry install
+
+# we prefer not to keep the virtual environment as a part of the synced directory for
+# performance reasons, hence we create a folder to store all of them and use symbolic links
+# for the project purposes
+cache_folder="$HOME/.project-cache/habitrac"
+frontend_cache="$cache_folder/$frontend_folder"
+documentation_cache="$cache_folder/$documentation_folder"
+backend_cache="$cache_folder/$backend_folder"
+
+mkdir -p "$frontend_cache"
+mkdir -p "$documentation_cache"
+mkdir -p "$backend_cache"
+
+# for the frontend project folder
+mv "$HOME/habitrac/$frontend_folder/node_modules" "$frontend_cache/node_modules"
+ln -s "$frontend_cache/node_modules" "$HOME/habitrac/$frontend_folder/node_modules"
+
+# for the documentation project folder
+mv "$HOME/habitrac/$documentation_folder/node_modules" "$documentation_cache/node_modules"
+ln -s "$documentation_cache/node_modules" "$HOME/habitrac/$documentation_folder/node_modules"
+
+# for the backend project folder
+mv "$HOME/habitrac/$backend_folder/.venv" "$backend_cache/.venv"
+ln -s "$backend_cache/.venv" "$HOME/habitrac/$backend_folder/.venv"
