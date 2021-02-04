@@ -23,8 +23,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # user installed apps
     "accounts.apps.AccountsConfig",
+    "habits.apps.HabitsConfig",
     # django addons
     "corsheaders",
+    "ariadne.contrib.django",
 ]
 
 MIDDLEWARE = [
