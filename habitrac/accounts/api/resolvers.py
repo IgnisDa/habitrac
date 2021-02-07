@@ -13,7 +13,7 @@ jwt_mutation.set_field("verifyToken", ariadne_jwt.resolve_verify)
 accounts_query = QueryType()
 
 
-@accounts_query.field("userDetail")
+@accounts_query.field("userDetails")
 @ariadne_jwt.decorators.login_required
-def user_detail(self, info, **kwargs):
+def user_details(self, info, **kwargs):
     return {"username": info.context.get("request").user.username}
