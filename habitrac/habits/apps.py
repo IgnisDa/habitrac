@@ -4,7 +4,7 @@ from django.utils.autoreload import autoreload_started
 
 
 def schema_watchdog(sender, **kwargs):
-    sender.watch_dir(settings.BASE_DIR, "**/*.graphql")
+    sender.watch_file(settings.BASE_DIR, "**/*.graphql")
 
 
 class HabitsConfig(AppConfig):
