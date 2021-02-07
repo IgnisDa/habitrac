@@ -12,7 +12,7 @@ frontend_folder="habitrac-frontend"
 documentation_folder="habitrac-docs"
 
 # Start all the servers
-{ cd "$backend_folder" && poetry run python3 manage.py runserver_plus  & \
+{ cd "$backend_folder" && poetry run python3 manage.py runserver  & \
   cd "$frontend_folder" && yarn dev; }
 # { cd "$backend_folder" && poetry run python3 manage.py runserver 0.0.0.0:8000 & \
 #   cd "$frontend_folder" && yarn dev & \
