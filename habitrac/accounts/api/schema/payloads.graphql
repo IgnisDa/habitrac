@@ -2,7 +2,7 @@
 This is the type of payload that is returned when a client requests details
 about themselves.
 """
-type UserDetailPayload {
+type UserDetailsPayload {
   " the username that is stored in the database "
   username: String!
 }
