@@ -1,14 +1,10 @@
 import glob
 
-from ariadne import (
-    load_schema_from_path,
-    make_executable_schema,
-    snake_case_fallback_resolvers,
-)
+import ariadne
+from accounts.api import resolvers as accounts_resolvers
 from ariadne.contrib.django.views import GraphQLView
-
-# from director.api import resolvers as director_resolvers
 from django.conf import settings
+from habits.api import resolvers as habits_resolvers
 
 
 class HabitracGraphQLView(GraphQLView):
@@ -16,12 +12,17 @@ class HabitracGraphQLView(GraphQLView):
 
 
 type_defs = [
-    load_schema_from_path(f)
+    ariadne.load_schema_from_path(f)
     for f in glob.glob(str(settings.BASE_DIR / "*" / "api" / "schema" / "*.graphql"))
 ]
+type_defs.extend(accounts_resolvers.auth_type_definitions)
 
-schema = make_executable_schema(
-    type_defs,
-    # [director_resolvers.query, director_resolvers.mutation],
-    snake_case_fallback_resolvers,
+resolvers = [
+    habits_resolvers.query,
+    accounts_resolvers.jwt_mutation,
+    accounts_resolvers.accounts_query,
+]
+
+schema = ariadne.make_executable_schema(
+    type_defs, resolvers, ariadne.snake_case_fallback_resolvers
 )
