@@ -1,0 +1,8 @@
+"""
+This is the type of payload that is returned when a client requests details
+about themselves.
+"""
+type UserDetailPayload {
+  " the username that is stored in the database "
+  username: String!
+}
