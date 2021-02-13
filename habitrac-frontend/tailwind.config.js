@@ -1,11 +1,14 @@
 module.exports = {
   purge: [],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {},
   },
   variants: {
     extend: {},
   },
-  plugins: [require('tailwindcss-debug-screens')],
+  plugins: [
+    require('tailwindcss-debug-screens'),
+    require('@tailwindcss/forms'),
+  ],
 }
