@@ -67,7 +67,8 @@ export default {
   },
   apollo: {
     clientConfigs: {
-      default: '~/plugins/apollo-config.js',
+      default: '~/configurations/apollo-config.js',
     },
+    authenticationType: 'JWT',
   },
 }
