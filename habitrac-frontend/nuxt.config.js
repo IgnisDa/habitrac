@@ -19,7 +19,7 @@ export default {
   css: ['~/assets/css/main.css'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [],
+  plugins: ['~/plugins/fontawesome.js'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -40,6 +40,8 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/apollo',
+    // https://google-fonts.nuxtjs.org/
+    '@nuxtjs/google-fonts',
   ],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
@@ -70,5 +72,11 @@ export default {
       default: '~/configurations/apollo-config.js',
     },
     authenticationType: 'JWT',
+  },
+  googleFonts: {
+    families: {
+      'Josefin+Sans': [500],
+    },
+    display: 'swap',
   },
 }
