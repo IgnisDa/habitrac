@@ -22,8 +22,8 @@ import tokenAuthMutation from '~/apollo/mutations/tokenAuth.gql'
 export default {
   data: () => ({
     credentials: {
-      username: '',
-      password: '',
+      username: 'test',
+      password: 'test-password',
     },
   }),
   methods: {
