@@ -1,6 +1,10 @@
 <template>
-  <div :class="mode !== 'production' ? 'debug-screens' : ''">
+  <div
+    :class="mode !== 'production' ? 'debug-screens' : ''"
+    class="antialiased"
+  >
     <Nuxt />
+    <NavBar></NavBar>
   </div>
 </template>
 
