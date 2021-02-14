@@ -1,14 +1,14 @@
 <template>
   <div class="fixed inset-x-0 bottom-0 w-full">
     <div
-      class="flex justify-around w-full mx-auto font-mono uppercase sm:w-9/12 md:w-7/12"
+      class="flex justify-around w-full mx-auto font-mono text-sm font-light uppercase sm:w-9/12 md:w-7/12"
     >
       <div v-for="(link, index) in links" :key="index">
         <NuxtLink
           :to="{ name: link.pathName }"
           :class="{ 'website-link': routeActive(link.pathName) }"
         >
-          <div class="px-4 pt-2">{{ link.label }}</div>
+          <div class="px-1 pt-1">{{ link.label }}</div>
         </NuxtLink>
       </div>
     </div>
