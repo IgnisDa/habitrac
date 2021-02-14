@@ -38,6 +38,9 @@ export default {
     loading: false,
     errors: [],
   }),
+  head: () => ({
+    title: 'Register',
+  }),
   methods: {
     ...mapActions({
       createUserMutation: 'user/createUser',
