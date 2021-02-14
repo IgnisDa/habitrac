@@ -3,6 +3,7 @@ import { library, config } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   faUserGraduate,
+  faSpinner,
   faGuitar,
   faUsers,
   faClock,
@@ -13,7 +14,7 @@ config.autoAddCss = false
 
 // You can add your icons directly in this plugin. See other examples for how you
 // can add other styles or just individual icons.
-library.add(faUserGraduate, faClock, faGuitar, faUsers)
+library.add(faUserGraduate, faClock, faGuitar, faUsers, faSpinner)
 
 // Register the component globally
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)
