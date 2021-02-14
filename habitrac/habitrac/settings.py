@@ -137,7 +137,10 @@ if DEBUG:
     INSTALLED_APPS.append("django_extensions")
     SHELL_PLUS = "ipython"
     RUNSERVERPLUS_SERVER_ADDRESS_PORT = "0.0.0.0:8000"
+    MIDDLEWARE.append("accounts.middlewares.DelayResponseMiddleware")
     MIDDLEWARE.append("accounts.middlewares.StatsMiddleware")
+    DEBUG_RESPONSE_DELAY = 2
+
 if os.environ.get("DJANGO_TESTING", False) == "1":
     DATABASES = {
         "default": {
