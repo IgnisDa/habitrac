@@ -5,6 +5,8 @@ about themselves.
 type UserDetailsPayload {
   " the username that is stored in the database "
   username: String!
+  " error that occurred while executing the query (if any) "
+  error: String
 }
 
 """
@@ -16,4 +18,15 @@ type CreateUserPayload {
   status: Boolean!
   " error message if the request failed "
   errors: CreateUserErrorType
+}
+
+"""
+This is the type of payload that is returned when a client requests the data of
+any particular user by specifying an `id`.
+"""
+type UserProfileDetailsPayload {
+  " the username that is stored in the database "
+  username: String
+  " error that occurred while executing the query (if any) "
+  error: String
 }
