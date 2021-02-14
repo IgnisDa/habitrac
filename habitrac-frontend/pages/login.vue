@@ -36,6 +36,9 @@ export default {
     },
     loading: false,
   }),
+  head: () => ({
+    title: 'Login',
+  }),
   methods: {
     ...mapActions({
       fetchTokenAuthAction: 'user/fetchTokenAuth',
