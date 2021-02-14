@@ -9,6 +9,9 @@ module.exports = {
       fontFamily: {
         display: ['Josefin Sans', 'sans-serif'],
       },
+      transitionProperty: {
+        width: 'width',
+      },
     },
   },
   variants: {
