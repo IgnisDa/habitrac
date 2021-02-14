@@ -1,5 +1,6 @@
 import ariadne_jwt
 from ariadne import MutationType, QueryType
+from django.conf import settings
 
 auth_type_definitions = [
     ariadne_jwt.jwt_schema,
@@ -16,4 +17,10 @@ accounts_query = QueryType()
 @accounts_query.field("userDetails")
 @ariadne_jwt.decorators.login_required
 def user_details(self, info, **kwargs):
+    if settings.DEBUG:
+        import time
+
+        # ? DEBUG: This is here just for testing purposes. We obviously don't want
+        # to increase response time in production
+        time.sleep(2)
     return {"username": info.context.get("request").user.username}
