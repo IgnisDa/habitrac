@@ -16,8 +16,8 @@
       <div class="w-1/2">
         <FontAwesomeIcon
           class="w-20 h-20 mx-auto"
-          :class="loading ? 'animate-spin' : 'animate-none'"
-          :icon="['fas', 'users']"
+          :class="{ 'animate-spin': loading }"
+          :icon="['fas', 'spinner']"
         ></FontAwesomeIcon>
       </div>
       <input type="submit" value="Register" />
