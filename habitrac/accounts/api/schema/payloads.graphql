@@ -6,3 +6,14 @@ type UserDetailsPayload {
   " the username that is stored in the database "
   username: String!
 }
+
+"""
+This is the type of payload that is returned when a client requests to create
+a new user
+"""
+type CreateUserPayload {
+  " whether the request failed or succeeded "
+  status: Boolean!
+  " error message if the request failed "
+  errors: CreateUserErrorType
+}
