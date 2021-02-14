@@ -8,25 +8,25 @@
     >
       <div class="w-1/2">
         <FontAwesomeIcon
-          class="w-12 h-12 mx-auto"
+          class="w-20 h-20 mx-auto"
           :icon="['fas', 'user-graduate']"
         ></FontAwesomeIcon>
       </div>
       <div class="w-1/2">
         <FontAwesomeIcon
-          class="w-12 h-12 mx-auto"
+          class="w-20 h-20 mx-auto"
           :icon="['fas', 'clock']"
         ></FontAwesomeIcon>
       </div>
       <div class="w-1/2">
         <FontAwesomeIcon
-          class="w-12 h-12 mx-auto"
+          class="w-20 h-20 mx-auto"
           :icon="['fas', 'guitar']"
         ></FontAwesomeIcon>
       </div>
       <div class="w-1/2">
         <FontAwesomeIcon
-          class="w-12 h-12 mx-auto"
+          class="w-20 h-20 mx-auto"
           :icon="['fas', 'users']"
         ></FontAwesomeIcon>
       </div>
@@ -35,25 +35,15 @@
 </template>
 
 <script>
-// import userDetailsQuery from '~/apollo/queries/userDetails.gql'
+import { mapActions } from 'vuex'
 
 export default {
-  data: () => ({
-    me: null,
-    loading: true,
-  }),
-  mounted() {
-    // this.$apollo
-    //   .query({
-    //     query: userDetailsQuery,
-    //   })
-    //   .then((result) => {
-    //     this.me = result.data.userDetails
-    //     this.loading = false
-    //   })
-    //   .catch((_error) => {
-    //     alert('You should be logged in!')
-    //   })
+  data: () => ({}),
+  mounted() {},
+  methods: {
+    ...mapActions({
+      fetchUserDetailsAction: 'user/fetchUserDetails',
+    }),
   },
 }
 </script>
