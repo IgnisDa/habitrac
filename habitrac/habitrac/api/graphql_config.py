@@ -21,6 +21,7 @@ resolvers = [
     habits_resolvers.query,
     accounts_resolvers.jwt_mutation,
     accounts_resolvers.accounts_query,
+    accounts_resolvers.accounts_mutation,
 ]
 
 schema = ariadne.make_executable_schema(
