@@ -1,0 +1,9 @@
+"""
+This is the input data that is required to perform various operations like create a user etc
+"""
+input CreateUserInput {
+  " the username that will be set for the new user "
+  username: String!
+  " the password that will be set for the new user "
+  password: String!
+}
