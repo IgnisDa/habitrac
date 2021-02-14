@@ -1,0 +1,6 @@
+query userProfileDetails($id: Int!) {
+  userProfileDetails(id: $id) {
+    username
+    error
+  }
+}
