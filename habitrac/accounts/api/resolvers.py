@@ -1,6 +1,5 @@
 import ariadne_jwt
 from ariadne import MutationType, QueryType
-from django.conf import settings
 from django.contrib.auth import get_user_model, password_validation
 from django.core.exceptions import ValidationError
 
@@ -23,13 +22,6 @@ accounts_mutation = MutationType()
 @ariadne_jwt.decorators.login_required
 def user_details(_, info, **kwargs):
     """ returns basic user data about the currently logged in user """
-    if settings.DEBUG:
-        import time
-
-        # ? DEBUG: ==>
-        # This is here just for testing purposes. We obviously don't want
-        # to increase response time in production
-        time.sleep(2)
     return {"username": info.context.get("request").user.username}
 
 
