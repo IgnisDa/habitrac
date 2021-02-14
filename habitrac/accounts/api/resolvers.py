@@ -18,6 +18,18 @@ accounts_query = QueryType()
 accounts_mutation = MutationType()
 
 
+@accounts_query.field("userProfileDetails")
+def user_profile_details(*_, id, **kwargs):
+    """ returns basic user data about the user having the specified `id` """
+    error = None
+    try:
+        username = CUSTOM_USER.objects.get(pk=id).username
+    except CUSTOM_USER.DoesNotExist:
+        username = None
+        error = "The requested error does not exist"
+    return {"username": username, "error": error}
+
+
 @accounts_query.field("userDetails")
 @ariadne_jwt.decorators.login_required
 def user_details(_, info, **kwargs):
