@@ -10,6 +10,7 @@ class StatsMiddleware:
 
     def __call__(self, request):
         start_time = time.time()
+        print(request.headers)
 
         response = self.get_response(request)
         response["Debug-Authorization"] = request.headers.get("Authorization", None)
