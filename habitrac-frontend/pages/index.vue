@@ -1,7 +1,9 @@
 <template>
-  <div class="flex flex-wrap min-h-screen overflow-hidden">
+  <div
+    class="flex flex-wrap min-h-screen mx-auto overflow-hidden lg:w-10/12 xl:w-8/12"
+  >
     <div class="flex w-full overflow-hidden sm:w-1/2">
-      <div class="p-2 m-auto text-7xl sm:text-8xl md:text-9xl font-display">
+      <div class="p-2 m-auto text-7xl md:text-8xl 2xl:text-9xl font-display">
         Habitrac
       </div>
     </div>
@@ -11,13 +13,17 @@
       <div
         v-for="(trait, index) in traits"
         :key="index"
-        class="flex items-center w-full mx-5 my-auto sm:flex-row-reverse"
+        class="flex items-center justify-between w-full mx-5 my-auto"
+        :class="[
+          index % 2 === 0 ? 'flex-row' : 'flex-row-reverse',
+          index % 2 === 1 ? 'text-left' : 'text-right',
+        ]"
       >
         <FontAwesomeIcon
           class="flex-none w-8 h-8 sm:h-12 sm:w-12"
           :icon="['fas', trait.icon]"
         ></FontAwesomeIcon>
-        <div class="ml-5 text-left sm:text-right sm:mr-6">
+        <div>
           {{ trait.text }}
         </div>
       </div>
@@ -53,8 +59,9 @@ export default {
       },
     ],
   }),
-  computed: {},
-  mounted() {},
+  head: () => ({
+    title: 'Habitrac',
+  }),
   methods: {
     ...mapActions({
       fetchUserDetailsAction: 'user/fetchUserDetails',
