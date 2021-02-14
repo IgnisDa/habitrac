@@ -2,6 +2,9 @@ module.exports = {
   purge: [],
   darkMode: 'class', // or 'media' or 'class'
   theme: {
+    debugScreens: {
+      position: ['right', 'top'],
+    },
     extend: {
       fontFamily: {
         display: ['Josefin Sans', 'sans-serif'],
