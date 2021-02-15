@@ -5,6 +5,7 @@
   >
     <Nuxt />
     <NavBar></NavBar>
+    <ControlBar></ControlBar>
   </div>
 </template>
 
