@@ -35,13 +35,15 @@ export default {
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
-    // https://composition-api.nuxtjs.org/
+    // https://color-mode.nuxtjs.org/
+    '@nuxtjs/color-mode',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    // https://github.com/nuxt-community/apollo-module
     '@nuxtjs/apollo',
     // https://google-fonts.nuxtjs.org/
     '@nuxtjs/google-fonts',
@@ -81,5 +83,8 @@ export default {
       'Josefin+Sans': [500],
     },
     display: 'swap',
+  },
+  colorMode: {
+    classSuffix: '',
   },
 }
