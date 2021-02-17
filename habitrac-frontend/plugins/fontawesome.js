@@ -6,6 +6,7 @@ import {
   faSpinner,
   faGuitar,
   faMoon,
+  faUserPlus,
   faLightbulb,
   faUsers,
   faClock,
@@ -20,6 +21,7 @@ config.autoAddCss = false
 library.add(
   faUserGraduate,
   faClock,
+  faUserPlus,
   faGuitar,
   faUsers,
   faSpinner,
