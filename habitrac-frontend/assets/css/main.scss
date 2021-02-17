@@ -1,0 +1,77 @@
+$t-duration: 800ms;
+$t-delay: 300ms;
+$t-color: rgb(54, 29, 68);
+
+.page-enter-active,
+.page-leave-active {
+  transition-duration: $t-duration * 2;
+
+  &::before,
+  &::after {
+    content: '';
+    transition-property: opacity, transform;
+    transition-timing-function: ease-in-out;
+    @apply fixed top-0 left-0 z-10 block w-screen h-1/2;
+  }
+
+  &::before {
+    background-color: $t-color;
+  }
+
+  &::after {
+    background-color: $t-color;
+    @apply top-1/2;
+  }
+}
+
+.page-leave {
+  &::before,
+  &::after {
+    transform: scaleX(0);
+  }
+}
+
+.page-leave-active {
+  &::before {
+    transition-duration: $t-duration;
+  }
+
+  &::after {
+    transition-duration: $t-duration - $t-delay;
+    transition-delay: $t-delay;
+  }
+}
+
+.page-leave-to {
+  &::before,
+  &::after {
+    transform: scale(1);
+    transform-origin: right;
+  }
+}
+
+.page-enter {
+  &::before,
+  &::after {
+    transform: scaleX(1);
+  }
+}
+
+.page-enter-active {
+  &::before {
+    transition-duration: $t-duration;
+  }
+
+  &::after {
+    transition-duration: $t-duration - $t-delay;
+    transition-delay: $t-delay;
+  }
+}
+
+.page-enter-to {
+  &::before,
+  &::after {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+}
