@@ -39,7 +39,7 @@ export default {
 .nuxt-link-exact-active::before,
 .website-link::before {
   content: '';
-  @apply block m-auto h-0.5 rounded-md w-full bg-pink-500 transition-width  duration-700;
+  @apply block m-auto h-0.5 rounded-md bg-pink-500 transition-width duration-500;
 }
 .nuxt-link-exact-active::before {
   @apply bg-purple-700;
