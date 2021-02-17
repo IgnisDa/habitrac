@@ -1,12 +1,1 @@
-.page-enter-active,
-.page-leave-active {
-  transition: transform 0.5s;
-  @apply transform;
-}
-.page-enter {
-  @apply absolute -translate-y-full;
-}
-
-.page-leave-to {
-  @apply fixed translate-x-full;
-}
+/* some css here */
