@@ -1,6 +1,6 @@
 $t-duration: 800ms;
 $t-delay: 300ms;
-$t-color: rgb(54, 29, 68);
+$t-color: rgb(22, 11, 31);
 
 .page-enter-active,
 .page-leave-active {
@@ -9,7 +9,7 @@ $t-color: rgb(54, 29, 68);
   &::before,
   &::after {
     content: '';
-    transition-property: opacity, transform;
+    transition-property: transform;
     transition-timing-function: ease-in-out;
     @apply fixed top-0 left-0 z-10 block w-screen h-1/2;
   }
@@ -59,12 +59,12 @@ $t-color: rgb(54, 29, 68);
 
 .page-enter-active {
   &::before {
-    transition-duration: $t-duration;
+    transition-duration: $t-duration - $t-delay;
+    transition-delay: $t-delay;
   }
 
   &::after {
-    transition-duration: $t-duration - $t-delay;
-    transition-delay: $t-delay;
+    transition-duration: $t-duration;
   }
 }
 
