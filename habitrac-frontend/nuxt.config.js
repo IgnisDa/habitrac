@@ -19,7 +19,7 @@ export default {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/main.css', '~/assets/css/main.scss'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: ['~/plugins/fontawesome.js'],
@@ -53,10 +53,6 @@ export default {
   build: {},
 
   // Added later
-  server: {
-    port: '3000',
-    host: '0.0.0.0',
-  },
   telemetry: false,
   watchers: {
     webpack: {
@@ -84,6 +80,7 @@ export default {
     },
     display: 'swap',
   },
+  pageTransition: {},
   colorMode: {
     classSuffix: '',
   },
