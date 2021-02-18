@@ -13,52 +13,73 @@
         </div>
         <form class="w-72" @submit.prevent="onSubmit()">
           <div class="mt-2 mb-5 sm:mt-0">
-            <label for="username" class="block text-black dark:text-gray-100"
-              >Username</label
+            <label for="username" class="block text-black dark:text-gray-100">
+              Username
+            </label>
+            <div
+              class="flex items-center p-3 my-2 bg-gray-100 border rounded-sm focus-within:ring-2 focus-within:ring-blue-600"
             >
-            <input
-              id="username"
-              v-model="credentials.username"
-              type="text"
-              autofocus
-              class="w-full px-4 py-3 mt-3 bg-gray-100 rounded-sm"
-              placeholder="Username"
-              required
-            />
+              <FontAwesomeIcon
+                class="flex-none w-6 h-6 text-black pointer-events-none fill-current"
+                :icon="fieldIcons.username"
+              ></FontAwesomeIcon>
+              <input
+                id="username"
+                v-model="credentials.username"
+                type="text"
+                class="w-full ml-2 bg-gray-100 border-0 focus:outline-none"
+                placeholder="Username"
+                required
+              />
+            </div>
           </div>
           <div class="my-5">
             <label for="password1" class="block text-black dark:text-gray-100">
               Password
             </label>
-            <input
-              id="password1"
-              v-model="credentials.password1"
-              type="password"
-              class="w-full px-4 py-3 mt-3 bg-gray-100 rounded-sm focus:outline-none"
-              placeholder="Password"
-              required
-            />
+            <div
+              class="flex items-center p-3 my-2 bg-gray-100 border rounded-sm ring-black focus-within:ring-2 focus-within:ring-blue-600"
+            >
+              <FontAwesomeIcon
+                class="flex-none w-6 h-6 text-black cursor-pointer fill-current"
+                :icon="fieldIcons.password1"
+                @click="togglePasswordVisibility('password1')"
+              ></FontAwesomeIcon>
+              <input
+                id="password1"
+                v-model="credentials.password1"
+                :type="fieldTypes.password1"
+                class="w-full ml-2 bg-gray-100 border-0 focus:outline-none"
+                placeholder="Password"
+                required
+              />
+            </div>
           </div>
           <div class="my-5">
-            <label for="password2" class="block text-black dark:text-gray-100">
+            <label for="password1" class="block text-black dark:text-gray-100">
               Confirm password
             </label>
-            <input
-              id="password2"
-              v-model="credentials.password2"
-              type="password"
-              class="w-full px-4 py-3 mt-3 bg-gray-100 rounded-sm focus:outline-none"
-              placeholder="Password"
-              required
-            />
-            <div class="flex justify-end mt-2 text-xs text-gray-600">
-              <a class="hover:text-blue-900 dark:text-gray-100">
-                Forgot Password?
-              </a>
+            <div
+              class="flex items-center p-3 my-2 bg-gray-100 border rounded-sm ring-black focus-within:ring-2 focus-within:ring-blue-600"
+            >
+              <FontAwesomeIcon
+                class="flex-none w-6 h-6 text-black cursor-pointer fill-current"
+                :icon="fieldIcons.password2"
+                @click="togglePasswordVisibility('password2')"
+              ></FontAwesomeIcon>
+              <input
+                id="password2"
+                v-model="credentials.password2"
+                :type="fieldTypes.password2"
+                class="w-full ml-2 bg-gray-100 border-0 focus:outline-none"
+                placeholder="Retype password"
+                required
+              />
             </div>
           </div>
           <button
             type="submit"
+            2
             class="block w-full p-3 text-center text-white duration-300 bg-gray-800 rounded-sm hover:bg-black dark:bg-green-700"
           >
             Register
@@ -67,7 +88,7 @@
       </div>
       <div class="hidden p-5 align-top border-2 border-l-0 rounded sm:block">
         <FontAwesomeIcon
-          class="w-32 h-32 transition-colors duration-500 fill-current dark:text-green-700"
+          class="w-32 h-32 transition-colors duration-500 fill-current"
           :icon="['fas', 'user-plus']"
           :class="{ 'text-yellow-400': loading }"
         ></FontAwesomeIcon>
@@ -88,6 +109,15 @@ export default {
     },
     loading: false,
     errors: [],
+    fieldTypes: {
+      password1: 'password',
+      password2: 'password',
+    },
+    fieldIcons: {
+      password1: ['fas', 'eye'],
+      password2: ['fas', 'eye'],
+      username: ['fas', 'user'],
+    },
   }),
   head: () => ({
     title: 'Register',
@@ -96,6 +126,12 @@ export default {
     ...mapActions({
       createUserMutation: 'user/createUser',
     }),
+    togglePasswordVisibility(fieldName) {
+      this.fieldTypes[fieldName] =
+        this.fieldTypes[fieldName] === 'password' ? 'text' : 'password'
+      this.fieldIcons[fieldName] =
+        this.fieldIcons[fieldName] === 'eye-slash' ? 'eye' : 'eye-slash'
+    },
     async onSubmit() {
       const credentials = this.credentials
 
@@ -108,11 +144,6 @@ export default {
         password: credentials.password1,
       }
 
-      // I initially thought that we do not need `async`-`await` here, but then it didn't
-      // work so I added them and it suddenly started working. Reason: We have to first
-      // await the response of the `fetchTokenAuthAction` and then when the authentication
-      // token is set in the site cookies, we perform `fetchUSerDetailsAction` with the
-      // newly set token present in the request header and get a successful response.
       this.loading = true
       const res = await this.createUserMutation(finalCredentials)
       if (!res.status) {
