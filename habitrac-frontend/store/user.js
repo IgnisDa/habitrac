@@ -30,21 +30,22 @@ export const actions = {
   async fetchTokenAuth(_context, payload) {
     const apolloHelpers = this.app.$apolloHelpers
     const apolloClient = this.app.apolloProvider.defaultClient
-    try {
-      await apolloClient
-        .mutate({
-          mutation: tokenAuthMutation,
-          variables: {
-            username: payload.username,
-            password: payload.password,
-          },
-        })
-        .then(({ data }) => {
-          apolloHelpers.onLogin(data.tokenAuth.token)
-        })
-    } catch (e) {
-      alert('Invalid credentials!')
-    }
+    return await apolloClient
+      .mutate({
+        mutation: tokenAuthMutation,
+        variables: {
+          username: payload.username,
+          password: payload.password,
+        },
+        errorPolicy: 'all',
+      })
+      .then((resp) => {
+        if (resp.errors) {
+          return resp.errors
+        } else {
+          apolloHelpers.onLogin(resp.data.tokenAuth.token)
+        }
+      })
   },
   async fetchUserDetails({ commit }) {
     const apolloClient = this.app.apolloProvider.defaultClient
