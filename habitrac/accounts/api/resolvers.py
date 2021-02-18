@@ -45,7 +45,7 @@ def create_user(*_, data, **kwargs):
     errors = {}
     if CUSTOM_USER.objects.filter(username=data["username"]).exists():
         errors.update(
-            {"username": "This username is taken, please choose something else!"}
+            {"username": ["This username is taken, please choose something else!"]}
         )
     try:
         password_validation.validate_password(data["password"])
