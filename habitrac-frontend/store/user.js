@@ -2,15 +2,18 @@ import tokenAuthMutation from '~/apollo/mutations/tokenAuth.gql'
 import createUserMutation from '~/apollo/mutations/createUser.gql'
 import userDetailsQuery from '~/apollo/queries/userDetails.gql'
 export const state = () => ({
-  username: {},
+  user: null,
 })
 export const mutations = {
   setUser(state, user) {
-    state.username = user.username
+    state.user = user.user
   },
 }
 
 export const actions = {
+  verifyLoggedIn() {
+    return !!this.app.$apolloHelpers.getToken()
+  },
   async createUser(_context, payload) {
     const apolloClient = this.app.apolloProvider.defaultClient
     return await apolloClient
