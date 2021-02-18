@@ -3,95 +3,141 @@
     <div
       class="container flex items-center justify-center min-h-screen mx-auto"
     >
-      <div class="p-5 m-3 border-2 rounded-md shadow-lg sm:m-0">
-        <div class="flex justify-center -mt-20 sm:hidden">
-          <FontAwesomeIcon
-            class="w-24 h-24 transition-colors duration-500 rounded-full fill-current"
-            :class="{ 'text-yellow-400': loading }"
-            :icon="['fas', 'user-plus']"
-          ></FontAwesomeIcon>
+      <div class="grid">
+        <div class="col-start-1 row-end-2">
+          <div
+            class="w-full h-full transition-all duration-300 transform rounded-xl rotate-6"
+            :class="[formErrorsExist ? 'bg-red-600' : 'bg-green-600']"
+          ></div>
         </div>
-        <form class="w-72" @submit.prevent="onSubmit()">
-          <div class="mt-2 mb-5 sm:mt-0">
-            <label for="username" class="block text-black dark:text-gray-100">
-              Username
-            </label>
-            <div
-              class="flex items-center p-3 my-2 bg-gray-100 border rounded-sm focus-within:ring-2 focus-within:ring-blue-600"
-            >
-              <FontAwesomeIcon
-                class="flex-none w-6 h-6 text-black pointer-events-none fill-current"
-                :icon="fieldIcons.username"
-              ></FontAwesomeIcon>
-              <input
-                id="username"
-                v-model="credentials.username"
-                type="text"
-                class="w-full ml-2 bg-gray-100 border-0 focus:outline-none"
-                placeholder="Username"
-                required
-              />
-            </div>
-          </div>
-          <div class="my-5">
-            <label for="password1" class="block text-black dark:text-gray-100">
-              Password
-            </label>
-            <div
-              class="flex items-center p-3 my-2 bg-gray-100 border rounded-sm ring-black focus-within:ring-2 focus-within:ring-blue-600"
-            >
-              <FontAwesomeIcon
-                class="flex-none w-6 h-6 text-black cursor-pointer fill-current"
-                :icon="fieldIcons.password1"
-                @click="togglePasswordVisibility('password1')"
-              ></FontAwesomeIcon>
-              <input
-                id="password1"
-                v-model="credentials.password1"
-                :type="fieldTypes.password1"
-                class="w-full ml-2 bg-gray-100 border-0 focus:outline-none"
-                placeholder="Password"
-                required
-              />
-            </div>
-          </div>
-          <div class="my-5">
-            <label for="password1" class="block text-black dark:text-gray-100">
-              Confirm password
-            </label>
-            <div
-              class="flex items-center p-3 my-2 bg-gray-100 border rounded-sm ring-black focus-within:ring-2 focus-within:ring-blue-600"
-            >
-              <FontAwesomeIcon
-                class="flex-none w-6 h-6 text-black cursor-pointer fill-current"
-                :icon="fieldIcons.password2"
-                @click="togglePasswordVisibility('password2')"
-              ></FontAwesomeIcon>
-              <input
-                id="password2"
-                v-model="credentials.password2"
-                :type="fieldTypes.password2"
-                class="w-full ml-2 bg-gray-100 border-0 focus:outline-none"
-                placeholder="Retype password"
-                required
-              />
-            </div>
-          </div>
-          <button
-            type="submit"
-            2
-            class="block w-full p-3 text-center text-white duration-300 bg-gray-800 rounded-sm hover:bg-black dark:bg-green-700"
+        <div
+          class="relative col-start-1 row-end-2 p-5 m-3 transition-colors duration-300 border rounded-md shadow-xl bg-gray-50 sm:m-0"
+        >
+          <div class="absolute"></div>
+          <div
+            class="pb-2 mb-8 text-3xl font-semibold tracking-wider text-center text-blue-500 transition-colors duration-500 border-b-4 border-blue-300 border-dashed sm:text-5xl"
+            :class="{ 'text-yellow-400': loading }"
           >
             Register
-          </button>
-        </form>
-      </div>
-      <div class="hidden p-5 align-top border-2 border-l-0 rounded sm:block">
-        <FontAwesomeIcon
-          class="w-32 h-32 transition-colors duration-500 fill-current"
-          :icon="['fas', 'user-plus']"
-          :class="{ 'text-yellow-400': loading }"
-        ></FontAwesomeIcon>
+          </div>
+          <form class="w-72 sm:w-80 md:w-96" @submit.prevent="onSubmit()">
+            <div class="mt-2 mb-5 sm:mt-0">
+              <label
+                for="username"
+                class="block font-serif text-lg text-black dark:text-gray-100"
+              >
+                Username
+              </label>
+              <div
+                class="flex items-center p-3 my-2 bg-gray-100 border rounded-sm focus-within:ring-2 focus-within:ring-blue-600"
+                :class="[
+                  errors.username
+                    ? 'ring-2 ring-red-600'
+                    : 'focus-within:ring-blue-600',
+                ]"
+              >
+                <FontAwesomeIcon
+                  class="flex-none w-6 h-6 text-black pointer-events-none fill-current"
+                  :icon="fieldIcons.username"
+                ></FontAwesomeIcon>
+                <input
+                  id="username"
+                  v-model="credentials.username"
+                  type="text"
+                  class="w-full ml-2 bg-gray-100 border-0 focus:outline-none"
+                  placeholder="Username"
+                  required
+                />
+              </div>
+              <transition name="errors">
+                <ul
+                  v-if="errors.username"
+                  class="space-y-1 text-xs tracking-wider text-red-500"
+                >
+                  <li v-for="(error, index) in errors.username" :key="index">
+                    {{ error }}
+                  </li>
+                </ul>
+              </transition>
+            </div>
+            <div class="my-5">
+              <label
+                for="passwordOne"
+                class="block font-serif text-lg text-black dark:text-gray-100"
+              >
+                Password
+              </label>
+              <div
+                class="flex items-center p-3 my-2 bg-gray-100 border rounded-sm ring-black focus-within:ring-2 focus-within:ring-blue-600"
+                :class="[
+                  errors.password
+                    ? 'ring-2 ring-red-600'
+                    : 'focus-within:ring-blue-600',
+                ]"
+              >
+                <FontAwesomeIcon
+                  class="flex-none w-6 h-6 text-black cursor-pointer fill-current"
+                  :icon="fieldIcons.passwordOne"
+                  @click="togglePasswordVisibility('passwordOne')"
+                ></FontAwesomeIcon>
+                <input
+                  id="passwordOne"
+                  v-model="credentials.passwordOne"
+                  :type="fieldTypes.passwordOne"
+                  class="w-full ml-2 bg-gray-100 border-0 focus:outline-none"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <transition name="errors">
+                <ul
+                  v-if="errors.password"
+                  class="space-y-1 text-xs tracking-wider text-red-500"
+                >
+                  <li v-for="(error, index) in errors.password" :key="index">
+                    {{ error }}
+                  </li>
+                </ul>
+              </transition>
+            </div>
+            <div class="my-5">
+              <label
+                for="passwordTwo"
+                class="block font-serif text-lg text-black dark:text-gray-100"
+              >
+                Confirm password
+              </label>
+              <div
+                class="flex items-center p-3 my-2 bg-gray-100 border rounded-sm focus-within:ring-2"
+                :class="[
+                  errors.password
+                    ? 'ring-2 ring-red-600'
+                    : 'focus-within:ring-blue-600',
+                ]"
+              >
+                <FontAwesomeIcon
+                  class="flex-none w-6 h-6 text-black cursor-pointer fill-current"
+                  :icon="fieldIcons.passwordTwo"
+                  @click="togglePasswordVisibility('passwordTwo')"
+                ></FontAwesomeIcon>
+                <input
+                  id="passwordTwo"
+                  v-model="credentials.passwordTwo"
+                  :type="fieldTypes.passwordTwo"
+                  class="w-full ml-2 bg-gray-100 border-0 focus:outline-none"
+                  placeholder="Retype password"
+                  required
+                />
+              </div>
+            </div>
+            <button
+              type="submit"
+              class="block w-full p-3 text-center text-white duration-300 bg-gray-800 rounded-sm hover:bg-black dark:bg-green-700"
+            >
+              Register
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -103,25 +149,37 @@ import { mapActions } from 'vuex'
 export default {
   data: () => ({
     credentials: {
-      username: 'test',
-      password1: 'test-password',
-      password2: 'test-password',
+      username: '',
+      passwordOne: '',
+      passwordTwo: '',
     },
     loading: false,
-    errors: [],
+    errors: { username: null, password: null },
     fieldTypes: {
-      password1: 'password',
-      password2: 'password',
+      passwordOne: 'password',
+      passwordTwo: 'password',
     },
     fieldIcons: {
-      password1: ['fas', 'eye'],
-      password2: ['fas', 'eye'],
+      passwordOne: ['fas', 'eye'],
+      passwordTwo: ['fas', 'eye'],
       username: ['fas', 'user'],
     },
   }),
   head: () => ({
     title: 'Register',
   }),
+  computed: {
+    formErrorsExist() {
+      let exist = false
+      for (const error in this.errors) {
+        if (this.errors[error]) {
+          exist = true
+          break
+        }
+      }
+      return exist
+    },
+  },
   methods: {
     ...mapActions({
       createUserMutation: 'user/createUser',
@@ -133,24 +191,39 @@ export default {
         this.fieldIcons[fieldName] === 'eye-slash' ? 'eye' : 'eye-slash'
     },
     async onSubmit() {
+      this.errors = { username: null, password: null }
       const credentials = this.credentials
 
-      if (credentials.password1 !== credentials.password2) {
-        alert('The two passwords are different!')
+      if (credentials.passwordOne !== credentials.passwordTwo) {
+        this.errors.password = ['The two passwords do not match']
         return
       }
       const finalCredentials = {
         username: credentials.username,
-        password: credentials.password1,
+        password: credentials.passwordOne,
       }
 
       this.loading = true
       const res = await this.createUserMutation(finalCredentials)
+      this.loading = false
       if (!res.status) {
         this.errors = res.errors
+      } else {
+        this.$router.push({ name: 'login' })
       }
-      this.loading = false
     },
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.errors-enter-active,
+.errors-leave-active {
+  transition-property: opacity;
+  transition-duration: 0.8s;
+}
+.errors-enter,
+.errors-leave-to {
+  opacity: 0;
+}
+</style>
