@@ -4,11 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   faUserGraduate,
   faSpinner,
+  faEye,
+  faEyeSlash,
   faGuitar,
   faMoon,
   faUserPlus,
+  faSignInAlt,
   faLightbulb,
   faUsers,
+  faUser,
   faClock,
 } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -19,7 +23,11 @@ config.autoAddCss = false
 // You can add your icons directly in this plugin. See other examples for how you
 // can add other styles or just individual icons.
 library.add(
+  faEyeSlash,
+  faUser,
   faUserGraduate,
+  faEye,
+  faSignInAlt,
   faClock,
   faUserPlus,
   faGuitar,
