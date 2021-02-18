@@ -16,7 +16,6 @@ export default {
         },
       })
       .then(({ data }) => {
-        console.log(data)
         return { user: data.userProfileDetails.username }
       })
   },
