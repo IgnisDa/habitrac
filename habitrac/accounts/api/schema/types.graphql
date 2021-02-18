@@ -3,7 +3,7 @@ This type is returned when an error occurs while creating a user
 """
 type CreateUserErrorType {
   " a string that describes the error on the username field "
-  username: String
+  username: [String!]
   " a list of error that will be raised on the password field; commonly validation errors "
   password: [String!]
 }
