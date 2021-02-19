@@ -1,5 +1,9 @@
 <template>
-  <div>You have been logged out!</div>
+  <div class="flex items-center justify-center min-h-screen">
+    <div class="text-3xl tracking-wide text-center sm:text-5xl">
+      You have been logged out!
+    </div>
+  </div>
 </template>
 
 <script>
