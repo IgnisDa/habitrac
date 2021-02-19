@@ -3,6 +3,7 @@
     :class="mode !== 'production' ? 'debug-screens' : ''"
     class="antialiased"
   >
+    <Alert></Alert>
     <Nuxt />
     <NavBar></NavBar>
     <ControlBar></ControlBar>
