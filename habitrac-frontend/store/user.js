@@ -1,9 +1,11 @@
 import tokenAuthMutation from '~/apollo/mutations/tokenAuth.gql'
 import createUserMutation from '~/apollo/mutations/createUser.gql'
 import userDetailsQuery from '~/apollo/queries/userDetails.gql'
+
 export const state = () => ({
   user: null,
 })
+
 export const mutations = {
   setUser(state, user) {
     state.user = user.user
