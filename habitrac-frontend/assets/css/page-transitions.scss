@@ -10,7 +10,7 @@ $t-color: rgb(11, 10, 70);
   &::after {
     transition-property: transform;
     transition-timing-function: ease-in-out;
-    @apply fixed text-right top-0 left-0 z-10 block text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-yellow-300 font-mono w-screen h-1/2 p-10;
+    @apply fixed text-right top-0 left-0 z-20 block text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-yellow-300 font-mono w-screen h-1/2 p-10;
   }
 
   &::before {
