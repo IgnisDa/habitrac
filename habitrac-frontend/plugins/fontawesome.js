@@ -12,7 +12,7 @@ import {
   faSignInAlt,
   faLightbulb,
   faUsers,
-  faTimesCircle,
+  faTimes,
   faUser,
   faClock,
 } from '@fortawesome/free-solid-svg-icons'
@@ -25,7 +25,7 @@ config.autoAddCss = false
 // can add other styles or just individual icons.
 library.add(
   faEyeSlash,
-  faTimesCircle,
+  faTimes,
   faUser,
   faUserGraduate,
   faEye,
