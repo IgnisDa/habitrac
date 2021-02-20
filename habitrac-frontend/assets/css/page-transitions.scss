@@ -14,16 +14,17 @@ $t-color: rgb(11, 10, 70);
   }
 
   &::before {
-    content: 'Loading...';
     background-color: $t-color;
+    content: 'Loading...';
   }
 
   &::after {
-    content: '';
     background-color: $t-color;
+    content: '';
     @apply top-1/2;
   }
 }
+
 .page-leave {
   &::before,
   &::after {
@@ -37,8 +38,8 @@ $t-color: rgb(11, 10, 70);
   }
 
   &::after {
-    transition-duration: $t-duration - $t-delay;
     transition-delay: $t-delay;
+    transition-duration: $t-duration - $t-delay;
   }
 }
 
@@ -47,9 +48,11 @@ $t-color: rgb(11, 10, 70);
   &::after {
     transform: scale(1);
   }
+
   &::before {
     transform-origin: left;
   }
+
   &::after {
     transform-origin: right;
   }
@@ -65,8 +68,8 @@ $t-color: rgb(11, 10, 70);
 .page-enter-active {
   &::before {
     content: '';
-    transition-duration: $t-duration - $t-delay;
     transition-delay: $t-delay;
+    transition-duration: $t-duration - $t-delay;
   }
 
   &::after {
