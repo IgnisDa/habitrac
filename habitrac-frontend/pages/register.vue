@@ -42,6 +42,7 @@
                 ></FontAwesomeIcon>
                 <input
                   id="username"
+                  ref="username"
                   v-model="credentials.username"
                   type="text"
                   class="w-full ml-2 bg-gray-100 border-0 focus:outline-none"
@@ -180,10 +181,16 @@ export default {
       return exist
     },
   },
+  mounted() {
+    this.focusInput()
+  },
   methods: {
     ...mapActions({
       createUserMutation: 'user/createUser',
     }),
+    focusInput() {
+      this.$refs.username.focus()
+    },
     togglePasswordVisibility(fieldName) {
       this.fieldTypes[fieldName] =
         this.fieldTypes[fieldName] === 'password' ? 'text' : 'password'
