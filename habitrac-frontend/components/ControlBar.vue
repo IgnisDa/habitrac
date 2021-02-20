@@ -55,6 +55,7 @@ export default {
   transition-property: opacity scale;
   transition-timing-function: ease-in-out;
 }
+
 .color-mode-enter,
 .color-mode-leave-to {
   @apply opacity-0 scale-75 transform;

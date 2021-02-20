@@ -44,12 +44,15 @@ export default {
   content: '';
   @apply block m-auto h-0.5 rounded-md bg-pink-500 transition-width duration-500;
 }
+
 .nuxt-link-exact-active::before {
   @apply bg-purple-700;
 }
+
 .website-link::before {
   @apply w-0;
 }
+
 .website-link:hover::before {
   @apply w-full;
 }

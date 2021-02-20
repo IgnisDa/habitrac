@@ -65,19 +65,23 @@ export default {
 <style lang="scss" scoped>
 .alert-leave-active,
 .alert-enter-active {
+  transform: translateX(-40px);
   transition-duration: 1s;
   transition-property: opacity, transform;
-  transform: translateX(-40px);
 }
+
 .alert-leave-active {
   position: absolute;
 }
+
 .alert-leave-to {
   opacity: 0;
 }
+
 .alert-enter-to {
   transform: translateX(0);
 }
+
 .alert-move {
   transition: transform 1s;
 }
