@@ -7,8 +7,8 @@ export const state = () => ({
   // --> `true`: displayed if the user is logged in otherwise not
   allElements: [
     { label: 'Home', pathName: 'index', authenticated: null },
-    { label: 'Register', pathName: 'register', authenticated: false },
     { label: 'Login', pathName: 'login', authenticated: false },
+    { label: 'Register', pathName: 'register', authenticated: false },
     { label: 'Profile', pathName: 'profile', authenticated: true },
     { label: 'Logout', pathName: 'logout', authenticated: true },
   ],
