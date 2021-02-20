@@ -10,6 +10,7 @@ export const state = () => ({
     { label: 'Login', pathName: 'login', authenticated: false },
     { label: 'Register', pathName: 'register', authenticated: false },
     { label: 'Profile', pathName: 'profile', authenticated: true },
+    { label: 'Start a Habit', pathName: 'new-habit', authenticated: true },
     { label: 'Logout', pathName: 'logout', authenticated: true },
   ],
 })
