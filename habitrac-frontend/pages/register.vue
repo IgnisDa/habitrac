@@ -133,9 +133,10 @@
             </div>
             <button
               type="submit"
-              class="block w-full p-3 text-center text-white duration-300 bg-gray-800 rounded-sm hover:bg-black dark:bg-green-700"
+              class="w-full p-3 text-lg font-semibold text-center text-red-600 uppercase bg-purple-200 rounded-sm focus:outline-none loading--button-border-blue"
+              :class="{ 'loading--button': loading }"
             >
-              Register
+              <span>Register</span>
             </button>
           </form>
         </div>
@@ -232,9 +233,10 @@ export default {
 <style lang="scss" scoped>
 .errors-enter-active,
 .errors-leave-active {
-  transition-property: opacity;
   transition-duration: 0.8s;
+  transition-property: opacity;
 }
+
 .errors-enter,
 .errors-leave-to {
   opacity: 0;

@@ -103,9 +103,10 @@
             </div>
             <button
               type="submit"
-              class="block w-full p-3 text-center text-white duration-300 bg-gray-800 rounded-sm hover:bg-black dark:bg-green-700"
+              class="w-full p-3 text-lg font-semibold text-center text-indigo-700 uppercase bg-gray-200 rounded-sm focus:outline-none loading--button-border-red"
+              :class="{ 'loading--button': loading }"
             >
-              Login
+              <span>Login</span>
             </button>
           </form>
         </div>
