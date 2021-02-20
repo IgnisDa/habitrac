@@ -1,0 +1,133 @@
+$btn-duration: 0.35s;
+$btn-duration-total: ($btn-duration * 4) * 2;
+
+.loading--button {
+  border: 0;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+
+  &::before,
+  &::after {
+    height: 2px;
+    width: 0%;
+  }
+
+  span::before,
+  span::after {
+    height: 0%;
+    width: 2px;
+  }
+
+  &::before,
+  &::after,
+  span::before,
+  span::after {
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    content: '';
+    opacity: 1;
+    position: absolute;
+    transition: opacity 1s ease;
+  }
+
+  &.loading--button-border-blue {
+    &::before,
+    &::after,
+    span::before,
+    span::after {
+      background: rgb(0, 0, 255);
+    }
+  }
+
+  &.loading--button-border-red {
+    &::before,
+    &::after,
+    span::before,
+    span::after {
+      background: rgb(230, 21, 21);
+    }
+  }
+
+  &::before {
+    animation-duration: $btn-duration-total;
+    animation-name: btn-border-top;
+    right: 0;
+    top: 0;
+  }
+
+  &::after {
+    animation-delay: $btn-duration * 2;
+    animation-duration: $btn-duration-total;
+    animation-name: btn-border-bottom;
+    bottom: 0;
+    left: 0;
+  }
+
+  span::before {
+    animation-delay: $btn-duration;
+    animation-duration: $btn-duration-total;
+    animation-name: btn-border-span-left;
+    left: 0;
+    top: 0;
+  }
+
+  span::after {
+    animation-delay: $btn-duration * 3;
+    animation-duration: $btn-duration-total;
+    animation-name: btn-border-span-right;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+@mixin btn-animations($name, $anchor, $edge) {
+  $anchor-op: 'left';
+
+  @if $anchor == 'left' {
+    $anchor-op: 'right';
+  } @else if $anchor == 'top' {
+    $anchor-op: 'bottom';
+  } @else if $anchor == 'bottom' {
+    $anchor-op: 'top';
+  }
+
+  @keyframes #{$name} {
+    0% {
+      #{$anchor-op}: auto;
+      #{$anchor}: 0;
+      #{$edge}: 0%;
+    }
+
+    12.5% {
+      #{$anchor-op}: auto;
+      #{$anchor}: 0;
+      #{$edge}: 100%;
+    }
+
+    12.6% {
+      #{$anchor-op}: 0;
+      #{$anchor}: auto;
+    }
+
+    50% {
+      #{$edge}: 100%;
+    }
+
+    62.5% {
+      #{$edge}: 0%;
+    }
+
+    100% {
+      #{$anchor-op}: 0;
+      #{$anchor}: auto;
+      #{$edge}: 0%;
+    }
+  }
+}
+
+@include btn-animations(btn-border-top, 'right', 'width');
+@include btn-animations(btn-border-bottom, 'left', 'width');
+@include btn-animations(btn-border-span-left, 'top', 'height');
+@include btn-animations(btn-border-span-right, 'bottom', 'height');
