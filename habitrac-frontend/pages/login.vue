@@ -13,7 +13,6 @@
         <div
           class="relative col-start-1 row-end-2 p-5 m-3 transition-colors duration-300 border rounded-md shadow-xl bg-gray-50 sm:m-0"
         >
-          <div class="absolute"></div>
           <div
             class="pb-2 mb-8 text-3xl font-semibold tracking-wider text-center text-blue-500 transition-colors duration-500 border-b-4 border-blue-300 border-dashed sm:text-5xl"
             :class="{ 'text-yellow-400': loading }"
