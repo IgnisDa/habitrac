@@ -210,6 +210,12 @@ export default {
         this.errors = res.errors
       } else {
         this.$router.push({ name: 'login' })
+        this.$addAlert({
+          severity: 'info',
+          messageHeading: 'Registration successful',
+          messageBody: 'Please log in with your new credentials',
+          active: true,
+        })
       }
     },
   },
