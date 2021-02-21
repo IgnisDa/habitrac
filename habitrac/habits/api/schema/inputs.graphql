@@ -1,0 +1,18 @@
+"""
+This input will be used when we want to create a new habit.
+"""
+input CreateHabitInput {
+  " the type of the habit- either daily or hourly "
+  type: String!
+  duration: DurationInput!
+}
+
+"""
+This input will be used to describe dates, from a starting date to a finishing one
+"""
+input DurationInput {
+  " the date-time when the duration starts "
+  from: DateTime!
+  " the date-time when the duration ends "
+  to: DateTime!
+}
