@@ -18,4 +18,6 @@ type Mutation {
 
   " create a new user with the supplied username and password "
   createUser(data: CreateUserInput!): CreateUserPayload!
+  " create a new habit for an authenticated user using the supplied data "
+  createDailyHabit(data: CreateHabitInput!): CreateHabitPayload!
 }
