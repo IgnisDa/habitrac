@@ -35,6 +35,18 @@ export default {
       messageBody: 'You have been logged out successfully!',
       active: true,
     })
+    this.$addAlert({
+      severity: 'warning',
+      messageHeading: 'Logged Out',
+      messageBody: 'You have been logged out successfully!',
+      active: true,
+    })
+    this.$addAlert({
+      severity: 'success',
+      messageHeading: 'Logged Out',
+      messageBody: 'You have been logged out successfully!',
+      active: true,
+    })
     this.$disableAlert(2)
   },
   methods: {
