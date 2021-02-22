@@ -2,8 +2,9 @@
 This input will be used when we want to create a new habit.
 """
 input CreateHabitInput {
-  " the type of the habit- either daily or hourly "
-  type: String!
+  " the name of the habit "
+  name: String!
+  " the duration of for which the habit will be followed "
   duration: DurationInput!
 }
 
