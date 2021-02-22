@@ -25,7 +25,7 @@
                   for="username"
                   class="block font-serif text-lg text-black dark:text-gray-100"
                 >
-                  Type
+                  What's the habit about?
                 </label>
                 <div
                   class="relative w-full p-3 my-2 bg-gray-100 border rounded-sm focus-within:ring-2 focus-within:ring-blue-600"
@@ -33,39 +33,23 @@
                   <div class="flex items-center">
                     <input
                       id="habit-name"
-                      v-model="formData.client"
+                      v-model="data.name"
                       type="text"
-                      class="w-full px-3 bg-gray-100 border-0 focus:outline-none"
+                      class="w-full px-1 bg-gray-100 border-0 focus:outline-none"
                       autocomplete="off"
                       placeholder="Meditate everyday"
-                      @keyup="showOptions = true"
                     />
                     <FontAwesomeIcon
                       class="flex-none w-6 h-6 text-black pointer-events-none fill-current"
                       :icon="['fas', 'clock']"
                     ></FontAwesomeIcon>
                   </div>
-                  <div
-                    v-show="resultQuery.length && showOptions"
-                    class="absolute inset-x-0 z-10 mt-1 overflow-hidden overflow-y-scroll bg-white border border-gray-300 rounded-md shadow-md"
-                  >
-                    <ul class="py-1">
-                      <li
-                        v-for="(value, index) in resultQuery"
-                        :key="index"
-                        class="px-3 py-2 cursor-pointer hover:bg-gray-200"
-                        @click="setInput(value.type)"
-                      >
-                        {{ value.type }}
-                      </li>
-                    </ul>
-                  </div>
                 </div>
               </div>
               <div class="mt-2 mb-5 sm:mt-0">
                 <div class="relative w-full my-2 rounded-sm">
-                  <div class="flex items-center">
-                    <div class="w-full px-1">
+                  <div class="flex flex-wrap items-center">
+                    <div class="w-full px-1 sm:w-1/2">
                       <label
                         for="duration-from"
                         class="block font-serif text-lg text-black dark:text-gray-100"
@@ -74,13 +58,12 @@
                       </label>
                       <input
                         id="duration-from"
+                        v-model="data.duration.from"
                         type="date"
                         class="w-full p-3 bg-gray-100 border duration-input focus:outline-none focus-within:ring-blue-400 focus-within:ring-2"
-                        autocomplete="off"
-                        placeholder="Meditate everyday"
                       />
                     </div>
-                    <div class="w-full px-1">
+                    <div class="w-full px-1 sm:w-1/2">
                       <label
                         for="duration-to"
                         class="block font-serif text-lg text-black dark:text-gray-100"
@@ -89,10 +72,9 @@
                       </label>
                       <input
                         id="duration-to"
+                        v-model="data.duration.to"
                         type="date"
                         class="w-full p-3 bg-gray-100 border duration-input focus:outline-none focus-within:ring-blue-400 focus-within:ring-2"
-                        autocomplete="off"
-                        placeholder="Meditate everyday"
                       />
                     </div>
                   </div>
@@ -102,7 +84,7 @@
                 type="submit"
                 class="w-full p-3 text-lg font-semibold text-center text-indigo-700 uppercase bg-gray-200 rounded-sm focus:outline-none loading--button-border-red"
               >
-                <span>Create New</span>
+                <span>Create</span>
               </button>
             </form>
           </div>
@@ -113,37 +95,29 @@
 </template>
 
 <script>
+import createDailyHabitMutation from '~/apollo/mutations/createDailyHabit.gql'
+
 export default {
   data: () => ({
-    showOptions: false,
-    formData: {},
-    data: [
-      { id: 1, type: 'Daily' },
-      { id: 2, type: 'Hourly' },
-    ],
+    data: { name: '', duration: { from: '', to: '' } },
   }),
   head: () => ({
     title: 'New Habit',
   }),
-  computed: {
-    resultQuery() {
-      if (this.formData.client) {
-        const data = this.data.filter((item) => {
-          return this.formData.client
-            .toLowerCase()
-            .split(' ')
-            .every((v) => item.type.toLowerCase().includes(v))
-        })
-
-        return data
-      } else {
-        return []
-      }
-    },
-  },
+  computed: {},
   methods: {
-    handleSubmit() {
-      return ''
+    async handleSubmit() {
+      const resp = await this.$apollo.mutate({
+        mutation: createDailyHabitMutation,
+        variables: {
+          data: this.data,
+        },
+      })
+      if (!resp.data.createDailyHabit.status) {
+        console.log('error')
+      } else {
+        console.log('success')
+      }
     },
     setInput(value) {
       this.$set(this.formData, 'client', value)
