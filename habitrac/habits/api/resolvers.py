@@ -1,7 +1,5 @@
-from datetime import timedelta
-
 from ariadne import MutationType, QueryType
-from ariadne_jwt.decorators import login_required
+from ariadne_token_auth.decorators import login_required
 from habits import models as habit_models
 
 query = QueryType()
@@ -19,7 +17,6 @@ def create_daily_habit(_, info, **data):
     duration_from = data["duration"]["from"]
     duration_to = data["duration"]["to"]
     duration = duration_to - duration_from
-    print(duration_from, duration_to, duration)
     if duration_from > duration_to:
         errors.append("The duration can not be negative")
         status = False
