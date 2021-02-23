@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     # django addons
     "corsheaders",
     "ariadne.contrib.django",
+    "ariadne_token_auth",
 ]
 
 MIDDLEWARE = [
@@ -36,9 +37,9 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "ariadne_jwt.middleware.JSONWebTokenMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "ariadne_token_auth.middleware.AuthTokenMiddleware",
 ]
 
 ROOT_URLCONF = "habitrac.urls"
@@ -126,10 +127,10 @@ if not DEBUG:
         0,
         "django.contrib.auth.hashers.Argon2PasswordHasher",
     )
-AUTHENTICATION_BACKENDS = [
-    "ariadne_jwt.backends.JSONWebTokenBackend",
+AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
-]
+    "ariadne_token_auth.backends.AuthTokenBackend",
+)
 # development only settings
 if DEBUG:
     ALLOWED_HOSTS += ["*"]
