@@ -1,0 +1,8 @@
+mutation getAuthToken($identifier: String!, $password: String!) {
+  getAuthToken(identifier: $identifier, password: $password) {
+    error
+    auth {
+      token
+    }
+  }
+}
