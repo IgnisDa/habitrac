@@ -23,7 +23,7 @@ resolvers = [
     root_resolvers.datetime_scalar,
     habits_resolvers.query,
     habits_resolvers.mutation,
-    accounts_resolvers.jwt_mutation,
+    accounts_resolvers.auth_mutation,
     accounts_resolvers.accounts_query,
     accounts_resolvers.accounts_mutation,
 ]
