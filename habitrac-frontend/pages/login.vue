@@ -22,7 +22,7 @@
           <form class="w-72 sm:w-80 md:w-96" @submit.prevent="onSubmit()">
             <div class="mt-2 mb-5 sm:mt-0">
               <label
-                for="username"
+                for="identifier"
                 class="block font-serif text-lg text-black dark:text-gray-100"
               >
                 Username
@@ -30,19 +30,19 @@
               <div
                 class="flex items-center p-3 my-2 bg-gray-100 border rounded-sm focus-within:ring-2 focus-within:ring-blue-600"
                 :class="[
-                  errors.username
+                  errors.identifier
                     ? 'ring-2 ring-red-600'
                     : 'focus-within:ring-blue-600',
                 ]"
               >
                 <FontAwesomeIcon
                   class="flex-none w-6 h-6 text-black pointer-events-none fill-current"
-                  :icon="fieldIcons.username"
+                  :icon="fieldIcons.identifier"
                 ></FontAwesomeIcon>
                 <input
-                  id="username"
-                  ref="username"
-                  v-model="credentials.username"
+                  id="identifier"
+                  ref="identifier"
+                  v-model="credentials.identifier"
                   type="text"
                   class="w-full ml-2 bg-gray-100 border-0 focus:outline-none"
                   placeholder="Username"
@@ -51,10 +51,10 @@
               </div>
               <transition name="errors">
                 <ul
-                  v-if="errors.username"
+                  v-if="errors.identifier"
                   class="space-y-1 text-xs tracking-wider text-red-500"
                 >
-                  <li v-for="(error, index) in errors.username" :key="index">
+                  <li v-for="(error, index) in errors.identifier" :key="index">
                     {{ error }}
                   </li>
                 </ul>
@@ -120,7 +120,7 @@ import { mapActions } from 'vuex'
 export default {
   data: () => ({
     credentials: {
-      username: '',
+      identifier: '',
       password: '',
     },
     loading: false,
@@ -129,9 +129,9 @@ export default {
     },
     fieldIcons: {
       password: ['fas', 'eye'],
-      username: ['fas', 'user'],
+      identifier: ['fas', 'user'],
     },
-    errors: { username: null, password: null },
+    errors: { identifier: null, password: null },
   }),
   head: () => ({
     title: 'Login',
@@ -157,7 +157,7 @@ export default {
       fetchUserDetailsAction: 'user/fetchUserDetails',
     }),
     focusInput() {
-      this.$refs.username.focus()
+      this.$refs.identifier.focus()
     },
     togglePasswordVisibility(fieldName) {
       this.fieldTypes[fieldName] =
@@ -179,7 +179,7 @@ export default {
       // so we check if it is not `null` and we know that there was an error in the
       // login mutation
       if (res) {
-        this.errors.username = [res[0].message]
+        this.errors.identifier = [res]
       } else {
         await this.fetchUserDetailsAction()
         this.$router.push({ name: 'index' })
