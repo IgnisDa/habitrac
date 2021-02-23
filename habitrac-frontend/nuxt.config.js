@@ -76,7 +76,7 @@ export default {
     clientConfigs: {
       default: '~/configurations/apollo-config.js',
     },
-    authenticationType: 'JWT',
+    authenticationType: 'Token',
   },
   googleFonts: {
     families: {
@@ -90,8 +90,5 @@ export default {
   },
   analyze: {
     analyzerMode: 'static',
-  },
-  router: {
-    middleware: 'setNavbarElements',
   },
 }
