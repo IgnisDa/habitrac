@@ -11,6 +11,10 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import globalMixin from '~/mixin/setNavbarElements.js'
+
+Vue.mixin(globalMixin)
 export default {
   data: () => ({
     mode: process.env.NODE_ENV,
