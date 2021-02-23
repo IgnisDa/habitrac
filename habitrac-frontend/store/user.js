@@ -1,4 +1,4 @@
-import tokenAuthMutation from '~/apollo/mutations/tokenAuth.gql'
+import getAuthTokenMutation from '~/apollo/mutations/getAuthToken.gql'
 import createUserMutation from '~/apollo/mutations/createUser.gql'
 import userDetailsQuery from '~/apollo/queries/userDetails.gql'
 
@@ -37,18 +37,18 @@ export const actions = {
     const apolloClient = this.app.apolloProvider.defaultClient
     return await apolloClient
       .mutate({
-        mutation: tokenAuthMutation,
+        mutation: getAuthTokenMutation,
         variables: {
-          username: payload.username,
+          identifier: payload.identifier,
           password: payload.password,
         },
         errorPolicy: 'all',
       })
       .then((resp) => {
-        if (resp.errors) {
-          return resp.errors
+        if (resp.data.getAuthToken.error) {
+          return resp.data.getAuthToken.error
         } else {
-          apolloHelpers.onLogin(resp.data.tokenAuth.token)
+          apolloHelpers.onLogin(resp.data.getAuthToken.auth.token)
         }
       })
   },
