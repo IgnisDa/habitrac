@@ -12,9 +12,8 @@ type Query {
 The root mutation definition
 """
 type Mutation {
-  verifyToken(token: String!): VerifyToken
-  refreshToken(token: String!): RefreshToken
-  tokenAuth(username: String!, password: String!): TokenAuth
+  getAuthToken(identifier: String!, password: String!): AuthTokenPayload!
+  deleteAuthToken(token: String!): DeleteTokenPayload!
 
   " create a new user with the supplied username and password "
   createUser(data: CreateUserInput!): CreateUserPayload!
