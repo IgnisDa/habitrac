@@ -1,18 +1,16 @@
-import ariadne_jwt
 from ariadne import MutationType, QueryType
+from ariadne_token_auth.api import resolvers
+from ariadne_token_auth.decorators import login_required
 from django.contrib.auth import get_user_model, password_validation
 from django.core.exceptions import ValidationError
 
 CUSTOM_USER = get_user_model()
 
-auth_type_definitions = [
-    ariadne_jwt.jwt_schema,
-]
+auth_type_definitions = [resolvers.type_defs]
 
-jwt_mutation = MutationType()
-jwt_mutation.set_field("tokenAuth", ariadne_jwt.resolve_token_auth)
-jwt_mutation.set_field("refreshToken", ariadne_jwt.resolve_refresh)
-jwt_mutation.set_field("verifyToken", ariadne_jwt.resolve_verify)
+auth_mutation = MutationType()
+auth_mutation.set_field("getAuthToken", resolvers.get_auth_token)
+auth_mutation.set_field("deleteAuthToken", resolvers.delete_auth_token)
 
 accounts_query = QueryType()
 accounts_mutation = MutationType()
@@ -31,7 +29,7 @@ def user_profile_details(*_, id, **kwargs):
 
 
 @accounts_query.field("userDetails")
-@ariadne_jwt.decorators.login_required
+@login_required
 def user_details(_, info, **kwargs):
     """ returns basic user data about the currently logged in user """
     return {"username": info.context.get("request").user.username}
