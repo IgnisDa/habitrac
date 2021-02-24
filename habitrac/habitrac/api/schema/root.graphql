@@ -5,7 +5,9 @@ type Query {
   " get the user of the currently logged in user using the authentication headers "
   userDetails: UserDetailsPayload!
   " to get the information of a particular user corresponding to their `id` "
-  userProfileDetails(id: Int!): UserProfileDetailsPayload!
+  userProfileDetails(usernameSlug: String!): UserProfileDetailsPayload!
+  " get all users in the database "
+  getUsersList: [User!]
 }
 
 """
