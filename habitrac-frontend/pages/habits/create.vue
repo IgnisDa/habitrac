@@ -30,7 +30,7 @@
                   What's the habit about?
                 </label>
                 <div
-                  class="relative w-full p-3 my-2 border rounded-sm focus-within:ring-2 focus-within:ring-blue-600"
+                  class="relative w-full p-3 my-2 bg-gray-100 border rounded-sm focus-within:ring-2 focus-within:ring-blue-600"
                   :class="[
                     errors.name
                       ? 'ring-2 ring-red-600'
@@ -42,7 +42,7 @@
                       id="habit-name"
                       v-model="data.name"
                       type="text"
-                      class="w-full px-1 bg-gray-100 border-0 focus:outline-none"
+                      class="w-full px-1 bg-gray-100 order-0 focus:outline-none"
                       autocomplete="off"
                       placeholder="Meditate everyday"
                       required
