@@ -8,6 +8,8 @@ type Query {
   userProfileDetails(usernameSlug: String!): UserProfileDetailsPayload!
   " get all users in the database "
   getUsersList: [User!]
+  " get all habits registered by a user "
+  getAllHabits(usernameSlug: String!): [Habit!]
 }
 
 """
