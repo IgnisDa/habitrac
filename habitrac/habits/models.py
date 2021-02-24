@@ -1,6 +1,23 @@
+import uuid
+
 from django.conf import settings
 from django.db import models
+from django.utils.text import slugify
 from django.utils.translation import gettext as _
+
+
+def create_name_slug(name):
+    """This is a function that returns a unique random slug taking into
+    account whether a habit with the generated slug already exists in the db."""
+    return_val = None
+    slug = slugify(name)
+    while True:
+        if not DailyHabit.objects.filter(name_slug=slug).exists():
+            return_val = slug
+            break
+        else:
+            slug = slugify(name) + str(uuid.uuid4().hex.upper()[:6])
+    return return_val
 
 
 class Habit(models.Model):
@@ -11,6 +28,11 @@ class Habit(models.Model):
     name = models.CharField(
         max_length=200,
         help_text=_("The name of the particular habit you are trying to cultivate."),
+    )
+    name_slug = models.SlugField(
+        max_length=100,
+        help_text=_("The unique slug that will be used to identify the habit"),
+        editable=False,
     )
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -33,6 +55,11 @@ class Habit(models.Model):
         blank=True,
         null=True,
     )
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.name_slug = create_name_slug(self.name)
+        super(Habit, self).save(*args, **kwargs)
 
     class Meta:
         abstract = True
