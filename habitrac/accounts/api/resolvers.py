@@ -3,6 +3,7 @@ from ariadne_token_auth.api import resolvers
 from ariadne_token_auth.decorators import login_required
 from django.contrib.auth import get_user_model, password_validation
 from django.core.exceptions import ValidationError
+from utils.handlers.errors import ErrorContainer
 
 CUSTOM_USER = get_user_model()
 
@@ -25,7 +26,7 @@ def user_profile_details(*_, username_slug, **kwargs):
         username = CUSTOM_USER.objects.get(username_slug=username_slug).username
     except CUSTOM_USER.DoesNotExist:
         username = None
-        error = "The requested error does not exist"
+        error = "The requested user does not exist"
     return {"username": username, "error": error}
 
 
@@ -40,22 +41,22 @@ def user_details(_, info, **kwargs):
 def create_user(*_, data, **kwargs):
     """Create a new user using the given `username` and `password` in the `data`
     variable."""
+    error_container = ErrorContainer("identifier", "password")
     status = False
-    errors = {}
     if CUSTOM_USER.objects.filter(username=data["identifier"]).exists():
-        errors.update(
-            {"identifier": ["This username is taken, please choose something else!"]}
+        error_container.update_with_error(
+            "identifier", "This username is taken, please choose something else!"
         )
     try:
         password_validation.validate_password(data["password"])
     except ValidationError as exc:
-        errors.update({"password": list(exc)})
-    if not errors:
-        errors = None
+        for err in list(exc):
+            error_container.update_with_error("password", str(err))
+    if not error_container:
         data["username"] = data.pop("identifier")
         CUSTOM_USER.objects.create_user(**data)
         status = True
-    return {"status": status, "errors": errors}
+    return {"status": status, "errors": error_container.get_all_errors()}
 
 
 @accounts_query.field("getUsersList")
