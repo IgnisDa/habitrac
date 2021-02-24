@@ -78,7 +78,7 @@
                 <FontAwesomeIcon
                   class="flex-none w-6 h-6 text-black cursor-pointer fill-current"
                   :icon="fieldIcons.password"
-                  @click="togglePasswordVisibility('passwordOne')"
+                  @click="togglePasswordVisibility('password')"
                 ></FontAwesomeIcon>
                 <input
                   id="password"
