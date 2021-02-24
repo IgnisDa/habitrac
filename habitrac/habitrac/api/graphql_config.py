@@ -29,5 +29,7 @@ resolvers = [
 ]
 
 schema = ariadne.make_executable_schema(
-    type_defs, resolvers, ariadne.snake_case_fallback_resolvers
+    type_defs,
+    resolvers,
+    ariadne.snake_case_fallback_resolvers,
 )
