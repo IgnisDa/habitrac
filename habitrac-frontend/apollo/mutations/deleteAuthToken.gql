@@ -1,0 +1,6 @@
+mutation deleteAuthToken($token: String!) {
+  deleteAuthToken(token: $token) {
+    status
+    error
+  }
+}
