@@ -3,7 +3,7 @@ This is the input data that is required to perform various operations like creat
 """
 input CreateUserInput {
   " the username that will be set for the new user "
-  username: String!
+  identifier: String!
   " the password that will be set for the new user "
   password: String!
 }
