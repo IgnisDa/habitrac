@@ -1,0 +1,9 @@
+"""
+This type is returned when a habit creation request results in an error
+"""
+type CreateDailyHabitErrorType {
+  " the errors associated with the name field "
+  name: [String!]
+  " the errors associated with the duration field "
+  duration: [String!]
+}
