@@ -2,7 +2,7 @@ mutation createUser($data: CreateUserInput!) {
   createUser(data: $data) {
     status
     errors {
-      username
+      identifier
       password
     }
   }
