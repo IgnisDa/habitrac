@@ -1,5 +1,5 @@
-query userProfileDetails($id: Int!) {
-  userProfileDetails(id: $id) {
+query userProfileDetails($usernameSlug: String!) {
+  userProfileDetails(usernameSlug: $usernameSlug) {
     username
     error
   }
