@@ -13,7 +13,6 @@
         <div
           class="relative col-start-1 row-end-2 p-5 m-3 transition-colors duration-300 border rounded-md shadow-xl bg-gray-50 sm:m-0"
         >
-          <div class="absolute"></div>
           <div
             class="pb-2 mb-8 text-3xl font-semibold tracking-wider text-center text-blue-500 transition-colors duration-500 border-b-4 border-blue-300 border-dashed sm:text-5xl"
             :class="{ 'text-yellow-400': loading }"
@@ -23,7 +22,7 @@
           <form class="w-72 sm:w-80 md:w-96" @submit.prevent="onSubmit()">
             <div class="mt-2 mb-5 sm:mt-0">
               <label
-                for="username"
+                for="identifier"
                 class="block font-serif text-lg text-black dark:text-gray-100"
               >
                 Username
@@ -31,19 +30,19 @@
               <div
                 class="flex items-center p-3 my-2 bg-gray-100 border rounded-sm focus-within:ring-2 focus-within:ring-blue-600"
                 :class="[
-                  errors.username
+                  errors.identifier
                     ? 'ring-2 ring-red-600'
                     : 'focus-within:ring-blue-600',
                 ]"
               >
                 <FontAwesomeIcon
                   class="flex-none w-6 h-6 text-black pointer-events-none fill-current"
-                  :icon="fieldIcons.username"
+                  :icon="fieldIcons.identifier"
                 ></FontAwesomeIcon>
                 <input
-                  id="username"
-                  ref="username"
-                  v-model="credentials.username"
+                  id="identifier"
+                  ref="identifier"
+                  v-model="credentials.identifier"
                   type="text"
                   class="w-full ml-2 bg-gray-100 border-0 focus:outline-none"
                   placeholder="Username"
@@ -52,10 +51,10 @@
               </div>
               <transition name="errors">
                 <ul
-                  v-if="errors.username"
+                  v-if="errors.identifier"
                   class="space-y-1 text-xs tracking-wider text-red-500"
                 >
-                  <li v-for="(error, index) in errors.username" :key="index">
+                  <li v-for="(error, index) in errors.identifier" :key="index">
                     {{ error }}
                   </li>
                 </ul>
@@ -151,12 +150,12 @@ import { mapActions } from 'vuex'
 export default {
   data: () => ({
     credentials: {
-      username: '',
+      identifier: '',
       passwordOne: '',
       passwordTwo: '',
     },
     loading: false,
-    errors: { username: null, password: null },
+    errors: { identifier: null, password: null },
     fieldTypes: {
       passwordOne: 'password',
       passwordTwo: 'password',
@@ -164,7 +163,7 @@ export default {
     fieldIcons: {
       passwordOne: ['fas', 'eye'],
       passwordTwo: ['fas', 'eye'],
-      username: ['fas', 'user'],
+      identifier: ['fas', 'user'],
     },
   }),
   head: () => ({
@@ -190,7 +189,7 @@ export default {
       createUserMutation: 'user/createUser',
     }),
     focusInput() {
-      this.$refs.username.focus()
+      this.$refs.identifier.focus()
     },
     togglePasswordVisibility(fieldName) {
       this.fieldTypes[fieldName] =
@@ -199,7 +198,7 @@ export default {
         this.fieldIcons[fieldName] === 'eye-slash' ? 'eye' : 'eye-slash'
     },
     async onSubmit() {
-      this.errors = { username: null, password: null }
+      this.errors = { identifier: null, password: null }
       const credentials = this.credentials
 
       if (credentials.passwordOne !== credentials.passwordTwo) {
@@ -207,7 +206,7 @@ export default {
         return
       }
       const finalCredentials = {
-        username: credentials.username,
+        identifier: credentials.identifier,
         password: credentials.passwordOne,
       }
 
