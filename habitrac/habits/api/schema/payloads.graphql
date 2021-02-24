@@ -5,5 +5,5 @@ type CreateHabitPayload {
   " whether the mutation was successful "
   status: Boolean!
   " any errors that were raised "
-  errors: [String!]
+  errors: CreateDailyHabitErrorType
 }
