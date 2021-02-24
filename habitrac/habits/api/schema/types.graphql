@@ -7,3 +7,21 @@ type CreateDailyHabitErrorType {
   " the errors associated with the duration field "
   duration: [String!]
 }
+
+"""
+This is the type returned when the client requests for details about a particular habit
+"""
+type Habit {
+  " the name of the habit "
+  name: String!
+  " the unique slug used to identify the habit "
+  nameSlug: String!
+  " the user which registered this habit "
+  user: User!
+  " the date and time the habit was started on "
+  startedOn: DateTime!
+  " the total duration the habit will go on for "
+  duration: String!
+  " the current progress of how much the habit has been completed "
+  progress: String!
+}
