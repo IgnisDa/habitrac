@@ -1,0 +1,48 @@
+from typing import Dict
+
+
+def check_if_errors_exist(error_dict):
+    """This function checks recursively that all the values of the
+    `error_dict` dictionary evaluate to `None`. If they don't, it means that
+    there exists errors and it returns `False`, otherwise `True`."""
+    for value in error_dict.values():
+        if value and type(value) == dict:
+            return check_if_errors_exist(value)
+        else:
+            return value is not None
+
+
+class ErrorContainer:
+    """This is a special class that will help to manage errors in resolvers
+    and keep the code clean and maintainable."""
+
+    fields: Dict = {}
+
+    def __init__(self, *args, **kwargs):
+        for arg in args:
+            self.fields[arg] = None
+
+    def __str__(self):
+        return f"<{self.__class__.__name__} ({self.fields})>"
+
+    def __bool__(self):
+        return check_if_errors_exist(self.get_all_errors())
+
+    def get_all_errors(self):
+        return self.fields
+
+    def update_with_error(self, field_name, error_string):
+        if field_name not in self.fields:
+            raise AttributeError(
+                f"`{field_name}` should be among `{list(self.fields.keys())}`"
+            )
+        if not self.fields[field_name]:
+            self.fields[field_name] = [error_string]
+        else:
+            self.fields[field_name].append(error_string)
+
+
+# error = ErrorContainer("username", "email")
+# error.update_with_error("username", "hello bro")
+# error.update_with_error("email", "wrong email bro")
+# error.update_with_error("email", "wrong email sis")
