@@ -8,14 +8,25 @@
 
 <script>
 import { mapActions } from 'vuex'
+import deleteAuthTokenAction from '~/apollo/mutations/deleteAuthToken.gql'
 
 export default {
   head: () => ({
     title: 'Logout',
   }),
   mounted() {
-    this.$apolloHelpers.onLogout()
-    this.constructNavbarElementsAction()
+    const authToken = this.$apolloHelpers.getToken()
+    this.$apollo
+      .mutate({
+        mutation: deleteAuthTokenAction,
+        variables: {
+          token: authToken,
+        },
+      })
+      .then(() => {
+        this.$apolloHelpers.onLogout()
+        this.constructNavbarElementsAction()
+      })
   },
   methods: {
     ...mapActions({
