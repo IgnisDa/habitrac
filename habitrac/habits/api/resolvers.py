@@ -1,7 +1,11 @@
-from ariadne import MutationType, QueryType
+import json
+
+from ariadne import MutationType, QueryType, convert_kwargs_to_snake_case
 from ariadne_token_auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from habits import models as habit_models
 
+CUSTOM_USER_MODEL = get_user_model()
 query = QueryType()
 mutation = MutationType()
 
@@ -38,3 +42,12 @@ def create_daily_habit(_, info, **data):
         errors = None
         status = True
     return {"status": status, "errors": errors}
+
+
+@query.field("getAllHabits")
+@convert_kwargs_to_snake_case
+def get_all_habits(*_, username_slug, **kwargs):
+    qs = CUSTOM_USER_MODEL.objects.get(username_slug=username_slug).dailyhabit_set.all()
+    for obj in qs:
+        obj.progress = json.dumps(obj.progress)
+    return qs
