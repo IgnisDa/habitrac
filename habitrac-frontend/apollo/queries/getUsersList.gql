@@ -1,0 +1,6 @@
+query getUsersList {
+  getUsersList {
+    username
+    usernameSlug
+  }
+}
