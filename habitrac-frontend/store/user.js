@@ -23,7 +23,7 @@ export const actions = {
         mutation: createUserMutation,
         variables: {
           data: {
-            username: payload.username,
+            identifier: payload.identifier,
             password: payload.password,
           },
         },
