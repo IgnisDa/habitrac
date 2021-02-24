@@ -2,14 +2,10 @@ from typing import Dict
 
 
 def check_if_errors_exist(error_dict):
-    """This function checks recursively that all the values of the
+    """This function checks that all the values of the
     `error_dict` dictionary evaluate to `None`. If they don't, it means that
-    there exists errors and it returns `False`, otherwise `True`."""
-    for value in error_dict.values():
-        if value and type(value) == dict:
-            return check_if_errors_exist(value)
-        else:
-            return value is not None
+    there exists errors and it returns `True`, otherwise `False`."""
+    return any(value is not None for value in error_dict.values())
 
 
 class ErrorContainer:
