@@ -1,6 +1,9 @@
 mutation createDailyHabit($data: CreateHabitInput!) {
   createDailyHabit(data: $data) {
     status
-    errors
+    errors {
+      name
+      duration
+    }
   }
 }
