@@ -1,4 +1,4 @@
-from ariadne import MutationType, QueryType
+from ariadne import MutationType, QueryType, convert_kwargs_to_snake_case
 from ariadne_token_auth.api import resolvers
 from ariadne_token_auth.decorators import login_required
 from django.contrib.auth import get_user_model, password_validation
@@ -17,11 +17,12 @@ accounts_mutation = MutationType()
 
 
 @accounts_query.field("userProfileDetails")
-def user_profile_details(*_, id, **kwargs):
-    """ returns basic user data about the user having the specified `id` """
+@convert_kwargs_to_snake_case
+def user_profile_details(*_, username_slug, **kwargs):
+    """ returns basic user data about the user having the specified `username_slug` """
     error = None
     try:
-        username = CUSTOM_USER.objects.get(pk=id).username
+        username = CUSTOM_USER.objects.get(username_slug=username_slug).username
     except CUSTOM_USER.DoesNotExist:
         username = None
         error = "The requested error does not exist"
@@ -41,9 +42,9 @@ def create_user(*_, data, **kwargs):
     variable."""
     status = False
     errors = {}
-    if CUSTOM_USER.objects.filter(username=data["username"]).exists():
+    if CUSTOM_USER.objects.filter(username=data["identifier"]).exists():
         errors.update(
-            {"username": ["This username is taken, please choose something else!"]}
+            {"identifier": ["This username is taken, please choose something else!"]}
         )
     try:
         password_validation.validate_password(data["password"])
@@ -51,6 +52,14 @@ def create_user(*_, data, **kwargs):
         errors.update({"password": list(exc)})
     if not errors:
         errors = None
+        data["username"] = data.pop("identifier")
         CUSTOM_USER.objects.create_user(**data)
         status = True
     return {"status": status, "errors": errors}
+
+
+@accounts_query.field("getUsersList")
+def get_users_list(self, info, *args, **kwargs):
+    # qs = CUSTOM_USER.objects.get(username="IgnisDa").dailyhabit_set.all()
+    # print(qs)
+    return CUSTOM_USER.objects.values("username", "username_slug")
