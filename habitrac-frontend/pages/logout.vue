@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import deleteAuthTokenAction from '~/apollo/mutations/deleteAuthToken.gql'
 
 export default {
@@ -25,12 +25,16 @@ export default {
       })
       .then(() => {
         this.$apolloHelpers.onLogout()
+        this.deleteUserMutation()
         this.constructNavbarElementsAction()
       })
   },
   methods: {
     ...mapActions({
       constructNavbarElementsAction: 'navbar/constructNavbarElements',
+    }),
+    ...mapMutations({
+      deleteUserMutation: 'user/deleteUser',
     }),
   },
 }
