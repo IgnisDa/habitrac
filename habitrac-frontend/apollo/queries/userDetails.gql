@@ -1,5 +1,9 @@
 query userDetails {
   userDetails {
-    username
+    user {
+      username
+      usernameSlug
+    }
+    error
   }
 }
