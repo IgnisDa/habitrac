@@ -1,0 +1,6 @@
+mutation toggleTagCycle($data: toggleTagCycleInput!) {
+  toggleTagCycle(data: $data) {
+    status
+    error
+  }
+}
