@@ -173,6 +173,10 @@ export default {
           messageBody: 'Your new habit was created successfully!',
           active: true,
         })
+        this.$router.push({
+          name: 'habits-slug',
+          params: { slug: resp.data.createDailyHabit.habit.nameSlug },
+        })
       }
     },
   },
