@@ -3,8 +3,8 @@ This is the type of payload that is returned when a client requests details
 about themselves.
 """
 type UserDetailsPayload {
-  " the username that is stored in the database "
-  username: String!
+  " the user that is stored in the database "
+  user: User
   " error that occurred while executing the query (if any) "
   error: String
 }
