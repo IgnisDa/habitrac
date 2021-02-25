@@ -29,6 +29,7 @@ export default {
       update: (value) => {
         return value.getUsersList
       },
+      prefetch: false,
     },
   },
 }
