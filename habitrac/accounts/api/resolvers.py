@@ -34,7 +34,11 @@ def user_profile_details(*_, username_slug, **kwargs):
 @login_required
 def user_details(_, info, **kwargs):
     """ returns basic user data about the currently logged in user """
-    return {"username": info.context.get("request").user.username}
+    user = info.context.get("request").user
+    return {
+        "user": {"username": user.username, "username_slug": user.username_slug},
+        "error": None,
+    }
 
 
 @accounts_mutation.field("createUser")
