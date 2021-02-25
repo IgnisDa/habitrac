@@ -51,6 +51,8 @@ export default {
     '@nuxtjs/apollo',
     // https://google-fonts.nuxtjs.org/
     '@nuxtjs/google-fonts',
+    // https://github.com/nuxt-community/dayjs-module
+    '@nuxtjs/dayjs',
   ],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
@@ -64,7 +66,8 @@ export default {
       poll: 1000,
     },
   },
-  target: 'static',
+  target: 'server',
+  // target: 'static',
   generate: {
     interval: 2000,
   },
