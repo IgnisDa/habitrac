@@ -1,0 +1,9 @@
+query getAllHabits($usernameSlug: String!) {
+  getAllHabits(usernameSlug: $usernameSlug) {
+    name
+    nameSlug
+    startedOn
+    progress
+    duration
+  }
+}
