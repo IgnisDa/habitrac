@@ -6,4 +6,26 @@ type CreateHabitPayload {
   status: Boolean!
   " any errors that were raised "
   errors: CreateDailyHabitErrorType
+  " the habit that was created "
+  habit: Habit
+}
+
+"""
+This type will be returned when details about a particular habit is requested
+"""
+type HabitDetailsPayload {
+  " the habit itself "
+  habit: Habit
+  " error, if any "
+  error: String
+}
+
+"""
+This type will be returned when a certain habit cycle is tagged or untagged as done
+"""
+type ToggleTagCyclePayload {
+  " whether the operation was successful "
+  status: Boolean!
+  " the error raised, if any "
+  error: String
 }
