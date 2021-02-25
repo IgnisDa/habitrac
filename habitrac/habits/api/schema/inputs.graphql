@@ -17,3 +17,13 @@ input DurationInput {
   " the date-time when the duration ends "
   to: DateTime!
 }
+
+"""
+This input will be used when a client wants to toggle a habit cycle as done or undone
+"""
+input toggleTagCycleInput {
+  " the unique slug of the habit to which the cycle belongs to "
+  nameSlug: String!
+  " the index of the cycle in the `progress` field of the habit, should be 1 indexed "
+  cycleIndex: Int!
+}
