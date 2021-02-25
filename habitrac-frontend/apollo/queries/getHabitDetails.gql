@@ -1,0 +1,11 @@
+query getHabitDetails($nameSlug: String!) {
+  getHabitDetails(nameSlug: $nameSlug) {
+    habit {
+      name
+      startedOn
+      duration
+      progress
+    }
+    error
+  }
+}
