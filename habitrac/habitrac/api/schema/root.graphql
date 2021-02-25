@@ -10,6 +10,8 @@ type Query {
   getUsersList: [User!]
   " get all habits registered by a user "
   getAllHabits(usernameSlug: String!): [Habit!]
+  " get the details of a habit for a particular user "
+  getHabitDetails(nameSlug: String!): HabitDetailsPayload!
 }
 
 """
@@ -23,4 +25,6 @@ type Mutation {
   createUser(data: CreateUserInput!): CreateUserPayload!
   " create a new habit for an authenticated user using the supplied data "
   createDailyHabit(data: CreateHabitInput!): CreateHabitPayload!
+  " toggle a habit cycle as done or not-done "
+  toggleTagCycle(data: toggleTagCycleInput!): ToggleTagCyclePayload!
 }
