@@ -12,9 +12,10 @@
 
 <script>
 import Vue from 'vue'
-import globalMixin from '~/mixin/setNavbarElements.js'
+import navbarMixin from '~/mixin/setNavbarElements.js'
 
-Vue.mixin(globalMixin)
+Vue.mixin(navbarMixin)
+
 export default {
   data: () => ({
     mode: process.env.NODE_ENV,
