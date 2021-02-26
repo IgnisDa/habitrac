@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   purge: [],
   darkMode: 'class', // or 'media' or 'class'
@@ -8,6 +10,9 @@ module.exports = {
     extend: {
       fontFamily: {
         display: ['Josefin Sans', 'sans-serif'],
+      },
+      colors: {
+        lime: colors.lime,
       },
       transitionProperty: {
         width: 'width',
