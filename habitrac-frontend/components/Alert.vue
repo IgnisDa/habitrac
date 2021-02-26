@@ -1,11 +1,13 @@
 <template>
-  <div id="alert--area" class="fixed z-10">
+  <!-- Giving the div a fixed width prevents the last alert from shrinking when we dismiss it.  -->
+  <!-- Remove the `w-64` class, and trigger an alert, and dismiss it, to see what I mean. -->
+  <div id="alert--area" class="fixed z-10 w-64">
     <transition-group name="alert" tag="div">
       <div
         v-for="alert in activeAlertsGetter"
         :id="`alert-${alert.id}`"
         :key="alert.id"
-        class="my-3"
+        class="w-full my-3"
       >
         <div
           v-show="alert.active"
@@ -25,11 +27,10 @@
               {{ alert.messageBody }}
             </div>
           </div>
-          <FontAwesomeIcon
-            class="w-6 h-6 text-black cursor-pointer fill-current hover:text-gray-500"
-            :icon="['fas', 'times']"
-            @click="closeAlert(alert.id)"
-          ></FontAwesomeIcon>
+          <TimesIcon
+            classes="w-6 h-6 text-gray-800 cursor-pointer fill-current hover:text-black"
+            @click.native="closeAlert(alert.id)"
+          ></TimesIcon>
         </div>
       </div>
     </transition-group>
@@ -65,9 +66,9 @@ export default {
 <style lang="scss" scoped>
 .alert-leave-active,
 .alert-enter-active {
-  transform: translateX(-40px);
+  transform: translateX(-70px);
   transition-duration: 1s;
-  transition-property: opacity, transform;
+  transition-property: opacity, transform, background-color;
 }
 
 .alert-leave-active {
