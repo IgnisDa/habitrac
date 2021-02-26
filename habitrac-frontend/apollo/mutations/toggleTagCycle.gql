@@ -1,4 +1,4 @@
-mutation toggleTagCycle($data: toggleTagCycleInput!) {
+mutation toggleTagCycle($data: ToggleTagCycleInput!) {
   toggleTagCycle(data: $data) {
     status
     error
