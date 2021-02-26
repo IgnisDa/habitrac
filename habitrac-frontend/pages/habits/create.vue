@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center min-h-screen">
+  <div class="flex items-center justify-center min-h-screen overflow-x-hidden">
     <div class="w-full dark:bg-gray-800">
       <div
         class="container flex items-center justify-center min-h-screen mx-auto"
@@ -14,7 +14,6 @@
           <div
             class="relative col-start-1 row-end-2 p-5 m-3 transition-colors duration-300 border rounded-md shadow-xl bg-gray-50 sm:m-0"
           >
-            <div class="absolute"></div>
             <div
               class="pb-2 mb-8 text-3xl font-semibold tracking-wider text-center text-blue-500 transition-colors duration-500 border-b-4 border-blue-300 border-dashed sm:text-5xl"
               :class="{ 'text-yellow-400': loading }"
@@ -40,6 +39,7 @@
                   <div class="flex items-center">
                     <input
                       id="habit-name"
+                      ref="name"
                       v-model="data.name"
                       type="text"
                       class="w-full px-1 bg-gray-100 order-0 focus:outline-none"
@@ -80,6 +80,7 @@
                         type="date"
                         class="w-full p-3 bg-gray-100 border duration-input focus:outline-none focus-within:ring-blue-400 focus-within:ring-2"
                         required
+                        :min="data.duration.from"
                       />
                     </div>
                     <div class="w-full px-1 sm:w-1/2">
@@ -95,6 +96,7 @@
                         type="date"
                         class="w-full p-3 bg-gray-100 border duration-input focus:outline-none focus-within:ring-blue-400 focus-within:ring-2"
                         required
+                        :min="data.duration.from"
                       />
                     </div>
                   </div>
@@ -111,6 +113,28 @@
                       </li>
                     </ul>
                   </transition>
+                </div>
+              </div>
+              <div class="mt-2 mb-5 sm:mt-0">
+                <label
+                  for="habit-description"
+                  class="block font-serif text-lg text-black dark:text-gray-100"
+                >
+                  Briefly description of the habit
+                </label>
+                <div
+                  class="relative w-full p-3 my-2 bg-gray-100 border rounded-sm focus-within:ring-2 focus-within:ring-blue-600"
+                >
+                  <div class="flex items-center">
+                    <textarea
+                      id="habit-description"
+                      v-model="data.description"
+                      type="text"
+                      class="w-full px-1 bg-gray-100 order-0 focus:outline-none"
+                      autocomplete="off"
+                      required
+                    ></textarea>
+                  </div>
                 </div>
               </div>
               <button
@@ -133,13 +157,14 @@ import createDailyHabitMutation from '~/apollo/mutations/createDailyHabit.gql'
 
 export default {
   data: () => ({
-    data: { name: '', duration: { from: '', to: '' } },
+    data: { name: '', duration: { from: '', to: '' }, description: '' },
     loading: false,
     errors: { name: null, duration: null },
   }),
   head: () => ({
     title: 'New Habit',
   }),
+
   computed: {
     formErrorsExist() {
       let exist = false
@@ -151,6 +176,10 @@ export default {
       }
       return exist
     },
+  },
+  mounted() {
+    this.$refs.name.focus()
+    this.data.duration.from = this.$dayjs().format('YYYY-MM-DD')
   },
   methods: {
     async handleSubmit() {
