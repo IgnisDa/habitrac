@@ -6,6 +6,8 @@ input CreateHabitInput {
   name: String!
   " the duration of for which the habit will be followed "
   duration: DurationInput!
+  " a brief description og the habit "
+  description: String!
 }
 
 """
