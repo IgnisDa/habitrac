@@ -39,7 +39,7 @@ class Habit(models.Model):
         on_delete=models.CASCADE,
         help_text=_("The user that wants to cultivate this particular habit."),
     )
-    started_on = models.DateTimeField(
+    started_on = models.DateField(
         auto_now_add=True,
         help_text=_("The date and time this particular habit was started."),
     )
