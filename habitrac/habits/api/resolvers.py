@@ -4,6 +4,7 @@ import json
 from ariadne import MutationType, QueryType, convert_kwargs_to_snake_case
 from ariadne_token_auth.decorators import login_required
 from django.contrib.auth import get_user_model
+from django.forms.models import model_to_dict
 from habits import models as habit_models
 from utils.general import get_user
 from utils.handlers.errors import ErrorContainer
@@ -22,6 +23,7 @@ def create_daily_habit(_, info, **data):
     user = info.context.get("request").user
     data = data["data"]
     name = data["name"]
+    description = data["description"]
     duration_from = data["duration"]["from"]
     duration_to = data["duration"]["to"]
     now = datetime.datetime.now() - datetime.timedelta(days=1)
@@ -30,7 +32,7 @@ def create_daily_habit(_, info, **data):
             "duration",
             f"The starting date must be greater than {now.strftime('%m/%d/%Y')}",
         )
-    duration_obj = duration_to - duration_from
+    duration_obj = duration_to - duration_from + datetime.timedelta(days=1)
     duration = (duration_to - duration_from).total_seconds() // (3600 * 24)
     if duration == 0:
         error_container.update_with_error(
@@ -46,7 +48,7 @@ def create_daily_habit(_, info, **data):
         )
     if not error_container:
         habit = habit_models.DailyHabit.objects.create(
-            user=user, name=name, duration=duration_obj
+            user=user, name=name, duration=duration_obj, description=description
         )
         status = True
     return {"status": status, "errors": error_container.get_all_errors(), "habit": habit}
@@ -57,9 +59,12 @@ def create_daily_habit(_, info, **data):
 @login_required
 def get_all_habits(_, info, username_slug, **kwargs):
     qs = CUSTOM_USER_MODEL.objects.get(username_slug=username_slug).dailyhabit_set.all()
+    ret_value = []
     for obj in qs:
+        vars(obj)["is_completed"] = obj.is_completed
         obj.progress = json.dumps(obj.progress)
-    return qs
+        ret_value.append(vars(obj))
+    return ret_value
 
 
 @query.field("getHabitDetails")
@@ -67,14 +72,16 @@ def get_all_habits(_, info, username_slug, **kwargs):
 @login_required
 def get_habit_details(_, info, name_slug, **kwargs):
     error = None
-    habit = None
     user = get_user(info)
+    ret_value = None
     try:
         habit = habit_models.DailyHabit.objects.get(name_slug=name_slug, user=user)
+        vars(habit)["is_completed"] = habit.is_completed
         habit.progress = json.dumps(habit.progress)
+        ret_value = vars(habit)
     except habit_models.DailyHabit.DoesNotExist:
         error = "The habit you requested for does not exist"
-    return {"habit": habit, "error": error}
+    return {"habit": ret_value, "error": error}
 
 
 @mutation.field("toggleTagCycle")
