@@ -32,3 +32,15 @@ export default {
   computed: {},
 }
 </script>
+
+<!-- <div v-for="(value, _, index) in habit.progress" :key="index">
+          <HabitCycleBox
+            :cycle="value"
+            :started-on="habit.startedOn"
+            :index="index"
+            :tooltip-text="parseDate(index).format('dddd, DD MMM YYYY')"
+            @click.native="toggleTagCycle(index)"
+          >
+            {{ parseDate(index).format('DD') }}
+          </HabitCycleBox>
+        </div> -->
