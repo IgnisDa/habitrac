@@ -370,6 +370,20 @@ optional = false
 python-versions = ">=3.6,<4"
 
 [[package]]
+name = "gunicorn"
+version = "20.0.4"
+description = "WSGI HTTP Server for UNIX"
+category = "main"
+optional = false
+python-versions = ">=3.4"
+
+[package.extras]
+eventlet = ["eventlet (>=0.9.7)"]
+gevent = ["gevent (>=0.13)"]
+setproctitle = ["setproctitle"]
+tornado = ["tornado (>=0.2)"]
+
+[[package]]
 name = "httpie"
 version = "2.4.0"
 description = "HTTPie: command-line HTTP client for the API era."
@@ -1373,7 +1387,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "5db4926e0fcf8101b82776d10888550d3efa5ef28f00ab780ec82df909b3596f"
+content-hash = "505e2bb225267b0765503a46a70e295fc8d440b0d50d0b1fbe5236ccf01ec538"
 
 [metadata.files]
 anyio = [
@@ -1597,6 +1611,10 @@ flake8 = [
 graphql-core = [
     {file = "graphql-core-3.0.5.tar.gz", hash = "sha256:51f7dab06b5035515b23984f6fcb677ed909b56c672152699cca32e03624992e"},
     {file = "graphql_core-3.0.5-py3-none-any.whl", hash = "sha256:dfc374d3426677727772d8da9dd010e92d10305ddd9c2f7f0fc388f07cee94c4"},
+]
+gunicorn = [
+    {file = "gunicorn-20.0.4-py2.py3-none-any.whl", hash = "sha256:cd4a810dd51bf497552cf3f863b575dabd73d6ad6a91075b65936b151cbf4f9c"},
+    {file = "gunicorn-20.0.4.tar.gz", hash = "sha256:1904bb2b8a43658807108d59c3f3d56c2b6121a701161de0ddf9ad140073c626"},
 ]
 httpie = [
     {file = "httpie-2.4.0-py3-none-any.whl", hash = "sha256:9b69f611734d8c0f7fffe96d2f9f9e3a2cfed6974a94053a43ca87e21b5ef5c8"},
