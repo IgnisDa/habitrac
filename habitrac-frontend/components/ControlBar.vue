@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import DarkModeIcon from '~/components/DarkModeIcon.vue'
-import LightModeIcon from '~/components/LightModeIcon.vue'
+import DarkModeIcon from '~/components/icons/DarkModeIcon.vue'
+import LightModeIcon from '~/components/icons/LightModeIcon.vue'
 
 export default {
   components: {
