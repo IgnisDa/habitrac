@@ -18,10 +18,14 @@ type Habit {
   nameSlug: String!
   " the user which registered this habit "
   user: User!
+  " a brief description of the habit "
+  description: String!
   " the date and time the habit was started on "
   startedOn: DateTime!
   " the total duration the habit will go on for "
   duration: String!
   " the current progress of how much the habit has been completed "
   progress: String!
+  " whether the habit is completed "
+  isCompleted: Boolean!
 }
