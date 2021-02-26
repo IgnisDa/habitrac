@@ -39,6 +39,9 @@ class Habit(models.Model):
         on_delete=models.CASCADE,
         help_text=_("The user that wants to cultivate this particular habit."),
     )
+    description = models.TextField(
+        help_text=_("A brief description of what the habit is going to be about")
+    )
     started_on = models.DateField(
         auto_now_add=True,
         help_text=_("The date and time this particular habit was started."),
@@ -68,6 +71,7 @@ class Habit(models.Model):
                 fields=["user", "name"], name="unique_habit_name_for_%(class)s"
             )
         ]
+        ordering = ("-started_on",)
 
     @classmethod
     def __get_help_text(cls, field):
@@ -91,6 +95,10 @@ class Habit(models.Model):
     def untag_cycle(self, cycle_number):
         """ Marks the given `cycle_number` as done """
         self.progress[f"cycle-{cycle_number}"] = False
+
+    @property
+    def is_completed(self):
+        return all(self.progress.values())
 
 
 class DailyHabit(Habit):
