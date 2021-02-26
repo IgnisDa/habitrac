@@ -2,6 +2,24 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
+  # construct filepath to vagrant configuration file
+  vagrant_config_file = File.join(ENV['HOME'],'.config', 'vagrant.conf')
+  # System settings for the virtual machine.
+  vm_num_cpus = "2"
+  vm_memory = "2048"
+
+  if File.file?(vagrant_config_file)
+    IO.foreach(vagrant_config_file) do |line|
+      line.chomp!
+      key, value = line.split(nil, 2)
+      case key
+        when /^([#;]|$)/; # ignore comments
+        when "GUEST_CPUS"; vm_num_cpus = value
+        when "GUEST_MEMORY_MB"; vm_memory = value
+      end
+    end
+  end
+
   # Set the base box used to build the image
   config.vm.box = "bento/ubuntu-20.10"
   # Name of the machine that is created
@@ -17,8 +35,8 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/home/vagrant/habitrac"
   # VirtualBox is the default provider, and we specify some specific settings here
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = "2048"
-    vb.cpus = "2"
+    vb.cpus = vm_num_cpus
+    vb.memory = vm_memory
   end
   # This script sets up python3, npm, yarn, postgresql etc.
   config.vm.provision :shell, :path => "tools/Vagrant/bootstrap"
