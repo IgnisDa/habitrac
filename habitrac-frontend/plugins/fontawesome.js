@@ -8,6 +8,7 @@ import {
   faEyeSlash,
   faGuitar,
   faMoon,
+  faCheck,
   faUserPlus,
   faSignInAlt,
   faLightbulb,
@@ -26,6 +27,7 @@ config.autoAddCss = false
 // can add other styles or just individual icons.
 library.add(
   faEyeSlash,
+  faCheck,
   faTimes,
   faUser,
   faCalendar,
