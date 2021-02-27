@@ -79,6 +79,20 @@ class Habit(models.Model):
         """ Returns the help_text for a single `field` """
         return str(cls._meta.get_field(field).help_text)
 
+    def create_cycles(self, cycles):
+        if not self.progress and not self.pk:
+            self.progress = {
+                f"cycle-{cycle_number}": False for cycle_number in range(1, cycles + 1)
+            }
+        else:
+            progress = self.progress
+            new_progress = {}
+            trues = [key for key, value in progress.items() if value]
+            for index in range(1, cycles + 1):
+                key_name = f"cycle-{index}"
+                new_progress[key_name] = key_name in trues
+            self.progress = new_progress
+
     @classmethod
     def get_all_help_text(cls, cycle_name):
         """ Returns the help_text for all the fields for this model """
@@ -111,11 +125,8 @@ class Habit(models.Model):
 
 class DailyHabit(Habit):
     def save(self, *args, **kwargs):
-        if not self.pk:
-            self.progress = {
-                f"cycle-{cycle_number}": False
-                for cycle_number in range(1, self.duration.days + 1)
-            }
+        cycles = self.duration.days
+        super(DailyHabit, self).create_cycles(cycles)
         return super().save(*args, **kwargs)
 
     @classmethod
