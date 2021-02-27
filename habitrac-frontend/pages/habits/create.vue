@@ -76,11 +76,11 @@
                       </label>
                       <input
                         id="duration-from"
-                        v-model="data.duration.from"
+                        v-model="data.dateFrom"
                         type="date"
                         class="w-full p-3 bg-gray-100 border duration-input focus:outline-none focus-within:ring-blue-400 focus-within:ring-2"
                         required
-                        :min="data.duration.from"
+                        :min="data.dateFrom"
                       />
                     </div>
                     <div class="w-full px-1 sm:w-1/2">
@@ -92,11 +92,11 @@
                       </label>
                       <input
                         id="duration-to"
-                        v-model="data.duration.to"
+                        v-model="data.dateTo"
                         type="date"
                         class="w-full p-3 bg-gray-100 border duration-input focus:outline-none focus-within:ring-blue-400 focus-within:ring-2"
                         required
-                        :min="data.duration.from"
+                        :min="data.dateFrom"
                       />
                     </div>
                   </div>
@@ -157,7 +157,7 @@ import createDailyHabitMutation from '~/apollo/mutations/createDailyHabit.gql'
 
 export default {
   data: () => ({
-    data: { name: '', duration: { from: '', to: '' }, description: '' },
+    data: { name: '', dateTo: '', dateFrom: '', description: '' },
     loading: false,
     errors: { name: null, duration: null },
   }),
@@ -179,22 +179,24 @@ export default {
   },
   mounted() {
     this.$refs.name.focus()
-    this.data.duration.from = this.$dayjs().format('YYYY-MM-DD')
+    this.data.dateFrom = this.$dayjs().format('YYYY-MM-DD')
   },
   methods: {
     async handleSubmit() {
       this.errors = { name: null, duration: null }
       this.loading = true
-      const resp = await this.$apollo.mutate({
+      const { data } = await this.$apollo.mutate({
         mutation: createDailyHabitMutation,
         variables: {
           data: this.data,
         },
       })
       this.loading = false
-      if (!resp.data.createDailyHabit.status) {
-        this.errors.duration = resp.data.createDailyHabit.errors.duration
-        this.errors.name = resp.data.createDailyHabit.errors.name
+      if (!data.createDailyHabit.status) {
+        this.errors.duration =
+          data.createDailyHabit.errors.dateTo +
+          data.createDailyHabit.errors.dateFrom
+        this.errors.name = data.createDailyHabit.errors.name
       } else {
         this.$addAlert({
           severity: 'success',
@@ -204,7 +206,7 @@ export default {
         })
         this.$router.push({
           name: 'habits-slug',
-          params: { slug: resp.data.createDailyHabit.habit.nameSlug },
+          params: { slug: data.createDailyHabit.habit.nameSlug },
         })
       }
     },

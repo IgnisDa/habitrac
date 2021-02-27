@@ -78,7 +78,6 @@ export default {
           variables: {
             data: {
               nameSlug: this.$route.params.slug,
-              cycleIndex: this.cycleIndex,
             },
           },
         })
