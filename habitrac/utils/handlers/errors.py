@@ -5,6 +5,9 @@ def check_if_errors_exist(error_dict):
     """This function checks that all the values of the
     `error_dict` dictionary evaluate to `None`. If they don't, it means that
     there exists errors and it returns `True`, otherwise `False`."""
+    if error_dict is None:
+        # there are no errors
+        return False
     return any(value is not None for value in error_dict.values())
 
 
@@ -25,6 +28,8 @@ class ErrorContainer:
         return check_if_errors_exist(self.get_all_errors())
 
     def get_all_errors(self):
+        if all(value is None for value in self.fields.values()):
+            return None
         return self.fields
 
     def update_with_error(self, field_name, error_string):
@@ -36,9 +41,3 @@ class ErrorContainer:
             self.fields[field_name] = [error_string]
         else:
             self.fields[field_name].append(error_string)
-
-
-# error = ErrorContainer("username", "email")
-# error.update_with_error("username", "hello bro")
-# error.update_with_error("email", "wrong email bro")
-# error.update_with_error("email", "wrong email sis")
