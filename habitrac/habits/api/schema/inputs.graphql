@@ -4,20 +4,12 @@ This input will be used when we want to create a new habit.
 input CreateHabitInput {
   " the name of the habit "
   name: String!
-  " the duration of for which the habit will be followed "
-  duration: DurationInput!
+  " the date on which the habit should end"
+  dateTo: Date!
+  " the date on which the habit should start "
+  dateFrom: Date!
   " a brief description og the habit "
   description: String!
-}
-
-"""
-This input will be used to describe dates, from a starting date to a finishing one
-"""
-input DurationInput {
-  " the date-time when the duration starts "
-  from: DateTime!
-  " the date-time when the duration ends "
-  to: DateTime!
 }
 
 """
@@ -26,6 +18,4 @@ This input will be used when a client wants to toggle a habit cycle as done or u
 input ToggleTagCycleInput {
   " the unique slug of the habit to which the cycle belongs to "
   nameSlug: String!
-  " the index of the cycle in the `progress` field of the habit, should be 1 indexed "
-  cycleIndex: Int!
 }

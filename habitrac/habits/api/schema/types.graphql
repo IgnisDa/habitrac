@@ -4,8 +4,10 @@ This type is returned when a habit creation request results in an error
 type CreateDailyHabitErrorType {
   " the errors associated with the name field "
   name: [String!]
-  " the errors associated with the duration field "
-  duration: [String!]
+  " the errors associated with the date_to field "
+  dateTo: [String!]
+  " the errors associated with the date_from field "
+  dateFrom: [String!]
 }
 
 """
@@ -32,10 +34,10 @@ type Habit {
   user: User!
   " a brief description of the habit "
   description: String!
-  " the date and time the habit was started on "
-  startedOn: DateTime!
-  " the total duration the habit will go on for "
-  duration: String!
+  " the date and time the habit was started on (inclusive) "
+  dateFrom: Date!
+  " the date the habit will end (inclusive) "
+  dateTo: Date!
   " the current progress of how much the habit has been completed "
   progress: String!
   " whether all cycles of the habit were marked as done "

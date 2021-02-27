@@ -14,28 +14,26 @@ mutation = MutationType()
 
 
 @mutation.field("createDailyHabit")
+@convert_kwargs_to_snake_case
 @login_required
-def create_daily_habit(_, info, **data):
-    error_container = ErrorContainer("duration", "name")
+def create_daily_habit(_, info, data):
+    error_container = ErrorContainer("date_from", "date_to", "name")
     status = False
     habit = None
     user = get_user(info)
-    data = data["data"]
-    name = data["name"]
-    description = data["description"]
-    duration_from = data["duration"]["from"]
-    duration_to = data["duration"]["to"]
-    now = datetime.datetime.now() - datetime.timedelta(days=1)
-    if duration_from < now:
+    name = data.get("name")
+    description = data.get("description")
+    date_from = data.get("date_from")
+    date_to = data.get("date_to")
+    today = datetime.date.today()
+    if date_from < today:
         error_container.update_with_error(
-            "duration",
-            f"The starting date must be greater than {now.strftime('%m/%d/%Y')}",
+            "date_from",
+            f"The starting date must be greater than {today.strftime('%m/%d/%Y')}",
         )
-    duration_obj = duration_to - duration_from + datetime.timedelta(days=1)
-    duration = (duration_to - duration_from).total_seconds() // (3600 * 24)
-    if duration < 0:
+    if date_to - date_from < datetime.timedelta(days=0):
         error_container.update_with_error(
-            "duration", "The starting date can not be after the ending date"
+            "date_to", "The ending date can not be before the ending date"
         )
     if habit_models.DailyHabit.objects.filter(name__iexact=name, user=user).exists():
         error_container.update_with_error(
@@ -43,7 +41,11 @@ def create_daily_habit(_, info, **data):
         )
     if not error_container:
         habit = habit_models.DailyHabit.objects.create(
-            user=user, name=name, duration=duration_obj, description=description
+            user=user,
+            name=name,
+            date_from=date_from,
+            date_to=date_to,
+            description=description,
         )
         status = True
     return {"status": status, "errors": error_container.get_all_errors(), "habit": habit}
@@ -123,9 +125,9 @@ def toggle_tag_cycle(_, info, data, **kwargs):
     user = get_user(info)
     habit = habit_models.DailyHabit.objects.get(name_slug=data["name_slug"], user=user)
     try:
-        habit.progress[f"cycle-{data['cycle_index']}"] = not habit.progress[
-            f"cycle-{data['cycle_index']}"
-        ]
+        today = f"{datetime.date.today()}"
+        print(today)
+        habit.progress[today] = not habit.progress[today]
         habit.save()
         status = True
     except KeyError:
