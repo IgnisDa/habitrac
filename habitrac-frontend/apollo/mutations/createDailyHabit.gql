@@ -3,7 +3,8 @@ mutation createDailyHabit($data: CreateHabitInput!) {
     status
     errors {
       name
-      duration
+      dateFrom
+      dateTo
     }
     habit {
       nameSlug

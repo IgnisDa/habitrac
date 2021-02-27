@@ -1,11 +1,11 @@
 query getAllHabits($usernameSlug: String!) {
   getAllHabits(usernameSlug: $usernameSlug) {
     name
-    nameSlug
-    startedOn
+    dateFrom
+    dateTo
     progress
-    duration
-    isCompleted
+    description
     isDone
+    isComplete
   }
 }
