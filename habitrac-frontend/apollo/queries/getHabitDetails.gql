@@ -5,6 +5,7 @@ query getHabitDetails($nameSlug: String!) {
       startedOn
       duration
       progress
+      isDone
       isCompleted
     }
     error

@@ -6,5 +6,6 @@ query getAllHabits($usernameSlug: String!) {
     progress
     duration
     isCompleted
+    isDone
   }
 }
