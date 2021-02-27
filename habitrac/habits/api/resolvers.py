@@ -125,11 +125,10 @@ def toggle_tag_cycle(_, info, data, **kwargs):
     user = get_user(info)
     habit = habit_models.DailyHabit.objects.get(name_slug=data["name_slug"], user=user)
     try:
-        today = f"{datetime.date.today()}"
-        print(today)
-        habit.progress[today] = not habit.progress[today]
+        today = data.get("date").strftime("%Y-%m-%d")
+        habit.toggle_day(today)
         habit.save()
         status = True
     except KeyError:
-        error = "Incorrect index specified. Make sure they are 1 indexed."
+        error = "The day you're trying to mark does not fall in this habit's duration."
     return {"status": status, "error": error}

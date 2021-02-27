@@ -25,7 +25,7 @@
           <button
             class="flex items-center p-1 px-2 transition duration-300 transform rounded-lg focus:outline-none hover:scale-110"
             :class="tagged ? 'bg-red-600' : 'bg-lime-600'"
-            @click="toggleTagCycle(cycleIndex)"
+            @click="toggleTagCycle()"
           >
             <transition name="button-icon" mode="out-in">
               <component

@@ -23,11 +23,7 @@
       class="flex flex-col w-full p-3 mx-3 space-y-2 overflow-auto sm:mx-0"
     >
       <div class="flex flex-wrap justify-around my-auto">
-        <HabitCycle
-          :cycle-index="cycleIndex"
-          :tagged="tagged"
-          @clicked="toggleTagCycle()"
-        ></HabitCycle>
+        <HabitCycle :tagged="tagged" @clicked="toggleTagCycle()"></HabitCycle>
       </div>
     </div>
   </div>
@@ -38,7 +34,7 @@ import getHabitDetailsQuery from '~/apollo/queries/getHabitDetails.gql'
 import toggleTagCycleMutation from '~/apollo/mutations/toggleTagCycle.gql'
 
 export default {
-  async asyncData({ app, params, $dayjs, redirect }) {
+  async asyncData({ app, params, $dayjs, redirect, $addAlert }) {
     const apolloClient = app.apolloProvider.defaultClient
     const slug = params.slug
     const { data } = await apolloClient.query({
@@ -51,16 +47,27 @@ export default {
     if (data) {
       const habit = data.getHabitDetails.habit
       const today = $dayjs($dayjs().format('YYYY-MM-DD'))
-      const startedOn = $dayjs(habit.startedOn)
-      const cycleIndex = today.diff(startedOn, 'd') + 1
-      const key = `cycle-${cycleIndex}`
+      const cycle = today.format('YYYY-MM-DD')
+      const dateFrom = $dayjs(habit.dateFrom)
+      if (today.isBefore(dateFrom)) {
+        redirect({
+          name: 'habits-slug-details',
+          params: { slug: params.slug },
+        })
+        $addAlert({
+          severity: 'warning',
+          messageHeading: 'Not started',
+          messageBody: 'The time period for this habit has not started yet',
+          active: true,
+        })
+      }
       if (typeof habit.progress === 'string') {
         habit.progress = JSON.parse(habit.progress)
       }
       const obj = {
         habit,
-        cycleIndex,
-        tagged: habit.progress[key],
+        cycle,
+        tagged: habit.progress[cycle],
       }
       if (habit.isDone) {
         redirect({
@@ -78,6 +85,7 @@ export default {
           variables: {
             data: {
               nameSlug: this.$route.params.slug,
+              date: this.cycle,
             },
           },
         })

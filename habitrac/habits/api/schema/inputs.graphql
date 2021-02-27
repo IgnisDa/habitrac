@@ -18,4 +18,6 @@ This input will be used when a client wants to toggle a habit cycle as done or u
 input ToggleTagCycleInput {
   " the unique slug of the habit to which the cycle belongs to "
   nameSlug: String!
+  " the date which should be toggled "
+  date: Date!
 }
