@@ -30,7 +30,7 @@
             <transition name="button-icon" mode="out-in">
               <component
                 :is="getIcon"
-                classes="text-gray-200 fill-current h-8 w-8 sm:h-12 sm:w-12"
+                classes="text-gray-100 fill-current h-8 w-8 sm:h-12 sm:w-12"
               ></component>
             </transition>
           </button>
