@@ -26,6 +26,7 @@ export default {
     '~/plugins/fontawesome.js',
     '~/plugins/alert.js',
     '~/plugins/authToken.js',
+    { src: '~/plugins/confetti.js', mode: 'client' },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
