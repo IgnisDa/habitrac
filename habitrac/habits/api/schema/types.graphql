@@ -9,6 +9,18 @@ type CreateDailyHabitErrorType {
 }
 
 """
+This type is returned when a habit update request results in an error
+"""
+type UpdateDailyHabitErrorType {
+  " the errors associated with the name field "
+  name: [String!]
+  " the errors associated with the duration field "
+  duration: [String!]
+  " the unique slug used to identify the habit "
+  nameSlug: [String!]
+}
+
+"""
 This is the type returned when the client requests for details about a particular habit
 """
 type Habit {
