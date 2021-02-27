@@ -19,7 +19,7 @@ def create_daily_habit(_, info, **data):
     error_container = ErrorContainer("duration", "name")
     status = False
     habit = None
-    user = info.context.get("request").user
+    user = get_user(info)
     data = data["data"]
     name = data["name"]
     description = data["description"]
@@ -45,6 +45,38 @@ def create_daily_habit(_, info, **data):
         habit = habit_models.DailyHabit.objects.create(
             user=user, name=name, duration=duration_obj, description=description
         )
+        status = True
+    return {"status": status, "errors": error_container.get_all_errors(), "habit": habit}
+
+
+@mutation.field("updateDailyHabit")
+@convert_kwargs_to_snake_case
+@login_required
+def update_daily_habit(_, info, data, name_slug):
+    error_container = ErrorContainer("duration", "name", "name_slug")
+    status = False
+    habit = None
+    name = data.get("name")
+    user = get_user(info)
+    description = data.get("description")
+    duration_to = data.get("duration").get("to")
+    habits = habit_models.DailyHabit.objects.filter(name_slug=name_slug, user=user)
+    if len(habits) > 1:
+        error_container.update_with_error(
+            "name_slug", "There was an error processing your request"
+        )
+    if not habits.exists():
+        error_container.update_with_error(
+            "name_slug", "The habit you requested for does not exist"
+        )
+    if not error_container:
+        habit = habits[0]
+        habit.name = name
+        habit.description = description
+        # duration = (duration_to - habit.started_on).total_seconds() // (3600 * 24)
+        duration_obj = duration_to.date() - habit.started_on + datetime.timedelta(days=1)
+        habit.duration = duration_obj
+        habit.save()
         status = True
     return {"status": status, "errors": error_container.get_all_errors(), "habit": habit}
 
