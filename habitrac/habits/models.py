@@ -1,6 +1,7 @@
 import uuid
-from datetime import date, timedelta
+from datetime import date
 
+from dateutil.rrule import DAILY, rrule
 from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
@@ -21,10 +22,9 @@ def create_name_slug(name):
     return return_val
 
 
-class Habit(models.Model):
-    """An abstract model to track the habit cycle of a person for a certain duration.
-    It is not meant to be used directly, but should be subclassed for various time
-    durations"""
+class DailyHabit(models.Model):
+    """An model to track the daily habit cycle of a person for a certain
+    duration."""
 
     name = models.CharField(
         max_length=200,
@@ -43,73 +43,70 @@ class Habit(models.Model):
     description = models.TextField(
         help_text=_("A brief description of what the habit is going to be about")
     )
-    started_on = models.DateField(
-        auto_now_add=True,
-        help_text=_("The date and time this particular habit was started."),
+    date_from = models.DateField(
+        help_text=_("The date this particular habit was started."),
     )
-    duration = models.DurationField(
-        help_text=_("The number of {0}s you plan to continue this habit for."),
+    date_to = models.DateField(
+        help_text=_("The date this particular habit is supposed to be completed."),
     )
     progress = models.JSONField(
         help_text=_(
-            "The progress of the habit being tracked. Each {0} (corresponding to "
+            "The progress of the habit being tracked. Each `date` (corresponding to "
             "duration) has a truth value whether that the habit was followed that "
-            "{0} or not."
+            "day or not."
         ),
         blank=True,
         null=True,
     )
 
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.name_slug = create_name_slug(self.name)
-        super(Habit, self).save(*args, **kwargs)
-
     class Meta:
-        abstract = True
         constraints = [
             models.UniqueConstraint(
                 fields=["user", "name"], name="unique_habit_name_for_%(class)s"
             )
         ]
-        ordering = ("-started_on",)
+        ordering = ("-date_from",)
+
+    def __str__(self):
+        return f"{self.user.username}'s habit of {self.name}"
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.name_slug = create_name_slug(self.name)
+        self.create_cycles()
+        super(DailyHabit, self).save(*args, **kwargs)
 
     @classmethod
     def __get_help_text(cls, field):
         """ Returns the help_text for a single `field` """
         return str(cls._meta.get_field(field).help_text)
 
-    def create_cycles(self, cycles):
+    def create_cycles(self):
         if not self.progress and not self.pk:
             self.progress = {
-                f"cycle-{cycle_number}": False for cycle_number in range(1, cycles + 1)
+                dt.strftime("%Y-%m-%d"): False
+                for dt in rrule(DAILY, dtstart=self.date_from, until=self.date_to)
             }
         else:
-            progress = self.progress
-            new_progress = {}
-            trues = [key for key, value in progress.items() if value]
-            for index in range(1, cycles + 1):
-                key_name = f"cycle-{index}"
-                new_progress[key_name] = key_name in trues
-            self.progress = new_progress
+            trues = [key for key, value in self.progress.items() if value]
+            self.progress = {
+                dt.strftime("%Y-%m-%d"): dt.strftime("%Y-%m-%d") in trues
+                for dt in rrule(DAILY, dtstart=self.date_from, until=self.date_to)
+            }
 
     @classmethod
-    def get_all_help_text(cls, cycle_name):
+    def get_all_help_text(cls):
         """ Returns the help_text for all the fields for this model """
         fields = cls._meta.fields
         return {
-            field.name: cls.__get_help_text(field.name).format(cycle_name)
+            field.name: cls.__get_help_text(field.name)
             for field in fields
             if field.name not in ["id", "progress"]
         }
 
-    def tag_cycle(self, cycle_number):
-        """ Marks the given `cycle_number` as done """
-        self.progress[f"cycle-{cycle_number}"] = True
-
-    def untag_cycle(self, cycle_number):
-        """ Marks the given `cycle_number` as done """
-        self.progress[f"cycle-{cycle_number}"] = False
+    def toggle_day(self, date):
+        """ Toggles the given `date` as done or not """
+        self.progress[date] = not self.progress[date]
 
     @property
     def is_completed(self):
@@ -119,38 +116,4 @@ class Habit(models.Model):
     @property
     def is_done(self):
         """ Boolean to indicate whether the habit's end date has passed """
-        final_date = self.started_on + self.duration - timedelta(days=1)
-        return date.today() >= final_date
-
-
-class DailyHabit(Habit):
-    def save(self, *args, **kwargs):
-        cycles = self.duration.days
-        super(DailyHabit, self).create_cycles(cycles)
-        return super().save(*args, **kwargs)
-
-    @classmethod
-    def get_all_help_text(cls):
-        return super(DailyHabit, cls).get_all_help_text("day")
-
-    def __str__(self):
-        return f"{self.user} daily habit of {self.name}"
-
-
-class HourlyHabit(Habit):
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.progress = {
-                f"cycle-{cycle_number}": False
-                for cycle_number in range(
-                    1, int(self.duration.total_seconds() / 3600) + 1
-                )
-            }
-        return super().save(*args, **kwargs)
-
-    @classmethod
-    def get_all_help_text(cls):
-        return super(HourlyHabit, cls).get_all_help_text("hour")
-
-    def __str__(self):
-        return f"{self.user} hourly habit of {self.name}"
+        return date.today() >= self.date_to
