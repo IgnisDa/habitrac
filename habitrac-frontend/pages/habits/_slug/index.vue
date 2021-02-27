@@ -46,28 +46,28 @@ export default {
       variables: {
         nameSlug: slug,
       },
+      fetchPolicy: 'network-only',
     })
     if (data) {
       const habit = data.getHabitDetails.habit
-      const today = $dayjs().add(1, 'd')
+      const today = $dayjs($dayjs().format('YYYY-MM-DD'))
       const startedOn = $dayjs(habit.startedOn)
-      const cycleIndex = today.diff(startedOn, 'd')
+      const cycleIndex = today.diff(startedOn, 'd') + 1
       const key = `cycle-${cycleIndex}`
+      if (typeof habit.progress === 'string') {
+        habit.progress = JSON.parse(habit.progress)
+      }
       const obj = {
         habit,
         cycleIndex,
         tagged: habit.progress[key],
-      }
-      if (typeof obj.habit.progress === 'string') {
-        obj.habit.progress = JSON.parse(obj.habit.progress)
       }
       if (habit.isDone) {
         redirect({
           name: 'habits-slug-details',
           params: { slug: params.slug },
         })
-      }
-      return obj
+      } else return obj
     }
   },
   methods: {
