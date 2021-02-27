@@ -1,0 +1,13 @@
+mutation updateDailyHabit($data: CreateHabitInput!, $nameSlug: String!) {
+  updateDailyHabit(data: $data, nameSlug: $nameSlug) {
+    status
+    errors {
+      name
+      duration
+      nameSlug
+    }
+    habit {
+      nameSlug
+    }
+  }
+}
