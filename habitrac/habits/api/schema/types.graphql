@@ -26,6 +26,8 @@ type Habit {
   duration: String!
   " the current progress of how much the habit has been completed "
   progress: String!
-  " whether the habit is completed "
+  " whether all cycles of the habit were marked as done "
   isCompleted: Boolean!
+  " whether the final date of the habit has passed "
+  isDone: Boolean!
 }
