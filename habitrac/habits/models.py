@@ -1,4 +1,5 @@
 import uuid
+from datetime import date, timedelta
 
 from django.conf import settings
 from django.db import models
@@ -98,7 +99,14 @@ class Habit(models.Model):
 
     @property
     def is_completed(self):
+        """ Boolean to indicate if all the cycles were completed """
         return all(self.progress.values())
+
+    @property
+    def is_done(self):
+        """ Boolean to indicate whether the habit's end date has passed """
+        final_date = self.started_on + self.duration - timedelta(days=1)
+        return date.today() >= final_date
 
 
 class DailyHabit(Habit):
