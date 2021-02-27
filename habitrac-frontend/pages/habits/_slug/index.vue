@@ -1,8 +1,26 @@
 <template>
-  <div class="flex items-center justify-center h-screen">
+  <div class="flex flex-col items-center justify-center h-screen space-y-8">
+    <div
+      class="px-5 py-2 font-serif text-3xl font-light border-2 border-red-500 rounded-md sm:text-5xl md:text-7xl"
+    >
+      {{ habit.name }}
+    </div>
+    <NuxtLink
+      :to="{
+        name: 'habits-slug-details',
+        params: { slug: $route.params.slug },
+      }"
+      class="relative flex items-center justify-center px-3 py-2 space-x-2 bg-blue-400 border border-red-500 rounded-md hover:bg-blue-300"
+    >
+      <FontAwesomeIcon
+        class="w-6 h-6 sm:w-8 sm:h-8"
+        :icon="['fas', 'info-circle']"
+      ></FontAwesomeIcon>
+      <div class="font-mono text-lg italic sm:text-xl md:text-3xl">Details</div>
+    </NuxtLink>
     <div
       v-if="habit"
-      class="flex flex-col w-full p-3 mx-3 space-y-2 overflow-auto sm:w-4/5 h-4/6 sm:h-5/6 sm:mx-0"
+      class="flex flex-col w-full p-3 mx-3 space-y-2 overflow-auto sm:mx-0"
     >
       <div class="flex flex-wrap justify-around my-auto">
         <HabitCycle
@@ -18,10 +36,9 @@
 <script>
 import getHabitDetailsQuery from '~/apollo/queries/getHabitDetails.gql'
 import toggleTagCycleMutation from '~/apollo/mutations/toggleTagCycle.gql'
-const isToday = require('dayjs/plugin/isToday')
 
 export default {
-  async asyncData({ app, params, $dayjs }) {
+  async asyncData({ app, params, $dayjs, redirect }) {
     const apolloClient = app.apolloProvider.defaultClient
     const slug = params.slug
     const { data } = await apolloClient.query({
@@ -32,7 +49,6 @@ export default {
     })
     if (data) {
       const habit = data.getHabitDetails.habit
-      $dayjs.extend(isToday)
       const today = $dayjs().add(1, 'd')
       const startedOn = $dayjs(habit.startedOn)
       const cycleIndex = today.diff(startedOn, 'd')
@@ -44,6 +60,12 @@ export default {
       }
       if (typeof obj.habit.progress === 'string') {
         obj.habit.progress = JSON.parse(obj.habit.progress)
+      }
+      if (habit.isDone) {
+        redirect({
+          name: 'habits-slug-details',
+          params: { slug: params.slug },
+        })
       }
       return obj
     }
@@ -76,3 +98,10 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+a::after {
+  content: '';
+  @apply w-0.5 bg-red-500 h-8 absolute -top-8;
+}
+</style>
