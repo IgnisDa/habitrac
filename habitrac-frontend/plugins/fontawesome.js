@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   faUserGraduate,
   faSpinner,
+  faInfoCircle,
   faEye,
   faEyeSlash,
   faGuitar,
@@ -27,6 +28,7 @@ config.autoAddCss = false
 // can add other styles or just individual icons.
 library.add(
   faEyeSlash,
+  faInfoCircle,
   faCheck,
   faTimes,
   faUser,
