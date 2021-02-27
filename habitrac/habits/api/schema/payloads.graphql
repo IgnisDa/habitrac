@@ -21,6 +21,18 @@ type HabitDetailsPayload {
 }
 
 """
+This type will be returned when a habit is created
+"""
+type UpdateHabitPayload {
+  " whether the mutation was successful "
+  status: Boolean!
+  " any errors that were raised "
+  errors: UpdateDailyHabitErrorType
+  " the habit that was updated "
+  habit: Habit
+}
+
+"""
 This type will be returned when a certain habit cycle is tagged or untagged as done
 """
 type ToggleTagCyclePayload {
