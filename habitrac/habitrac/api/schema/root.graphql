@@ -27,4 +27,9 @@ type Mutation {
   createDailyHabit(data: CreateHabitInput!): CreateHabitPayload!
   " toggle a habit cycle as done or not-done "
   toggleTagCycle(data: ToggleTagCycleInput!): ToggleTagCyclePayload!
+  " update a daily habit for the authenticated user using the supplied data "
+  updateDailyHabit(
+    data: CreateHabitInput!
+    nameSlug: String!
+  ): UpdateHabitPayload!
 }
