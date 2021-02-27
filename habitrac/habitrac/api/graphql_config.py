@@ -2,11 +2,10 @@ import glob
 
 import ariadne
 from accounts.api import resolvers as accounts_resolvers
+from ariadne.contrib.django.scalars import date_scalar, datetime_scalar
 from ariadne.contrib.django.views import GraphQLView
 from django.conf import settings
 from habits.api import resolvers as habits_resolvers
-
-from . import resolvers as root_resolvers
 
 
 class HabitracGraphQLView(GraphQLView):
@@ -20,12 +19,13 @@ type_defs = [
 type_defs.extend(accounts_resolvers.auth_type_definitions)
 
 resolvers = [
-    root_resolvers.datetime_scalar,
     habits_resolvers.query,
     habits_resolvers.mutation,
     accounts_resolvers.auth_mutation,
     accounts_resolvers.accounts_query,
     accounts_resolvers.accounts_mutation,
+    date_scalar,
+    datetime_scalar,
 ]
 
 schema = ariadne.make_executable_schema(

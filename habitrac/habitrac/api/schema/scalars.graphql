@@ -1,4 +1,9 @@
 """
-A custom type to define a date-time
+A custom type to define a date time
 """
 scalar DateTime
+
+"""
+A custom type to define a date
+"""
+scalar Date
