@@ -4,7 +4,6 @@ import json
 from ariadne import MutationType, QueryType, convert_kwargs_to_snake_case
 from ariadne_token_auth.decorators import login_required
 from django.contrib.auth import get_user_model
-from django.forms.models import model_to_dict
 from habits import models as habit_models
 from utils.general import get_user
 from utils.handlers.errors import ErrorContainer
@@ -34,11 +33,7 @@ def create_daily_habit(_, info, **data):
         )
     duration_obj = duration_to - duration_from + datetime.timedelta(days=1)
     duration = (duration_to - duration_from).total_seconds() // (3600 * 24)
-    if duration == 0:
-        error_container.update_with_error(
-            "duration", "The starting date and the ending date can not be same"
-        )
-    elif duration < 0:
+    if duration < 0:
         error_container.update_with_error(
             "duration", "The starting date can not be after the ending date"
         )
@@ -62,6 +57,7 @@ def get_all_habits(_, info, username_slug, **kwargs):
     ret_value = []
     for obj in qs:
         vars(obj)["is_completed"] = obj.is_completed
+        vars(obj)["is_done"] = obj.is_done
         obj.progress = json.dumps(obj.progress)
         ret_value.append(vars(obj))
     return ret_value
@@ -77,6 +73,8 @@ def get_habit_details(_, info, name_slug, **kwargs):
     try:
         habit = habit_models.DailyHabit.objects.get(name_slug=name_slug, user=user)
         vars(habit)["is_completed"] = habit.is_completed
+        vars(habit)["is_done"] = habit.is_done
+        habit.is_done
         habit.progress = json.dumps(habit.progress)
         ret_value = vars(habit)
     except habit_models.DailyHabit.DoesNotExist:
