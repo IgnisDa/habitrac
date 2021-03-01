@@ -5,14 +5,16 @@ module.exports = {
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     debugScreens: {
-      position: ['right', 'top'],
+      position: ['left', 'top'],
     },
     extend: {
       fontFamily: {
         display: ['Josefin Sans', 'sans-serif'],
+        handwriting: ['Sacramento', 'cursive'],
       },
       colors: {
         lime: colors.lime,
+        'true-gray': colors.trueGray,
       },
       transitionProperty: {
         width: 'width',
@@ -20,7 +22,10 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      space: ['hover'],
+      animation: ['hover'],
+    },
   },
   plugins: [require('tailwindcss-debug-screens')],
 }
