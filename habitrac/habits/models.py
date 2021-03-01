@@ -117,3 +117,15 @@ class DailyHabit(models.Model):
     def is_done(self):
         """ Boolean to indicate whether the habit's end date has passed """
         return date.today() >= self.date_to
+
+    def generate_report(self):
+        total = len(self.progress)
+        complete = len([value for value in self.progress.values() if value])
+        incomplete = total - complete
+        completion_percentage = round((complete / total) * 100, 2)
+        return {
+            "complete": complete,
+            "incomplete": incomplete,
+            "total": total,
+            "completion_percentage": completion_percentage,
+        }
