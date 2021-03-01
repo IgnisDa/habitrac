@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center justify-center min-h-screen overflow-x-hidden">
-    <div class="w-full dark:bg-gray-800">
+    <div class="w-full">
       <div
         class="container flex items-center justify-center min-h-screen mx-auto"
       >
@@ -24,7 +24,7 @@
               <div class="mt-2 mb-5 sm:mt-0">
                 <label
                   for="username"
-                  class="block font-serif text-lg text-black dark:text-gray-100"
+                  class="block font-serif text-lg text-black"
                 >
                   What's the habit about?
                 </label>
@@ -70,7 +70,7 @@
                     <div class="w-full px-1 sm:w-1/2">
                       <label
                         for="duration-from"
-                        class="block font-serif text-lg text-black dark:text-gray-100"
+                        class="block font-serif text-lg text-black"
                       >
                         From
                       </label>
@@ -86,7 +86,7 @@
                     <div class="w-full px-1 sm:w-1/2">
                       <label
                         for="duration-to"
-                        class="block font-serif text-lg text-black dark:text-gray-100"
+                        class="block font-serif text-lg text-black"
                       >
                         To
                       </label>
@@ -118,19 +118,19 @@
               <div class="mt-2 mb-5 sm:mt-0">
                 <label
                   for="habit-description"
-                  class="block font-serif text-lg text-black dark:text-gray-100"
+                  class="block font-serif text-lg text-black"
                 >
                   Briefly description of the habit
                 </label>
                 <div
-                  class="relative w-full p-3 my-2 bg-gray-100 border rounded-sm focus-within:ring-2 focus-within:ring-blue-600"
+                  class="relative w-full p-1 my-2 bg-gray-100 border rounded-sm focus-within:ring-2 focus-within:ring-blue-600"
                 >
                   <div class="flex items-center">
                     <textarea
                       id="habit-description"
                       v-model="data.description"
                       type="text"
-                      class="w-full px-1 bg-gray-100 order-0 focus:outline-none"
+                      class="w-full h-20 px-1 bg-gray-100 resize-none focus:outline-none"
                       autocomplete="off"
                       required
                     ></textarea>

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full dark:bg-gray-800">
+  <div class="w-full">
     <div
       class="container flex items-center justify-center min-h-screen mx-auto"
     >
@@ -11,7 +11,7 @@
           ></div>
         </div>
         <div
-          class="relative col-start-1 row-end-2 p-5 m-3 transition-colors duration-300 border rounded-md shadow-xl bg-gray-50 sm:m-0"
+          class="relative col-start-1 row-end-2 p-5 m-3 transition-colors duration-300 bg-gray-900 rounded-md shadow-2xl sm:m-0"
         >
           <div
             class="pb-2 mb-8 text-3xl font-semibold tracking-wider text-center text-blue-500 transition-colors duration-500 border-b-4 border-blue-300 border-dashed sm:text-5xl"
@@ -23,7 +23,7 @@
             <div class="mt-2 mb-5 sm:mt-0">
               <label
                 for="identifier"
-                class="block font-serif text-lg text-black dark:text-gray-100"
+                class="block font-serif text-lg text-gray-100"
               >
                 Username
               </label>
@@ -63,7 +63,7 @@
             <div class="my-5">
               <label
                 for="password"
-                class="block font-serif text-lg text-black dark:text-gray-100"
+                class="block font-serif text-lg text-gray-100"
               >
                 Password
               </label>
@@ -105,7 +105,7 @@
               class="w-full p-3 text-lg font-semibold text-center text-indigo-700 uppercase bg-gray-200 rounded-sm focus:outline-none loading--button-border-red"
               :class="{ 'loading--button': loading }"
             >
-              <span>Login</span>
+              <span>Submit</span>
             </button>
           </form>
         </div>
@@ -138,14 +138,10 @@ export default {
   }),
   computed: {
     formErrorsExist() {
-      let exist = false
-      for (const error in this.errors) {
-        if (this.errors[error]) {
-          exist = true
-          break
-        }
+      if (this.errors.identifier !== null) {
+        return true
       }
-      return exist
+      return false
     },
   },
   mounted() {
@@ -166,7 +162,7 @@ export default {
         this.fieldIcons[fieldName] === 'eye-slash' ? 'eye' : 'eye-slash'
     },
     async onSubmit() {
-      this.errors = { username: null, password: null }
+      this.errors = { identifier: null, password: null }
       // I initially thought that we do not need `async`-`await` here, but then it didn't
       // work so I added them and it suddenly started working. Reason: We have to first
       // await the response of the `fetchTokenAuthAction` and then, when the authentication
