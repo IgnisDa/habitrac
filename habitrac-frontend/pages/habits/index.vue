@@ -1,24 +1,24 @@
 <template>
   <div class="flex items-center justify-center h-screen">
-    <ol
-      class="flex flex-col w-full p-3 mx-3 space-y-2 overflow-auto list-decimal list-inside bg-gray-200 divide-y divide-purple-200 rounded-lg shadow-lg sm:w-3/5 h-4/6 sm:h-5/6 sm:mx-0"
-    >
-      <div v-if="loading">Its still loading</div>
-      <li v-for="(habit, index) in habits" v-else :key="index">
-        <NuxtLink
-          :to="{
-            name: 'habits-slug',
-            params: { slug: habit.nameSlug },
-          }"
-        >
-          <span
-            class="text-blue-800 hover:text-blue-700 hover:underline sm:text-lg"
-          >
-            {{ habit.name }}
-          </span>
-        </NuxtLink>
-      </li>
-    </ol>
+    <div class="w-full mx-3 sm:w-4/5 md:w-1/3">
+      <CodeWindow>
+        <template #body>
+          <div v-if="loading">Its still loading</div>
+          <div v-for="(habit, index) in habits" :key="index">
+            <NuxtLink
+              :to="{
+                name: 'habits-slug',
+                params: { slug: habit.nameSlug },
+              }"
+            >
+              <span class="text-true-gray-200 hover:underline sm:text-lg">
+                {{ habit.name }}
+              </span>
+            </NuxtLink>
+          </div>
+        </template>
+      </CodeWindow>
+    </div>
   </div>
 </template>
 
