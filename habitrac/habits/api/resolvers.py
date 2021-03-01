@@ -132,3 +132,12 @@ def toggle_tag_cycle(_, info, data, **kwargs):
     except KeyError:
         error = "The day you're trying to mark does not fall in this habit's duration."
     return {"status": status, "error": error}
+
+
+@query.field("getHabitReport")
+@convert_kwargs_to_snake_case
+@login_required
+def get_habit_report(_, info, name_slug, **kwargs):
+    user = get_user(info)
+    habit = habit_models.DailyHabit.objects.get(name_slug=name_slug, user=user)
+    return habit.generate_report()
