@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center justify-center min-h-screen">
-    <div class="text-3xl tracking-wide text-center sm:text-5xl">
+    <div class="text-3xl tracking-wide text-center text-green-300 sm:text-5xl">
       You have been logged out!
     </div>
   </div>
