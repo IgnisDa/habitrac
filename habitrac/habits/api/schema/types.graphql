@@ -45,3 +45,17 @@ type Habit {
   " whether the final date of the habit has passed "
   isDone: Boolean!
 }
+
+"""
+This is the type returned when the client requests a report about a particular habit
+"""
+type HabitReport {
+  " the number of cycles when the habit was marked as done "
+  complete: Int!
+  " the number of cycles when the habit was not marked as done "
+  incomplete: Int!
+  " the total number of cycles that this habit spanned "
+  total: Int!
+  " the percentage of days that the habit was completed successfully "
+  completionPercentage: Float!
+}
