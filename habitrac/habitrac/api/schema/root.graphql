@@ -12,6 +12,8 @@ type Query {
   getAllHabits(usernameSlug: String!): [Habit!]
   " get the details of a habit for a particular user "
   getHabitDetails(nameSlug: String!): HabitDetailsPayload!
+  " get the report about a particular habit "
+  getHabitReport(nameSlug: String!): HabitReport!
 }
 
 """
