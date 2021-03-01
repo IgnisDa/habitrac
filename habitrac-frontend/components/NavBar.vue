@@ -1,13 +1,15 @@
 <template>
   <div class="fixed inset-x-0 bottom-0 w-full">
-    <div class="flex justify-around w-full mx-auto sm:w-9/12 md:w-7/12">
+    <div
+      class="flex justify-around w-full mx-auto text-gray-200 sm:w-9/12 md:w-7/12"
+    >
       <div v-for="(link, index) in elements" :key="index">
         <NuxtLink
           :to="{ name: link.pathName }"
           :class="{ 'website-link': routeInactive(link.pathName) }"
         >
           <div
-            class="px-3 pt-1 font-mono text-sm uppercase sm:text-lg sm:tracking-widest"
+            class="px-3 pt-1 font-mono text-sm tracking-tight uppercase sm:text-lg sm:tracking-widest"
           >
             {{ link.label }}
           </div>
