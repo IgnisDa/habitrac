@@ -1,0 +1,8 @@
+query getHabitReport($nameSlug: String!) {
+  getHabitReport(nameSlug: $nameSlug) {
+    complete
+    incomplete
+    total
+    completionPercentage
+  }
+}
