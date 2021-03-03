@@ -4,5 +4,6 @@ query getHabitReport($nameSlug: String!) {
     incomplete
     total
     completionPercentage
+    dateTo
   }
 }
