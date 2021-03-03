@@ -4,17 +4,30 @@
       <CodeWindow>
         <template #body>
           <div v-if="loading">Its still loading</div>
-          <div v-for="(habit, index) in habits" :key="index">
-            <NuxtLink
-              :to="{
-                name: 'habits-slug',
-                params: { slug: habit.nameSlug },
-              }"
-            >
-              <span class="text-true-gray-200 hover:underline sm:text-lg">
-                {{ habit.name }}
-              </span>
-            </NuxtLink>
+          <div>
+            <div v-if="habits.length > 0">
+              <div v-for="(habit, index) in habits" :key="index">
+                <NuxtLink
+                  :to="{
+                    name: 'habits-slug',
+                    params: { slug: habit.nameSlug },
+                  }"
+                >
+                  <span class="text-true-gray-200 hover:underline sm:text-lg">
+                    {{ habit.name }}
+                  </span>
+                </NuxtLink>
+              </div>
+            </div>
+            <div v-else class="text-center">
+              You have not created any habits to track. Create one
+              <NuxtLink
+                :to="{ name: 'habits-create' }"
+                class="text-blue-600 hover:underline"
+              >
+                here</NuxtLink
+              >.
+            </div>
           </div>
         </template>
       </CodeWindow>
