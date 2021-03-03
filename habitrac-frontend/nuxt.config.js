@@ -79,6 +79,9 @@ export default {
     authenticationType: 'Token',
   },
   pwa: {
+    icon: {
+      fileName: 'icon.png',
+    },
     manifest: {
       name: 'Habitrac',
       short_name: 'Habitrac',
