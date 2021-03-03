@@ -15,7 +15,7 @@ export default {
           'A simple webapp to help you track your habits and keep you responsible for your actions',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
