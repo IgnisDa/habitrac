@@ -5,7 +5,7 @@ module.exports = {
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     debugScreens: {
-      position: ['left', 'top'],
+      position: ['left', 'bottom'],
     },
     extend: {
       fontFamily: {
