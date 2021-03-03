@@ -1,0 +1,1 @@
+web: gunicorn habitrac.wsgi --log-file -
