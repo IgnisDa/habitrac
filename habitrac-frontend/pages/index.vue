@@ -139,13 +139,17 @@ export default {
       this.$confetti.stop()
     },
     getStarted() {
-      this.$addAlert({
-        severity: 'warning',
-        messageHeading: 'Getting started',
-        messageBody: 'Once logged in, click on START A HABIT',
-        active: true,
-      })
-      this.$router.push({ name: 'register' })
+      if (this.$verifyAuthTokenExists()) {
+        this.$router.push({ name: 'habits-create' })
+      } else {
+        this.$addAlert({
+          severity: 'warning',
+          messageHeading: 'Getting started',
+          messageBody: 'Once logged in, click on START A HABIT',
+          active: true,
+        })
+        this.$router.push({ name: 'register' })
+      }
     },
     changeSlide(number) {
       if (number === 1) {
