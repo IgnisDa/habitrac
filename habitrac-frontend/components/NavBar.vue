@@ -48,7 +48,7 @@ export default {
 }
 
 .nuxt-link-exact-active::after {
-  @apply bg-purple-700;
+  @apply bg-yellow-300;
 }
 
 .website-link::after {
