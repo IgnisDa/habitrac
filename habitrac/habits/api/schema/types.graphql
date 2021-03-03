@@ -58,4 +58,6 @@ type HabitReport {
   total: Int!
   " the percentage of days that the habit was completed successfully "
   completionPercentage: Float!
+  " the last date of this habit "
+  dateTo: Date!
 }
