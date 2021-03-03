@@ -3,6 +3,7 @@ from ariadne_token_auth.api import resolvers
 from ariadne_token_auth.decorators import login_required
 from django.contrib.auth import get_user_model, password_validation
 from django.core.exceptions import ValidationError
+from utils.general import get_user
 from utils.handlers.errors import ErrorContainer
 
 CUSTOM_USER = get_user_model()
@@ -65,6 +66,11 @@ def create_user(*_, data, **kwargs):
 
 @accounts_query.field("getUsersList")
 def get_users_list(self, info, *args, **kwargs):
-    # qs = CUSTOM_USER.objects.get(username="IgnisDa").dailyhabit_set.all()
-    # print(qs)
     return CUSTOM_USER.objects.values("username", "username_slug")
+
+
+@accounts_query.field("getUserReport")
+@login_required
+def get_user_report(self, info, *args, **kwargs):
+    user = get_user(info)
+    return user.get_report()
