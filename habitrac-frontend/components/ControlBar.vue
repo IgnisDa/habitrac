@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-0 right-0 m-3">
+  <div class="fixed bottom-0 right-0 m-3">
     <div class="flex justify-around w-full mx-auto lg:w-10/12 xl:w-8/12">
       <a href="//github.com/IgnisDa/habitrac" target="blank">
         <FontAwesomeIcon
