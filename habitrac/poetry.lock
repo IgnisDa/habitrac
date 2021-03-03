@@ -51,7 +51,7 @@ test = ["coverage", "flake8", "pexpect", "wheel"]
 name = "argon2-cffi"
 version = "20.1.0"
 description = "The secure Argon2 password hashing algorithm."
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -206,7 +206,7 @@ python-versions = "*"
 name = "cffi"
 version = "1.14.5"
 description = "Foreign Function Interface for Python calling C code."
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -301,14 +301,15 @@ python-versions = "*"
 
 [[package]]
 name = "django"
-version = "3.1"
+version = "3.1.7"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 category = "main"
 optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
-asgiref = ">=3.2.10,<3.3.0"
+argon2-cffi = {version = ">=16.1.0", optional = true, markers = "extra == \"argon2\""}
+asgiref = ">=3.2.10,<4"
 pytz = "*"
 sqlparse = ">=0.2.2"
 
@@ -976,7 +977,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 name = "pycparser"
 version = "2.20"
 description = "C parser in Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
@@ -1395,7 +1396,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "f18958363c0784bcfbcb79d84ad433621db33ab8d9c1c38859c9a3ece305d7fd"
+content-hash = "742238f238866ef19aa4017f6cc6166bcc2309e14a71055d29f101009c1f5648"
 
 [metadata.files]
 anyio = [
@@ -1597,8 +1598,8 @@ dj-database-url = [
     {file = "dj_database_url-0.5.0-py2.py3-none-any.whl", hash = "sha256:851785365761ebe4994a921b433062309eb882fedd318e1b0fcecc607ed02da9"},
 ]
 django = [
-    {file = "Django-3.1-py3-none-any.whl", hash = "sha256:1a63f5bb6ff4d7c42f62a519edc2adbb37f9b78068a5a862beff858b68e3dc8b"},
-    {file = "Django-3.1.tar.gz", hash = "sha256:2d390268a13c655c97e0e2ede9d117007996db692c1bb93eabebd4fb7ea7012b"},
+    {file = "Django-3.1.7-py3-none-any.whl", hash = "sha256:baf099db36ad31f970775d0be5587cc58a6256a6771a44eb795b554d45f211b8"},
+    {file = "Django-3.1.7.tar.gz", hash = "sha256:32ce792ee9b6a0cbbec340123e229ac9f765dff8c2a4ae9247a14b2ba3a365a7"},
 ]
 django-cors-headers = [
     {file = "django-cors-headers-3.7.0.tar.gz", hash = "sha256:96069c4aaacace786a34ee7894ff680780ec2644e4268b31181044410fecd12e"},
