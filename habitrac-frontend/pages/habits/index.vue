@@ -3,8 +3,8 @@
     <div class="w-full mx-3 sm:w-4/5 md:w-1/3">
       <CodeWindow>
         <template #body>
-          <div v-if="loading">Its still loading</div>
-          <div>
+          <div v-if="loading">Loading...</div>
+          <div v-else>
             <div v-if="habits.length > 0">
               <div v-for="(habit, index) in habits" :key="index">
                 <NuxtLink
