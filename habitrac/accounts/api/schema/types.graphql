@@ -17,3 +17,15 @@ type User {
   " the unique slug of the user "
   usernameSlug: String!
 }
+
+"""
+This is the type returned when details about a particular are requested
+"""
+type UserReport {
+  " the total number of habits the user has created "
+  numberOfHabits: Int!
+  " the total number of habits whose duration have ended "
+  completedHabits: Int!
+  " the total number of habits whose duration have ended as well as all cycles were tagged successfully "
+  doneHabits: Int!
+}
