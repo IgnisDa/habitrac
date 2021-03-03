@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center justify-center min-h-screen overflow-x-hidden">
-    <div class="w-full dark:bg-gray-800">
+    <div class="w-full">
       <div
         class="container flex items-center justify-center min-h-screen mx-auto"
       >
@@ -24,7 +24,7 @@
               <div class="mt-2 mb-5 sm:mt-0">
                 <label
                   for="username"
-                  class="block font-serif text-lg text-black dark:text-gray-100"
+                  class="block font-serif text-lg text-black"
                 >
                   What's the habit about?
                 </label>
@@ -70,34 +70,34 @@
                     <div class="w-full px-1 sm:w-1/2">
                       <label
                         for="duration-from"
-                        class="block font-serif text-lg text-black dark:text-gray-100"
+                        class="block font-serif text-lg text-black"
                       >
                         From
                       </label>
                       <input
                         id="duration-from"
-                        v-model="data.duration.from"
+                        v-model="data.dateFrom"
                         type="date"
                         class="w-full p-3 bg-gray-100 border duration-input focus:outline-none focus-within:ring-blue-400 focus-within:ring-2"
                         required
-                        :min="data.duration.from"
+                        :min="data.dateFrom"
                         disabled
                       />
                     </div>
                     <div class="w-full px-1 sm:w-1/2">
                       <label
                         for="duration-to"
-                        class="block font-serif text-lg text-black dark:text-gray-100"
+                        class="block font-serif text-lg text-black"
                       >
                         To
                       </label>
                       <input
                         id="duration-to"
-                        v-model="data.duration.to"
+                        v-model="data.dateTo"
                         type="date"
                         class="w-full p-3 bg-gray-100 border duration-input focus:outline-none focus-within:ring-blue-400 focus-within:ring-2"
                         required
-                        :min="data.duration.from"
+                        :min="data.dateFrom"
                       />
                     </div>
                   </div>
@@ -119,7 +119,7 @@
               <div class="mt-2 mb-5 sm:mt-0">
                 <label
                   for="habit-description"
-                  class="block font-serif text-lg text-black dark:text-gray-100"
+                  class="block font-serif text-lg text-black"
                 >
                   Briefly description of the habit
                 </label>
@@ -179,10 +179,8 @@ export default {
         data: {
           name: habit.name,
           description: habit.description,
-          duration: {
-            from: startedOn.format('YYYY-MM-DD'),
-            to: startedOn.add(count, 'd').format('YYYY-MM-DD'),
-          },
+          dateFrom: startedOn.format('YYYY-MM-DD'),
+          dateTo: startedOn.add(count, 'd').format('YYYY-MM-DD'),
         },
       }
       return obj
