@@ -16,13 +16,14 @@
         >
           Track your habits elegantly
         </div>
-        <div class="mt-2 sm:mt-4 md:mt-6">
-          <NuxtLink
+        <div class="mt-4 sm:mt-6 md:mt-8">
+          <button
             :to="{ name: 'login' }"
             class="px-3 py-2 text-lg font-semibold text-black uppercase rounded-md shadow-lg hover:underline sm:text-2xl bg-lime-600 hover:bg-lime-500"
+            @click="getStarted()"
           >
             Get Started
-          </NuxtLink>
+          </button>
         </div>
       </div>
       <div class="relative w-full mb-32 overflow-hidden sm:mb-0 sm:w-1/2">
@@ -136,6 +137,15 @@ export default {
     },
     stopConfetti() {
       this.$confetti.stop()
+    },
+    getStarted() {
+      this.$addAlert({
+        severity: 'warning',
+        messageHeading: 'Getting started',
+        messageBody: 'Once logged in, click on START A HABIT',
+        active: true,
+      })
+      this.$router.push({ name: 'register' })
     },
     changeSlide(number) {
       if (number === 1) {
