@@ -123,10 +123,15 @@ STATIC_ROOT = BASE_DIR / "static"
 MEDIA_ROOT = "media"
 # production only settings
 if not DEBUG:
+    import dj_database_url
     PASSWORD_HASHERS.insert(
         0,
         "django.contrib.auth.hashers.Argon2PasswordHasher",
     )
+    ALLOWED_HOSTS = [".habitrac.herokuapp.com"]
+    DATABASE_URL = os.environ.get('DATABASE_URL')
+    DATABASES = {'default': dj_database_url.parse(DATABASE_URL)}
+
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
     "ariadne_token_auth.backends.AuthTokenBackend",
