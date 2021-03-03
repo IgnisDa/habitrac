@@ -12,7 +12,7 @@
             ></div>
           </div>
           <div
-            class="relative col-start-1 row-end-2 p-5 m-3 transition-colors duration-300 border rounded-md shadow-xl bg-gray-50 sm:m-0"
+            class="relative col-start-1 row-end-2 p-5 m-3 transition-colors duration-300 bg-gray-900 border rounded-md shadow-xl sm:m-0"
           >
             <div
               class="pb-2 mb-8 text-3xl font-semibold tracking-wider text-center text-blue-500 transition-colors duration-500 border-b-4 border-blue-300 border-dashed sm:text-5xl"
@@ -24,7 +24,7 @@
               <div class="mt-2 mb-5 sm:mt-0">
                 <label
                   for="username"
-                  class="block font-serif text-lg text-black"
+                  class="block font-serif text-lg text-gray-100"
                 >
                   What's the habit about?
                 </label>
@@ -48,7 +48,7 @@
                       required
                     />
                     <FontAwesomeIcon
-                      class="flex-none w-6 h-6 text-black pointer-events-none fill-current"
+                      class="flex-none w-6 h-6 text-gray-100 pointer-events-none fill-current"
                       :icon="['fas', 'clock']"
                     ></FontAwesomeIcon>
                   </div>
@@ -70,7 +70,7 @@
                     <div class="w-full px-1 sm:w-1/2">
                       <label
                         for="duration-from"
-                        class="block font-serif text-lg text-black"
+                        class="block font-serif text-lg text-gray-100"
                       >
                         From
                       </label>
@@ -86,7 +86,7 @@
                     <div class="w-full px-1 sm:w-1/2">
                       <label
                         for="duration-to"
-                        class="block font-serif text-lg text-black"
+                        class="block font-serif text-lg text-gray-100"
                       >
                         To
                       </label>
@@ -118,7 +118,7 @@
               <div class="mt-2 mb-5 sm:mt-0">
                 <label
                   for="habit-description"
-                  class="block font-serif text-lg text-black"
+                  class="block font-serif text-lg text-gray-100"
                 >
                   Briefly description of the habit
                 </label>
