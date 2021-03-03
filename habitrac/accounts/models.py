@@ -49,3 +49,17 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return f"{self.username}'s account"
+
+    def get_report(self):
+        number_of_habits = self.dailyhabit_set.count()
+        completed_habits = len(
+            [habit for habit in self.dailyhabit_set.all() if habit.is_completed]
+        )
+        done_habits = len(
+            [habit for habit in self.dailyhabit_set.all() if habit.is_done]
+        )
+        return {
+            "number_of_habits": number_of_habits,
+            "completed_habits": completed_habits,
+            "done_habits": done_habits,
+        }
