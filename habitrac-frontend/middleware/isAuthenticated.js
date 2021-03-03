@@ -3,7 +3,7 @@ export default ({ store, error }) => {
     if (!resp) {
       error({
         statusCode: 401,
-        message: 'You are not allowed to see this page',
+        message: 'You cannot see this page until you log in',
       })
     }
   })
