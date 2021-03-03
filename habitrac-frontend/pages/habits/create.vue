@@ -120,7 +120,7 @@
                   for="habit-description"
                   class="block font-serif text-lg text-gray-100"
                 >
-                  Briefly description of the habit
+                  Brief description of the habit
                 </label>
                 <div
                   class="relative w-full p-1 my-2 bg-gray-100 border rounded-sm focus-within:ring-2 focus-within:ring-blue-600"
