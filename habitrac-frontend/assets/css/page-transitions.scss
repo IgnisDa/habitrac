@@ -1,6 +1,6 @@
 $t-duration: 1000ms;
 $t-delay: 300ms;
-$t-color: rgb(11, 10, 70);
+$t-color: rgba(11, 10, 70, 0.95);
 
 .page-enter-active,
 .page-leave-active {
@@ -8,19 +8,15 @@ $t-color: rgb(11, 10, 70);
 
   &::before,
   &::after {
+    background-color: $t-color;
+    content: '';
     transition-property: transform;
     transition-timing-function: ease-in-out;
-    @apply fixed text-right top-0 left-0 z-20 block text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-yellow-300 font-mono w-screen h-1/2 p-10;
-  }
-
-  &::before {
-    background-color: $t-color;
-    content: 'Loading...';
+    @apply fixed text-right top-0 left-0 z-20 block text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-yellow-300 font-mono w-screen h-1/2 p-10 opacity-100;
   }
 
   &::after {
     background-color: $t-color;
-    content: '';
     @apply top-1/2;
   }
 }
@@ -29,6 +25,7 @@ $t-color: rgb(11, 10, 70);
   &::before,
   &::after {
     transform: scaleX(0);
+    @apply opacity-100;
   }
 }
 
@@ -44,6 +41,8 @@ $t-color: rgb(11, 10, 70);
 }
 
 .page-leave-to {
+  @apply opacity-0;
+
   &::before,
   &::after {
     transform: scale(1);
@@ -59,9 +58,12 @@ $t-color: rgb(11, 10, 70);
 }
 
 .page-enter {
+  @apply opacity-0;
+
   &::before,
   &::after {
     transform: scaleX(1);
+    @apply opacity-100;
   }
 }
 
