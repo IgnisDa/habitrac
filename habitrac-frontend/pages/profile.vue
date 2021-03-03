@@ -5,6 +5,10 @@
         <template #body>
           <div class="flex flex-col font-serif divide-y">
             <div class="flex justify-between space-x-3">
+              <div>Username</div>
+              <div>{{ username }}</div>
+            </div>
+            <div class="flex justify-between space-x-3">
               <div>Total number of habits</div>
               <div>{{ report.numberOfHabits }}</div>
             </div>
@@ -25,12 +29,14 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import getUserReportQuery from '~/apollo/queries/getUserReport.gql'
 
 export default {
   middleware: ['isAuthenticated'],
-  async asyncData({ app }) {
+  async asyncData({ app, store }) {
     const apolloClient = app.apolloProvider.defaultClient
+    await store.dispatch('user/fetchUserDetails')
     const { data } = await apolloClient.query({
       query: getUserReportQuery,
     })
@@ -41,5 +47,10 @@ export default {
   head: () => ({
     title: 'Profile',
   }),
+  computed: {
+    ...mapState({
+      username: (state) => state.user.user.username,
+    }),
+  },
 }
 </script>
