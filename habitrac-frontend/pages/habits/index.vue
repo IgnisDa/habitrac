@@ -42,6 +42,7 @@ import getAllHabitsQuery from '~/apollo/queries/getAllHabits.gql'
 export default {
   middleware: ['isAuthenticated'],
   data: () => ({ habits: [], loading: false }),
+  head: () => ({ title: 'All Habits' }),
   computed: {
     ...mapState({
       usernameSlug: (state) => state.user.user.usernameSlug,
