@@ -18,6 +18,7 @@ import {
   faTimes,
   faUser,
   faClock,
+  faPencilAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 
@@ -28,6 +29,7 @@ config.autoAddCss = false
 // can add other styles or just individual icons.
 library.add(
   faEyeSlash,
+  faPencilAlt,
   faInfoCircle,
   faCheck,
   faTimes,
