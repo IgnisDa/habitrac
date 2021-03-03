@@ -32,8 +32,10 @@
             >
               <div class="border border-yellow-300 rounded-lg">
                 <FontAwesomeIcon
-                  class="flex-none w-16 h-16 p-3 sm:h-24 sm:w-24 hover:animate-pulse"
+                  class="flex-none w-16 h-16 p-3 cursor-pointer sm:h-24 sm:w-24"
+                  :class="{ 'animate-bounce': confetti }"
                   :icon="['fas', traits[currentSlide].icon]"
+                  @click="confetti = !confetti"
                 ></FontAwesomeIcon>
               </div>
               <div class="flex justify-between space-x-10 font-extrabold">
@@ -52,7 +54,7 @@
               </div>
             </div>
             <div
-              class="w-full font-serif text-lg text-center transition-colors duration-1000 sm:w-4/5 md:w-4/5 sm:text-xl md:text-3xl text-true-gray-200"
+              class="w-full px-3 font-serif text-lg text-center transition-colors duration-1000 sm:px-0 sm:w-4/5 md:w-4/5 sm:text-xl md:text-3xl text-true-gray-200"
             >
               {{ traits[currentSlide].text }}
             </div>
@@ -91,14 +93,42 @@ export default {
     ],
     currentSlide: 0,
     slideTransitionName: '',
+    confetti: false,
   }),
   head: () => ({
     title: 'Habitrac',
   }),
+  watch: {
+    confetti(newValue) {
+      if (newValue === true) this.startConfetti()
+      else this.stopConfetti()
+    },
+  },
+  beforeDestroy() {
+    this.stopConfetti()
+  },
   methods: {
     ...mapActions({
       fetchUserDetailsAction: 'user/fetchUserDetails',
     }),
+    startConfetti() {
+      this.$confetti.start({
+        particlesPerFrame: 0.7,
+        particles: [
+          {
+            type: 'heart',
+            dropRate: 6,
+          },
+          {
+            type: 'circle',
+            size: 3,
+          },
+        ],
+      })
+    },
+    stopConfetti() {
+      this.$confetti.stop()
+    },
     changeSlide(number) {
       if (number === 1) {
         this.slideTransitionName = 'slide-next'
