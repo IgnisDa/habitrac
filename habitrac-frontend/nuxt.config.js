@@ -72,7 +72,8 @@ export default {
   },
   publicRuntimeConfig: {
     backendUrl:
-      process.env.VUE_APP_BACKEND_URL || 'https://habitrac.herokuapp.com/',
+      process.env.VUE_APP_BACKEND_URL ||
+      'https://habitrac.herokuapp.com/graphql/',
   },
   apollo: {
     clientConfigs: {
