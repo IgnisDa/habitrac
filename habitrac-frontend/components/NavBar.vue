@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed inset-x-0 bottom-0 w-full">
+  <div class="fixed inset-x-0 top-0 w-full">
     <div
       class="flex justify-around w-full mx-auto text-gray-200 sm:w-9/12 md:w-7/12"
     >
@@ -41,21 +41,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.nuxt-link-exact-active::before,
-.website-link::before {
+.nuxt-link-exact-active::after,
+.website-link::after {
   content: '';
   @apply block m-auto h-0.5 rounded-md bg-pink-500 transition-width duration-500;
 }
 
-.nuxt-link-exact-active::before {
+.nuxt-link-exact-active::after {
   @apply bg-purple-700;
 }
 
-.website-link::before {
+.website-link::after {
   @apply w-0;
 }
 
-.website-link:hover::before {
+.website-link:hover::after {
   @apply w-full;
 }
 </style>
