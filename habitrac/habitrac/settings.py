@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from typing import List
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -106,7 +107,7 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
 ]
-CORS_ORIGIN_WHITELIST = ("http://127.0.0.1:3000", "http://localhost:3000")
+CORS_ORIGIN_WHITELIST: List[str] = ["http://127.0.0.1:3000", "http://localhost:3000"]
 TIME_ZONE = "Asia/Kolkata"
 DATABASES = {
     "default": {
@@ -124,13 +125,17 @@ MEDIA_ROOT = "media"
 # production only settings
 if not DEBUG:
     import dj_database_url
+
     PASSWORD_HASHERS.insert(
         0,
         "django.contrib.auth.hashers.Argon2PasswordHasher",
     )
     ALLOWED_HOSTS = [".habitrac.herokuapp.com"]
-    DATABASE_URL = os.environ.get('DATABASE_URL')
-    DATABASES = {'default': dj_database_url.parse(DATABASE_URL)}
+    DATABASE_URL = os.environ.get("DATABASE_URL")
+    DATABASES = {"default": dj_database_url.parse(DATABASE_URL)}
+    CORS_ORIGIN_WHITELIST = [
+        "https://habitrac.netlify.app/",
+    ]
 
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
