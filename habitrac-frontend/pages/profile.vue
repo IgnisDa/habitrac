@@ -38,5 +38,8 @@ export default {
     const obj = { report }
     return obj
   },
+  head: () => ({
+    title: 'Profile',
+  }),
 }
 </script>
