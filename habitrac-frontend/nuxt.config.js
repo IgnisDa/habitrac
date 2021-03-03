@@ -65,8 +65,8 @@ export default {
       poll: 1000,
     },
   },
-  target: 'server',
-  // target: 'static',
+  // target: 'server',
+  target: 'static',
   generate: {
     interval: 2000,
   },
