@@ -16,6 +16,14 @@
         >
           Track your habits elegantly
         </div>
+        <div class="mt-2 sm:mt-4 md:mt-6">
+          <NuxtLink
+            :to="{ name: 'login' }"
+            class="px-3 py-2 text-lg font-semibold text-black uppercase rounded-md shadow-lg hover:underline sm:text-2xl bg-lime-600 hover:bg-lime-500"
+          >
+            Get Started
+          </NuxtLink>
+        </div>
       </div>
       <div class="relative w-full mb-32 overflow-hidden sm:mb-0 sm:w-1/2">
         <transition-group
