@@ -125,6 +125,7 @@ class DailyHabit(models.Model):
         completion_percentage = round((complete / total) * 100, 2)
         return {
             "complete": complete,
+            "date_to": self.date_to,
             "incomplete": incomplete,
             "total": total,
             "completion_percentage": completion_percentage,
