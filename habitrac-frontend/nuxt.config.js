@@ -67,9 +67,6 @@ export default {
   },
   // target: 'server',
   target: 'static',
-  generate: {
-    interval: 2000,
-  },
   publicRuntimeConfig: {
     backendUrl:
       process.env.VUE_APP_BACKEND_URL ||
@@ -81,6 +78,14 @@ export default {
     },
     authenticationType: 'Token',
   },
+  pwa: {
+    manifest: {
+      name: 'Habitrac',
+      short_name: 'Habitrac',
+      description:
+        'A simple webapp to help you track your habits and keep you responsible for your actions',
+    },
+  },
   googleFonts: {
     families: {
       'Josefin+Sans': [500],
@@ -88,7 +93,6 @@ export default {
     },
     display: 'swap',
   },
-  pageTransition: {},
   analyze: {
     analyzerMode: 'static',
   },
