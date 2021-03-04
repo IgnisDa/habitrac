@@ -139,3 +139,18 @@ def get_habit_report(_, info, name_slug, **kwargs):
     user = get_user(info)
     habit = habit_models.DailyHabit.objects.get(name_slug=name_slug, user=user)
     return habit.generate_report()
+
+
+@mutation.field("deleteHabit")
+@convert_kwargs_to_snake_case
+@login_required
+def delete_habit(_, info, name_slug, *args, **kwargs):
+    user = get_user(info)
+    status = False
+    error = None
+    try:
+        habit_models.DailyHabit.objects.get(name_slug=name_slug, user=user).delete()
+        status = True
+    except habit_models.DailyHabit.DoesNotExist:
+        error = "The requested habit does not exist in the database."
+    return {"status": status, "error": error}
