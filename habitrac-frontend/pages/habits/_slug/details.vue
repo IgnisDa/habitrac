@@ -27,7 +27,7 @@
       </div>
     </div>
     <div
-      class="mx-3 text-sm italic text-indigo-400 sm:text-base md:text-xl sm:w-4/5 md:w-2/3"
+      class="mx-5 text-sm italic text-center text-indigo-400 sm:text-base md:text-xl sm:w-4/5 md:w-2/3"
     >
       {{ habit.description }}
     </div>
