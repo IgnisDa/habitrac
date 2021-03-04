@@ -33,19 +33,15 @@ echo "fi" >> $HOME/.bashrc
 backend_folder="habitrac"
 # directory path of nuxt development server
 frontend_folder="habitrac-frontend"
-# directory path of documentation development server
-documentation_folder="habitrac-docs"
 
 
 # change to the project folder
 cd "$HOME/habitrac"
 # install the dependencies for the frontend application
 cd "$frontend_folder" && yarn
-
-# change to the project folder
-cd "$HOME/habitrac"
-# install the dependencies for the documentation application
-cd "$documentation_folder" && yarn
+# write a `.env` file which is used to define some configuration variables essential to the
+# working of the application
+echo "VUE_APP_BACKEND_URL=http://0.0.0.0:8000/graphql/" >> ".env"
 
 # change to the project folder
 cd "$HOME/habitrac"
@@ -59,20 +55,14 @@ poetry install
 # for the project purposes
 cache_folder="$HOME/.project-cache/habitrac"
 frontend_cache="$cache_folder/$frontend_folder"
-documentation_cache="$cache_folder/$documentation_folder"
 backend_cache="$cache_folder/$backend_folder"
 
 mkdir -p "$frontend_cache"
-mkdir -p "$documentation_cache"
 mkdir -p "$backend_cache"
 
 # for the frontend project folder
 mv "$HOME/habitrac/$frontend_folder/node_modules" "$frontend_cache/node_modules"
 ln -s "$frontend_cache/node_modules" "$HOME/habitrac/$frontend_folder/node_modules"
-
-# for the documentation project folder
-mv "$HOME/habitrac/$documentation_folder/node_modules" "$documentation_cache/node_modules"
-ln -s "$documentation_cache/node_modules" "$HOME/habitrac/$documentation_folder/node_modules"
 
 # for the backend project folder
 mv "$HOME/habitrac/$backend_folder/.venv" "$backend_cache/.venv"
