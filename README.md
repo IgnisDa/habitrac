@@ -100,15 +100,23 @@ will trigger a deploy.
 ### Backend
 
 Heroku does not support mono repositories and therefore the changes need to pushed as a
-[subtree](https://www.atlassian.com/git/tutorials/git-subtree). A custom configuration using
-the file `habitrac/Procfile` handles the rest.
+[subtree](https://www.atlassian.com/git/tutorials/git-subtree). A custom configuration
+using the file `habitrac/Procfile` handles the rest. You need to run the following command
+in the project root to deploy the backend.
+
+```bash
+git subtree push --prefix habitrac heroku main
+```
 
 ## Built With
 
-- [Contributor Covenant](https://www.contributor-covenant.org/) - Used
-  for the Code of Conduct
-- [Creative Commons](https://creativecommons.org/) - Used to choose
-  the license
+- [Django](https://www.djangoproject.com/) - Used for powering the backend
+- [NuxtJs](https://nuxtjs.org/) - Used as frontend framework
+- [GraphQL](https://graphql.org/) - Used to make API calls from frontend to backend
+- [Araidne](https://ariadnegraphql.org/) - Used to process the API call in the backend
+- [Tailwind CSS](https://graphql.org/) - CSS framework to style the website
+
+And a ton of others...
 
 ## Contributing
 
