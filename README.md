@@ -15,6 +15,7 @@ if you would like to contribute.
     - [Getting the source code](#getting-the-source-code)
     - [Setup](#setup)
     - [Verification](#verification)
+    - [Final steps](#final-steps)
   - [Running the tests](#running-the-tests)
   - [Deployment](#deployment)
     - [Frontend](#frontend)
@@ -79,6 +80,15 @@ cd ~/habitrac
 Open up your browser and visit `http://127.0.0.1:8000/` to access the backend development
 server powered by Django. Visit `http://127.0.0.1:3000/` to access the frontend development
 server powered by NuxtJs.
+
+### Final steps
+
+**IMPORTANT**: You need to create a file in the path `habitrac-frontend/.env` with the
+following contents:
+
+```bash
+VUE_APP_BACKEND_URL=http://0.0.0.0:8000/graphql/
+```
 
 ## Running the tests
 
