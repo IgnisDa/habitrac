@@ -3,22 +3,32 @@
     class="flex flex-col items-center justify-center w-full min-h-screen mx-auto space-y-10 sm:w-4/5 md:h-3/4"
   >
     <div
-      class="relative px-5 py-2 font-serif text-3xl font-light border-2 border-yellow-300 rounded-md text-true-gray-200 sm:text-5xl md:text-7xl"
+      class="flex items-center px-5 py-2 space-x-3 font-serif text-3xl font-light border-2 border-yellow-300 rounded-md text-true-gray-200 sm:text-5xl md:text-7xl"
     >
       <div>{{ habit.name }}</div>
-      <NuxtLink
-        :to="{
-          name: 'habits-slug-update',
-          params: { slug: $route.params.slug },
-        }"
-      >
-        <FontAwesomeIcon
-          class="absolute top-0 w-6 h-6 -right-8 sm:-right-10 sm:w-8 sm:h-8"
-          :icon="['fas', 'pencil-alt']"
-        ></FontAwesomeIcon>
-      </NuxtLink>
+      <div class="flex flex-col space-y-2">
+        <NuxtLink
+          :to="{
+            name: 'habits-slug-update',
+            params: { slug: $route.params.slug },
+          }"
+        >
+          <FontAwesomeIcon
+            class="w-6 h-6 transition-transform duration-300 transform sm:w-8 sm:h-8 hover:scale-110"
+            :icon="['fas', 'pencil-alt']"
+          ></FontAwesomeIcon>
+        </NuxtLink>
+        <button class="focus:outline-none" @click="handleDelete()">
+          <FontAwesomeIcon
+            class="w-6 h-6 transition-transform duration-300 transform sm:w-8 sm:h-8 hover:scale-110"
+            :icon="['fas', 'trash-alt']"
+          ></FontAwesomeIcon>
+        </button>
+      </div>
     </div>
-    <div class="text-xl italic text-indigo-600">
+    <div
+      class="mx-3 text-sm italic text-indigo-400 sm:text-base md:text-xl sm:w-4/5 md:w-2/3"
+    >
       {{ habit.description }}
     </div>
     <div v-if="habit.isDone">
@@ -130,6 +140,16 @@ export default {
   beforeDestroy() {
     this.$confetti.stop()
   },
-  methods: {},
+  methods: {
+    handleDelete() {
+      if (
+        confirm(
+          'This action is irreversible. Are you sure you want to delete this habit?'
+        )
+      ) {
+        console.log('ok')
+      }
+    },
+  },
 }
 </script>
