@@ -1,8 +1,6 @@
 <template>
   <div class="min-h-screen text-gray-300 bg-center bg-no-repeat bg-cover">
-    <div
-      class="flex flex-wrap min-h-screen mx-auto overflow-hidden lg:w-10/12 xl:w-8/12"
-    >
+    <div class="flex flex-wrap min-h-screen mx-auto lg:w-10/12 xl:w-8/12">
       <div
         class="flex flex-col items-center justify-center w-full overflow-hidden sm:w-1/2"
       >
@@ -26,7 +24,7 @@
           </button>
         </div>
       </div>
-      <div class="relative w-full mb-32 overflow-hidden sm:mb-0 sm:w-1/2">
+      <div class="relative w-full mb-32 sm:mb-0 sm:w-1/2">
         <transition-group
           tag="div"
           class="flex items-center justify-center h-full px-3"
