@@ -14,17 +14,17 @@
             </div>
             <div class="flex justify-between space-x-3">
               <div>Habits completed</div>
-              <div>{{ report.completedHabits }}</div>
+              <div>{{ report.doneHabits }}</div>
             </div>
             <div class="flex justify-between space-x-3">
               <div>Habits followed through successfully</div>
-              <div>{{ report.doneHabits }}</div>
+              <div>{{ report.completedHabits }}</div>
             </div>
           </div>
         </template>
       </CodeWindow>
     </div>
-    <div v-else>Still Loading</div>
+    <div v-else class="text-3xl text-center text-gray-200">Loading...</div>
   </div>
 </template>
 
@@ -34,23 +34,24 @@ import getUserReportQuery from '~/apollo/queries/getUserReport.gql'
 
 export default {
   middleware: ['isAuthenticated'],
-  async asyncData({ app, store }) {
-    const apolloClient = app.apolloProvider.defaultClient
-    await store.dispatch('user/fetchUserDetails')
-    const { data } = await apolloClient.query({
-      query: getUserReportQuery,
-    })
-    const report = data.getUserReport
-    const obj = { report }
-    return obj
-  },
+  data: () => ({
+    report: null,
+  }),
   head: () => ({
     title: 'Profile',
   }),
+
   computed: {
     ...mapState({
       username: (state) => state.user.user.username,
     }),
+  },
+  async mounted() {
+    await this.$store.dispatch('user/fetchUserDetails')
+    const { data } = await this.$apollo.query({
+      query: getUserReportQuery,
+    })
+    this.report = data.getUserReport
   },
 }
 </script>
