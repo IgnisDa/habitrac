@@ -7,5 +7,5 @@ from . import models
 class DailyHabitAdmin(admin.ModelAdmin):
     readonly_fields = (
         "name_slug",
-        # "progress",
+        "progress",
     )
