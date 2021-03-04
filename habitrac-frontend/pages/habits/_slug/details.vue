@@ -74,6 +74,7 @@
 <script>
 import getHabitDetailsQuery from '~/apollo/queries/getHabitDetails.gql'
 import getHabitReportQuery from '~/apollo/queries/getHabitReport.gql'
+import deleteHabitMutation from '~/apollo/mutations/deleteHabit.gql'
 
 export default {
   async asyncData({ app, params, $dayjs }) {
@@ -141,13 +142,36 @@ export default {
     this.$confetti.stop()
   },
   methods: {
-    handleDelete() {
+    async handleDelete() {
       if (
         confirm(
           'This action is irreversible. Are you sure you want to delete this habit?'
         )
       ) {
-        console.log('ok')
+        const slug = this.$route.params.slug
+        const { data } = await this.$apollo.mutate({
+          mutation: deleteHabitMutation,
+          variables: {
+            nameSlug: slug,
+          },
+        })
+        if (!data.deleteHabit.error) {
+          this.$addAlert({
+            severity: 'info',
+            messageHeading: 'Deleted',
+            messageBody: `The habit '${slug}' was deleted successfully!`,
+            active: true,
+          })
+          this.$router.push({ name: 'habits' })
+        } else {
+          this.$addAlert({
+            severity: 'danger',
+            messageHeading: 'Error',
+            messageBody:
+              'We encountered an error while performing this operation. Please try again.',
+            active: true,
+          })
+        }
       }
     },
   },
