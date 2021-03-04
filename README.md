@@ -88,9 +88,9 @@ This repository has no tests yet. Hopefully, I can fix that in the future. :P
 
 The website is deployed using two platforms: the frontend on
 [Netlify](https://habitrac.netlify.app/) and the backend on
-[Heroku](https://habitrac.herokuapp.com/). Since this is a mono repository (a repository
-that contains all its moving parts/applications in one single git repository), deployment
-is a bit tricky.
+[Heroku](https://habitrac.herokuapp.com/graphql/). Since this is a mono repository (a
+repository that contains all its moving parts/applications in one single git repository),
+deployment is a bit tricky.
 
 ### Frontend
 
