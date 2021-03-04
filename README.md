@@ -114,6 +114,9 @@ git subtree push --prefix habitrac heroku main
 - [NuxtJs](https://nuxtjs.org/) - Used as frontend framework
 - [GraphQL](https://graphql.org/) - Used to make API calls from frontend to backend
 - [Araidne](https://ariadnegraphql.org/) - Used to process the API call in the backend
+- [ariadne-token-auth](https://github.com/IgnisDa/ariadne-token-auth) - Used for
+  authentication between the frontend and backend (_DISCLAIMER_: I am the author of this
+  package)
 - [Tailwind CSS](https://graphql.org/) - CSS framework to style the website
 
 And a ton of others...
