@@ -2,7 +2,7 @@
 
 ## Making commits to the repository
 
-To make it easier for you to make [conventional
+To make it easier to make [conventional
 commits](https://www.conventionalcommits.org/en/v1.0.0/), we use
 [Gitzer](https://github.com/IgnisDa/Gitzer) to make our commits (_DISCLAIMER_: I am the
 author of this tool).
