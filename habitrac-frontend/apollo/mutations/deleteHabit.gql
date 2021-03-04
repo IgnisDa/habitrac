@@ -1,0 +1,6 @@
+mutation deleteHabit($nameSlug: String!) {
+  deleteHabit(nameSlug: $nameSlug) {
+    status
+    error
+  }
+}
