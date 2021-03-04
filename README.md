@@ -15,7 +15,6 @@ if you would like to contribute.
     - [Getting the source code](#getting-the-source-code)
     - [Setup](#setup)
     - [Verification](#verification)
-    - [Final steps](#final-steps)
   - [Running the tests](#running-the-tests)
   - [Deployment](#deployment)
     - [Frontend](#frontend)
@@ -35,14 +34,14 @@ for notes on how to deploy the project on a live system.
 
 ### Prerequisites
 
-The main development for Gitzer occurs using [Vagrant](https://www.vagrantup.com/) and all
-the associated scripts to setup a development environment for Habitrac are already present in
-the repository.
+The main development for Habitrac occurs using [Vagrant](https://www.vagrantup.com/) and
+all the associated scripts to setup a development environment are already present in the
+repository.
 
-You can install Vagrant from [here](https://www.vagrantup.com/downloads). Once you have
-downloaded it, you can verify your installation using `vagrant --version`. At the time of
-writing this guide, the output of that command is Vagrant 2.2.14. You might have to restart
-your machine after installing Vagrant.
+You can install Vagrant from [here](https://www.vagrantup.com/downloads). You might have to
+restart your machine after installing Vagrant. You can verify your installation using
+`vagrant --version`. At the time of writing this guide, the output of that command is
+_Vagrant 2.2.14_.
 
 ### Getting the source code
 
@@ -80,15 +79,6 @@ cd ~/habitrac
 Open up your browser and visit `http://127.0.0.1:8000/` to access the backend development
 server powered by Django. Visit `http://127.0.0.1:3000/` to access the frontend development
 server powered by NuxtJs.
-
-### Final steps
-
-**IMPORTANT**: You need to create a file in the path `habitrac-frontend/.env` with the
-following contents:
-
-```bash
-VUE_APP_BACKEND_URL=http://0.0.0.0:8000/graphql/
-```
 
 ## Running the tests
 
