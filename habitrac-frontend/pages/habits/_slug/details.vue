@@ -1,73 +1,80 @@
 <template>
-  <div
-    class="flex flex-col items-center justify-center w-full min-h-screen mx-auto space-y-10 sm:w-4/5 md:h-3/4"
-  >
+  <div>
     <div
-      class="flex items-center px-5 py-2 space-x-3 font-serif text-3xl font-light border-2 border-yellow-300 rounded-md text-true-gray-200 sm:text-5xl md:text-7xl"
+      v-if="habit"
+      class="flex flex-col items-center justify-center w-full min-h-screen mx-auto space-y-10 sm:w-4/5 md:h-3/4"
     >
-      <div>{{ habit.name }}</div>
-      <div class="flex flex-col space-y-2">
-        <NuxtLink
-          :to="{
-            name: 'habits-slug-update',
-            params: { slug: $route.params.slug },
-          }"
-        >
-          <FontAwesomeIcon
-            class="w-6 h-6 transition-transform duration-300 transform sm:w-8 sm:h-8 hover:scale-110"
-            :icon="['fas', 'pencil-alt']"
-          ></FontAwesomeIcon>
-        </NuxtLink>
-        <button class="focus:outline-none" @click="handleDelete()">
-          <FontAwesomeIcon
-            class="w-6 h-6 transition-transform duration-300 transform sm:w-8 sm:h-8 hover:scale-110"
-            :icon="['fas', 'trash-alt']"
-          ></FontAwesomeIcon>
-        </button>
+      <div
+        class="flex items-center px-5 py-2 space-x-3 font-serif text-3xl font-light border-2 border-yellow-300 rounded-md text-true-gray-200 sm:text-5xl md:text-7xl"
+      >
+        <div>{{ habit.name }}</div>
+        <div class="flex flex-col space-y-2">
+          <NuxtLink
+            :to="{
+              name: 'habits-slug-update',
+              params: { slug: $route.params.slug },
+            }"
+          >
+            <FontAwesomeIcon
+              class="w-6 h-6 transition-transform duration-300 transform sm:w-8 sm:h-8 hover:scale-110"
+              :icon="['fas', 'pencil-alt']"
+            ></FontAwesomeIcon>
+          </NuxtLink>
+          <button class="focus:outline-none" @click="handleDelete()">
+            <FontAwesomeIcon
+              class="w-6 h-6 transition-transform duration-300 transform sm:w-8 sm:h-8 hover:scale-110"
+              :icon="['fas', 'trash-alt']"
+            ></FontAwesomeIcon>
+          </button>
+        </div>
+      </div>
+      <div
+        class="mx-5 text-sm italic text-center text-indigo-400 sm:text-base md:text-xl sm:w-4/5 md:w-2/3"
+      >
+        {{ habit.description }}
+      </div>
+      <div v-if="habit.isDone">
+        <div class="text-lg font-bold text-center text-green-600 sm:text-2xl">
+          The duration of this habit is now over!
+        </div>
+      </div>
+      <div class="mx-3 sm:w-4/5 md:w-2/3">
+        <CodeWindow>
+          <template #body>
+            <div v-if="report">
+              <div class="flex flex-col font-serif divide-y">
+                <div class="flex justify-between space-x-3">
+                  <div>Started on</div>
+                  <div>{{ startedOn }}</div>
+                </div>
+                <div class="flex justify-between space-x-3">
+                  <div>End date</div>
+                  <div>{{ dateTo }}</div>
+                </div>
+                <div class="flex justify-between space-x-3">
+                  <div>Total</div>
+                  <div>{{ report.total }}</div>
+                </div>
+                <div class="flex justify-between space-x-3">
+                  <div>Completed</div>
+                  <div>{{ report.complete }}</div>
+                </div>
+                <div class="flex justify-between space-x-3">
+                  <div>Incomplete</div>
+                  <div>{{ report.incomplete }}</div>
+                </div>
+                <div class="flex justify-between space-x-3">
+                  <div>Percentage of days followed through</div>
+                  <div>{{ report.completionPercentage }}%</div>
+                </div>
+              </div>
+            </div>
+            <div v-else>Loading...</div>
+          </template>
+        </CodeWindow>
       </div>
     </div>
-    <div
-      class="mx-5 text-sm italic text-center text-indigo-400 sm:text-base md:text-xl sm:w-4/5 md:w-2/3"
-    >
-      {{ habit.description }}
-    </div>
-    <div v-if="habit.isDone">
-      <div class="text-lg font-bold text-center text-green-600 sm:text-2xl">
-        The duration of this habit is now over!
-      </div>
-    </div>
-    <div class="mx-3 sm:w-4/5 md:w-2/3">
-      <CodeWindow>
-        <template #body>
-          <div class="flex flex-col font-serif divide-y">
-            <div class="flex justify-between space-x-3">
-              <div>Started on</div>
-              <div>{{ startedOn }}</div>
-            </div>
-            <div class="flex justify-between space-x-3">
-              <div>End date</div>
-              <div>{{ dateTo }}</div>
-            </div>
-            <div class="flex justify-between space-x-3">
-              <div>Total</div>
-              <div>{{ report.total }}</div>
-            </div>
-            <div class="flex justify-between space-x-3">
-              <div>Completed</div>
-              <div>{{ report.complete }}</div>
-            </div>
-            <div class="flex justify-between space-x-3">
-              <div>Incomplete</div>
-              <div>{{ report.incomplete }}</div>
-            </div>
-            <div class="flex justify-between space-x-3">
-              <div>Percentage of days followed through</div>
-              <div>{{ report.completionPercentage }}%</div>
-            </div>
-          </div>
-        </template>
-      </CodeWindow>
-    </div>
+    <div v-else>Loading...</div>
   </div>
 </template>
 
@@ -77,10 +84,18 @@ import getHabitReportQuery from '~/apollo/queries/getHabitReport.gql'
 import deleteHabitMutation from '~/apollo/mutations/deleteHabit.gql'
 
 export default {
-  async asyncData({ app, params, $dayjs }) {
-    const apolloClient = app.apolloProvider.defaultClient
-    const slug = params.slug
-    const { data } = await apolloClient.query({
+  data: () => ({
+    habit: { name: '' },
+    startedOn: null,
+    dateTo: null,
+    report: null,
+  }),
+  head() {
+    return { title: `${this.habit.name} | Details` }
+  },
+  async mounted() {
+    const slug = this.$route.params.slug
+    const { data } = await this.$apollo.query({
       query: getHabitDetailsQuery,
       variables: {
         nameSlug: slug,
@@ -93,7 +108,7 @@ export default {
       // sense for most use cases; backend data doesn't change very much or that often.
       // I feel like the massive idiot now.
     })
-    const { data: report } = await apolloClient.query({
+    const { data: report } = await this.$apollo.query({
       query: getHabitReportQuery,
       variables: {
         nameSlug: slug,
@@ -106,22 +121,15 @@ export default {
       if (typeof habit.progress === 'string') {
         habit.progress = JSON.parse(habit.progress)
       }
-      const startedOn = $dayjs(habit.startedOn).format('D, MMM YYYY')
-      const dateTo = $dayjs(report.getHabitReport.dateTo).format('D, MMM YYYY')
-      const obj = {
-        habit,
-        startedOn,
-        dateTo,
-        report: report.getHabitReport,
-      }
-      return obj
+      const startedOn = this.$dayjs(habit.startedOn).format('D, MMM YYYY')
+      const dateTo = this.$dayjs(report.getHabitReport.dateTo).format(
+        'D, MMM YYYY'
+      )
+      this.habit = habit
+      this.startedOn = startedOn
+      this.dateTo = dateTo
+      this.report = report.getHabitReport
     }
-  },
-  head() {
-    return { title: `${this.habit.name} | Details` }
-  },
-  computed: {},
-  mounted() {
     if (this.habit.isCompleted) {
       this.$confetti.start({
         particlesPerFrame: 0.7,
