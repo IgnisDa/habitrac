@@ -36,4 +36,6 @@ type Mutation {
     data: CreateHabitInput!
     nameSlug: String!
   ): UpdateHabitPayload!
+  " delete a habit from the database "
+  deleteHabit(nameSlug: String!): ToggleTagCyclePayload!
 }
