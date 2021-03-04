@@ -16,3 +16,4 @@ six==1.15.0; python_version >= "3.6" and python_full_version < "3.0.0" or python
 sqlparse==0.4.1; python_version >= "3.6"
 starlette==0.13.8; python_full_version >= "3.6.1" and python_full_version < "4.0.0" and python_version >= "3.6"
 typing-extensions==3.7.4.3; python_full_version >= "3.6.1" and python_full_version < "4.0.0"
+whitenoise==5.2.0; python_version >= "3.5" and python_version < "4"
