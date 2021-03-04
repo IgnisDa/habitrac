@@ -173,14 +173,14 @@ export default {
       if (typeof habit.progress === 'string') {
         habit.progress = JSON.parse(habit.progress)
       }
-      const count = Object.keys(habit.progress).length - 1
-      const startedOn = $dayjs(habit.startedOn)
+      const startedOn = $dayjs(habit.startedOn).format('YYYY-MM-DD')
+      const dateTo = $dayjs(habit.dateTo).format('YYYY-MM-DD')
       const obj = {
         data: {
+          dateTo,
           name: habit.name,
           description: habit.description,
-          dateFrom: startedOn.format('YYYY-MM-DD'),
-          dateTo: startedOn.add(count, 'd').format('YYYY-MM-DD'),
+          dateFrom: startedOn,
         },
       }
       return obj
