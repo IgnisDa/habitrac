@@ -30,6 +30,7 @@
     "nuxt": "^2.14.6",
     "postcss": "^7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "uuid": "^8.3.2",
     "vue-confetti": "^2.2.1"
   },
   "devDependencies": {
