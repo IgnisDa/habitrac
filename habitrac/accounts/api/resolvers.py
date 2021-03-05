@@ -73,3 +73,17 @@ def get_users_list(self, info, *args, **kwargs):
 @login_required
 def get_user_report(self, info, *args, **kwargs):
     return get_user(info).get_report()
+
+
+@accounts_mutation.field("setVaultPassword")
+@login_required
+def set_vault_password(self, info, password, *args, **kwargs):
+    user = get_user(info)
+    status = False
+    error = None
+    if not user.vault_password:
+        user.set_vault_password(password)
+        status = True
+    else:
+        error = "You have already set a vault password"
+    return {"status": status, "error": error}
