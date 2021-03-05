@@ -38,4 +38,6 @@ type Mutation {
   ): UpdateHabitPayload!
   " delete a habit from the database "
   deleteHabit(nameSlug: String!): ToggleTagCyclePayload!
+  " set a vault password for the authenticated user associated with the request "
+  setVaultPassword(password: String!): ToggleTagCyclePayload!
 }
