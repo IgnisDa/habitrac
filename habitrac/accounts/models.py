@@ -1,6 +1,7 @@
 import uuid
 from typing import List
 
+from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.text import slugify
@@ -33,6 +34,15 @@ class CustomUser(AbstractUser):
         help_text=_("The unique slug that will be used to identify the user"),
         editable=False,
     )
+    vault_password = models.CharField(
+        max_length=150,
+        help_text=_(
+            "The password that can be used to access the user's secret vault."
+            "Should be stored as a hashed pasword."
+        ),
+        blank=True,
+        null=True,
+    )
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS: List[str] = []
@@ -49,6 +59,13 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return f"{self.username}'s account"
+
+    def set_vault_password(self, plaintext_password):
+        self.vault_password = make_password(plaintext_password)
+        super().save()
+
+    def check_vault_password(self, plaintext_password):
+        return check_password(plaintext_password, self.vault_password)
 
     def get_report(self):
         number_of_habits = self.dailyhabit_set.count()
