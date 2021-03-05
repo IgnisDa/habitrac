@@ -1,0 +1,6 @@
+query versionCheck {
+  versionCheck {
+    frontend
+    backend
+  }
+}
