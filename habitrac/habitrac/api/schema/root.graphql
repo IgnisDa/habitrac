@@ -2,6 +2,8 @@
 The root query definition
 """
 type Query {
+  " get the details about the version of the frontend and backend running in the server "
+  versionCheck: Version!
   " get the user of the currently logged in user using the authentication headers "
   userDetails: UserDetailsPayload!
   " to get the information of a particular user corresponding to their `id` "
@@ -16,6 +18,8 @@ type Query {
   getHabitReport(nameSlug: String!): HabitReport!
   " get details about the currently logged in user "
   getUserReport: UserReport!
+  " checks if the vault password provided by the user is correct "
+  checkVaultPassword(password: String!): Boolean!
 }
 
 """
