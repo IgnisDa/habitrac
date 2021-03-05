@@ -75,12 +75,34 @@ export const actions = {
           //     'X-Example-Header': `some-custom-value`,
           //   },
           // },
+          fetchPolicy: 'network-only',
         })
         .then(({ data }) => {
           commit('setUser', data.userDetails)
         })
     } catch (error) {
-      alert('We encountered a problem trying to log you in, please try again!')
+      // This took some time to figure out, but here's the deal:
+
+      // Suppose you have two devices- A and B. You login on device A and then on device B.
+      // The package used for authentication in the backend (ariadne_token_auth) supplies
+      // them both with just one authentication token (ie both the authentication tokens on
+      // device A and B are the same). Now suppose you log out on device B and then login
+      // there again. Everything will work fine. However, when you use the website from
+      // device A, even though it would look like you are logged in (since you DO have an
+      // authentication token set in localStorage), you would actually have the wrong token
+      // (that is, the older one) and thus get authentication errors. This is not a problem
+      // on the frontend, but a shortcoming on the backend authentication. The solution I
+      // am going with, for the time being, is to ask the user to login again if an error
+      // is raised here.
+      this.app.$apolloHelpers.onLogout()
+      this.$addAlert({
+        severity: 'danger',
+        messageHeading: 'Logged Out',
+        messageBody:
+          'You have been logged out from another device. Please login again.',
+        active: true,
+      })
+      this.$router.push({ name: 'login' })
     }
   },
 }
