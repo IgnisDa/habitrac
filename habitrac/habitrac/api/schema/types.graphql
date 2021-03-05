@@ -1,0 +1,7 @@
+"""
+This type is returned when the version data is requested
+"""
+type Version {
+  frontend: String!
+  backend: String!
+}
