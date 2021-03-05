@@ -35,7 +35,7 @@ def user_profile_details(*_, username_slug, **kwargs):
 @login_required
 def user_details(_, info, **kwargs):
     """ returns basic user data about the currently logged in user """
-    user = info.context.get("request").user
+    user = get_user(info)
     return {
         "user": {"username": user.username, "username_slug": user.username_slug},
         "error": None,
@@ -72,5 +72,4 @@ def get_users_list(self, info, *args, **kwargs):
 @accounts_query.field("getUserReport")
 @login_required
 def get_user_report(self, info, *args, **kwargs):
-    user = get_user(info)
-    return user.get_report()
+    return get_user(info).get_report()
