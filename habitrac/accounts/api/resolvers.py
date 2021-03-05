@@ -87,3 +87,10 @@ def set_vault_password(self, info, password, *args, **kwargs):
     else:
         error = "You have already set a vault password"
     return {"status": status, "error": error}
+
+
+@accounts_query.field("checkVaultPassword")
+@login_required
+def check_vault_password(self, info, password, *args, **kwargs):
+    user = get_user(info)
+    return user.check_vault_password(password)
