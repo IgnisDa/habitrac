@@ -5,6 +5,7 @@ from accounts.api import resolvers as accounts_resolvers
 from ariadne.contrib.django.scalars import date_scalar, datetime_scalar
 from ariadne.contrib.django.views import GraphQLView
 from django.conf import settings
+from habitrac.api import resolvers as root_resolvers
 from habits.api import resolvers as habits_resolvers
 
 
@@ -19,6 +20,7 @@ type_defs = [
 type_defs.extend(accounts_resolvers.auth_type_definitions)
 
 resolvers = [
+    root_resolvers.root_query,
     habits_resolvers.query,
     habits_resolvers.mutation,
     accounts_resolvers.auth_mutation,
