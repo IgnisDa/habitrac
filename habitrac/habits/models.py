@@ -58,6 +58,13 @@ class DailyHabit(models.Model):
         blank=True,
         null=True,
     )
+    vault = models.BooleanField(
+        default=False,
+        help_text=_(
+            "Whether the habit will be stored in the vault, that is, not "
+            "appear in the normal habit lists."
+        ),
+    )
 
     class Meta:
         constraints = [
