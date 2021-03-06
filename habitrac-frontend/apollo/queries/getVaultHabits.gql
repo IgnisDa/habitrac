@@ -1,0 +1,12 @@
+query getVaultHabits($usernameSlug: String!) {
+  getVaultHabits(usernameSlug: $usernameSlug) {
+    name
+    nameSlug
+    dateFrom
+    dateTo
+    progress
+    description
+    isDone
+    isCompleted
+  }
+}
