@@ -137,6 +137,23 @@
                   </div>
                 </div>
               </div>
+              <div class="flex items-center mt-2 mb-5 sm:mt-0">
+                <div class="p-1 my-2 rounded-sm">
+                  <div class="flex items-center">
+                    <input
+                      id="habit-vault"
+                      v-model="data.vault"
+                      type="checkbox"
+                    />
+                  </div>
+                </div>
+                <label
+                  for="vault"
+                  class="block font-serif text-lg text-gray-100"
+                >
+                  Vault
+                </label>
+              </div>
               <button
                 type="submit"
                 class="w-full p-3 text-lg font-semibold text-center text-indigo-700 uppercase bg-gray-200 rounded-sm focus:outline-none loading--button-border-red"
@@ -157,7 +174,7 @@ import createDailyHabitMutation from '~/apollo/mutations/createDailyHabit.gql'
 
 export default {
   data: () => ({
-    data: { name: '', dateTo: '', dateFrom: '', description: '' },
+    data: { name: '', dateTo: '', dateFrom: '', description: '', vault: false },
     loading: false,
     errors: { name: null, duration: null },
   }),
@@ -185,6 +202,7 @@ export default {
     async handleSubmit() {
       this.errors = { name: null, duration: null }
       this.loading = true
+      console.log(this.data)
       const { data } = await this.$apollo.mutate({
         mutation: createDailyHabitMutation,
         variables: {
