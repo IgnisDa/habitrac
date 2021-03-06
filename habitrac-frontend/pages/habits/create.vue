@@ -153,6 +153,12 @@
                 >
                   Vault
                 </label>
+                <div class="mx-2 cursor-pointer" @click="showVaultDetails()">
+                  <FontAwesomeIcon
+                    class="flex-none w-5 h-5 text-gray-100 fill-current"
+                    :icon="['fas', 'info-circle']"
+                  ></FontAwesomeIcon>
+                </div>
               </div>
               <button
                 type="submit"
@@ -199,6 +205,11 @@ export default {
     this.data.dateFrom = this.$dayjs().format('YYYY-MM-DD')
   },
   methods: {
+    showVaultDetails() {
+      alert(
+        'The habits that are stored in the vault can only be accessed with a password. The vault can be accessed in the dashboard'
+      )
+    },
     async handleSubmit() {
       this.errors = { name: null, duration: null }
       this.loading = true
