@@ -55,7 +55,6 @@ export default {
       query: checkIfVaultPasswordSetQuery,
       fetchPolicy: 'network-only',
     })
-    console.log(data)
     if (!data) {
       this.$addAlert({
         severity: 'warning',
