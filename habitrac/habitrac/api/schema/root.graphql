@@ -22,6 +22,8 @@ type Query {
   getUserReport: UserReport!
   " checks if the vault password provided by the user is correct "
   checkVaultPassword(password: String!): Boolean!
+  " checks if the user has set a vault password "
+  checkIfVaultPasswordSet: Boolean!
 }
 
 """
