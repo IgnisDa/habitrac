@@ -139,8 +139,8 @@ if not DEBUG:
         "https://habitrac.netlify.app",
     ]
 
-BACKEND_VERSION = "0.1.0"
-FRONTEND_VERSION = "0.1.1"
+BACKEND_VERSION = "0.1.1"
+FRONTEND_VERSION = "0.1.2"
 
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
