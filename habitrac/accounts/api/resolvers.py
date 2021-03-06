@@ -94,3 +94,11 @@ def set_vault_password(self, info, password, *args, **kwargs):
 def check_vault_password(self, info, password, *args, **kwargs):
     user = get_user(info)
     return user.check_vault_password(password)
+
+
+@accounts_query.field("checkIfVaultPasswordSet")
+@login_required
+def check_if_vault_password_set(self, info, *args, **kwargs):
+    user = get_user(info)
+    flag = user.vault_password
+    return flag is not None
