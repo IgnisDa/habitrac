@@ -187,7 +187,6 @@ export default {
   head: () => ({
     title: 'New Habit',
   }),
-
   computed: {
     formErrorsExist() {
       let exist = false
@@ -213,7 +212,6 @@ export default {
     async handleSubmit() {
       this.errors = { name: null, duration: null }
       this.loading = true
-      console.log(this.data)
       const { data } = await this.$apollo.mutate({
         mutation: createDailyHabitMutation,
         variables: {
