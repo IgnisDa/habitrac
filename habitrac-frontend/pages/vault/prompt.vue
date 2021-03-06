@@ -125,7 +125,6 @@ export default {
           password: this.password,
         },
       })
-      console.log(data)
       if (!data) {
         this.errors.password = ['The password supplied was incorrect']
       } else {
