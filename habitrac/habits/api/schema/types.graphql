@@ -44,6 +44,8 @@ type Habit {
   isCompleted: Boolean!
   " whether the final date of the habit has passed "
   isDone: Boolean!
+  " whether the habit will be stored in the vault "
+  vault: Boolean!
 }
 
 """

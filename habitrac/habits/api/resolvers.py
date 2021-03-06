@@ -64,6 +64,7 @@ def update_daily_habit(_, info, data, name_slug):
     user = get_user(info)
     description = data.get("description")
     date_to = data.get("date_to")
+    vault = data.get('vault')
     habits = habit_models.DailyHabit.objects.filter(name_slug=name_slug, user=user)
     if len(habits) > 1:
         error_container.update_with_error(
@@ -78,6 +79,7 @@ def update_daily_habit(_, info, data, name_slug):
         habit.name = name
         habit.description = description
         habit.date_to = date_to
+        habit.vault = vault
         habit.save()
         status = True
     return {"status": status, "errors": error_container.get_all_errors(), "habit": habit}

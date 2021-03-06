@@ -12,7 +12,7 @@
             ></div>
           </div>
           <div
-            class="relative col-start-1 row-end-2 p-5 m-3 transition-colors duration-300 border rounded-md shadow-xl bg-gray-50 sm:m-0"
+            class="relative col-start-1 row-end-2 p-5 m-3 transition-colors duration-300 bg-gray-900 border rounded-md shadow-xl sm:m-0"
           >
             <div
               class="pb-2 mb-8 text-3xl font-semibold tracking-wider text-center text-blue-500 transition-colors duration-500 border-b-4 border-blue-300 border-dashed sm:text-5xl"
@@ -24,7 +24,7 @@
               <div class="mt-2 mb-5 sm:mt-0">
                 <label
                   for="username"
-                  class="block font-serif text-lg text-black"
+                  class="block font-serif text-lg text-gray-100"
                 >
                   What's the habit about?
                 </label>
@@ -70,7 +70,7 @@
                     <div class="w-full px-1 sm:w-1/2">
                       <label
                         for="duration-from"
-                        class="block font-serif text-lg text-black"
+                        class="block font-serif text-lg text-gray-100"
                       >
                         From
                       </label>
@@ -87,7 +87,7 @@
                     <div class="w-full px-1 sm:w-1/2">
                       <label
                         for="duration-to"
-                        class="block font-serif text-lg text-black"
+                        class="block font-serif text-lg text-gray-100"
                       >
                         To
                       </label>
@@ -119,7 +119,7 @@
               <div class="mt-2 mb-5 sm:mt-0">
                 <label
                   for="habit-description"
-                  class="block font-serif text-lg text-black"
+                  class="block font-serif text-lg text-gray-100"
                 >
                   Briefly description of the habit
                 </label>
@@ -136,6 +136,29 @@
                       required
                     ></textarea>
                   </div>
+                </div>
+              </div>
+              <div class="flex items-center mt-2 mb-5 sm:mt-0">
+                <div class="p-1 my-2 rounded-sm">
+                  <div class="flex items-center">
+                    <input
+                      id="habit-vault"
+                      v-model="data.vault"
+                      type="checkbox"
+                    />
+                  </div>
+                </div>
+                <label
+                  for="vault"
+                  class="block font-serif text-lg text-gray-100"
+                >
+                  Vault
+                </label>
+                <div class="mx-2 cursor-pointer" @click="showVaultDetails()">
+                  <FontAwesomeIcon
+                    class="flex-none w-5 h-5 text-gray-100 fill-current"
+                    :icon="['fas', 'info-circle']"
+                  ></FontAwesomeIcon>
                 </div>
               </div>
               <button
@@ -181,6 +204,7 @@ export default {
           name: habit.name,
           description: habit.description,
           dateFrom: startedOn,
+          vault: habit.vault,
         },
       }
       return obj
@@ -205,10 +229,13 @@ export default {
       return exist
     },
   },
-  mounted() {
-    this.$refs.name.focus()
-  },
+  mounted() {},
   methods: {
+    showVaultDetails() {
+      alert(
+        'The habits that are stored in the vault can only be accessed with a password. The vault can be accessed in the dashboard'
+      )
+    },
     async handleSubmit() {
       this.errors = { name: null, duration: null }
       this.loading = true
