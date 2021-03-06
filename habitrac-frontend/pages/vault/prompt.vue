@@ -78,7 +78,7 @@ import checkVaultPasswordQuery from '~/apollo/queries/checkVaultPassword.gql'
 
 export default {
   data: () => ({
-    password: 'test-password',
+    password: '',
     loading: false,
     fieldIcons: {
       password: ['fas', 'eye'],
