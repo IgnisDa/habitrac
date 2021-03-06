@@ -140,7 +140,7 @@ if not DEBUG:
     ]
 
 BACKEND_VERSION = "0.1.0"
-FRONTEND_VERSION = "0.1.0"
+FRONTEND_VERSION = "0.1.1"
 
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
