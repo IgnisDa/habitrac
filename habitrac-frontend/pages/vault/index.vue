@@ -38,6 +38,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import getVaultHabitsQuery from '~/apollo/queries/getVaultHabits.gql'
+import checkIfVaultPasswordSetQuery from '~/apollo/queries/checkIfVaultPasswordSet.gql'
 import { getCookie } from '~/utils.js'
 
 export default {
@@ -48,8 +49,22 @@ export default {
     }),
   },
   async mounted() {
-    if (!getCookie('vault-token')) {
-      this.$router.push({ name: 'vault-prompt' })
+    const {
+      data: { checkIfVaultPasswordSet: data },
+    } = await this.$apollo.query({
+      query: checkIfVaultPasswordSetQuery,
+      fetchPolicy: 'network-only',
+    })
+    console.log(data)
+    if (!data) {
+      this.$addAlert({
+        severity: 'warning',
+        messageBody: 'You have not set a vault password.',
+        messageHeading: 'No password',
+        active: true,
+      })
+      this.$router.push({ name: 'vault-first' })
+    } else if (!getCookie('vault-token')) {
       this.$addAlert({
         severity: 'danger',
         messageBody:
@@ -57,6 +72,7 @@ export default {
         messageHeading: 'Expired',
         active: true,
       })
+      this.$router.push({ name: 'vault-prompt' })
     } else {
       this.loading = true
       await this.fetchUserDetailsAction()
@@ -66,6 +82,7 @@ export default {
           variables: {
             usernameSlug: this.usernameSlug,
           },
+          fetchPolicy: 'network-only',
         })
         .then(({ data: { getVaultHabits: data } }) => {
           this.habits = data
