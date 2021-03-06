@@ -24,7 +24,7 @@
           </button>
         </div>
       </div>
-      <div class="relative w-full mb-32 sm:mb-0 sm:w-1/2">
+      <div class="relative w-full mb-32 overflow-hidden sm:mb-0 sm:w-1/2">
         <transition-group
           tag="div"
           class="flex items-center justify-center h-full px-3"
@@ -192,6 +192,7 @@ export default {
 .slide-next-leave-active,
 .slide-prev-enter-active,
 .slide-prev-leave-active {
+  // position: absolute;
   transition: transform 0.5s ease-in-out;
 }
 
