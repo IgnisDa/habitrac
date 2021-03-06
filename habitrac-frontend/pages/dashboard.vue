@@ -3,11 +3,12 @@
     <div class="w-full mx-3 sm:w-4/5 md:w-1/3">
       <CodeWindow>
         <template #body>
-          <div class="hover:underline">
-            <NuxtLink :to="{ name: 'habits' }">My Habits</NuxtLink>
-          </div>
-          <div class="hover:underline">
-            <NuxtLink :to="{ name: 'profile' }">My Profile</NuxtLink>
+          <div
+            v-for="(link, index) in links"
+            :key="index"
+            class="hover:underline"
+          >
+            <NuxtLink :to="{ name: link.path }">{{ link.label }}</NuxtLink>
           </div>
         </template>
       </CodeWindow>
@@ -17,6 +18,13 @@
 
 <script>
 export default {
+  data: () => ({
+    links: [
+      { label: 'My Habits', path: 'habits' },
+      { label: 'My Profile', path: 'profile' },
+      { label: 'Vault', path: 'vault' },
+    ],
+  }),
   head: () => ({
     title: 'Dashboard',
   }),
