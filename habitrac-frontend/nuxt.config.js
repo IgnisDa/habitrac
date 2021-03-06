@@ -71,6 +71,10 @@ export default {
     backendUrl:
       process.env.VUE_APP_BACKEND_URL ||
       'https://habitrac.herokuapp.com/graphql/',
+    version: {
+      backend: '0.1.0',
+      frontend: '0.1.0',
+    },
   },
   apollo: {
     clientConfigs: {
