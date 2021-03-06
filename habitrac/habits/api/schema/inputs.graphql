@@ -10,6 +10,8 @@ input CreateHabitInput {
   dateFrom: Date!
   " a brief description og the habit "
   description: String!
+  " whether the habit will be stored in the vault "
+  vault: Boolean!
 }
 
 """
