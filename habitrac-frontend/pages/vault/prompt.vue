@@ -117,12 +117,15 @@ export default {
     },
     async onSubmit() {
       this.errors = { password: null }
-      const { data } = await this.$apollo.query({
+      const {
+        data: { checkVaultPassword: data },
+      } = await this.$apollo.query({
         query: checkVaultPasswordQuery,
         variables: {
           password: this.password,
         },
       })
+      console.log(data)
       if (!data) {
         this.errors.password = ['The password supplied was incorrect']
       } else {
