@@ -12,6 +12,8 @@ type Query {
   getUsersList: [User!]
   " get all habits registered by a user "
   getAllHabits(usernameSlug: String!): [Habit!]
+  " get all habits registered by a user that have been marked as vault "
+  getVaultHabits(usernameSlug: String!): [Habit!]
   " get the details of a habit for a particular user "
   getHabitDetails(nameSlug: String!): HabitDetailsPayload!
   " get the report about a particular habit "
