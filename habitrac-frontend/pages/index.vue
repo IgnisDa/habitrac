@@ -74,6 +74,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import versionCheckQuery from '~/apollo/queries/versionCheck.gql'
 
 export default {
   data: () => ({
@@ -110,6 +111,24 @@ export default {
       if (newValue === true) this.startConfetti()
       else this.stopConfetti()
     },
+  },
+  async mounted() {
+    const frontendVersion = localStorage.getItem('frontend-version')
+    const {
+      data: { versionCheck: data },
+    } = await this.$apollo.query({
+      query: versionCheckQuery,
+    })
+    if (!frontendVersion) {
+      localStorage.setItem('frontend-version', data.frontend)
+    }
+    if (data.frontend !== frontendVersion) {
+      alert(
+        'There have been updates since the last time you visited. Reloading...'
+      )
+      document.location.reload(true)
+      localStorage.setItem('frontend-version', data.frontend)
+    }
   },
   beforeDestroy() {
     this.stopConfetti()
