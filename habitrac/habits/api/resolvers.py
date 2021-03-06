@@ -25,6 +25,7 @@ def create_daily_habit(_, info, data):
     description = data.get("description")
     date_from = data.get("date_from")
     date_to = data.get("date_to")
+    vault = data.get("vault")
     today = datetime.date.today()
     if date_from < today:
         error_container.update_with_error(
@@ -46,6 +47,7 @@ def create_daily_habit(_, info, data):
             date_from=date_from,
             date_to=date_to,
             description=description,
+            vault=vault,
         )
         status = True
     return {"status": status, "errors": error_container.get_all_errors(), "habit": habit}
@@ -85,7 +87,9 @@ def update_daily_habit(_, info, data, name_slug):
 @convert_kwargs_to_snake_case
 @login_required
 def get_all_habits(_, info, username_slug, **kwargs):
-    qs = CUSTOM_USER_MODEL.objects.get(username_slug=username_slug).dailyhabit_set.all()
+    qs = CUSTOM_USER_MODEL.objects.get(
+        username_slug=username_slug
+    ).dailyhabit_set.filter(vault=False)
     ret_value = []
     for obj in qs:
         vars(obj)["is_completed"] = obj.is_completed
@@ -154,3 +158,19 @@ def delete_habit(_, info, name_slug, *args, **kwargs):
     except habit_models.DailyHabit.DoesNotExist:
         error = "The requested habit does not exist in the database."
     return {"status": status, "error": error}
+
+
+@query.field("getVaultHabits")
+@convert_kwargs_to_snake_case
+@login_required
+def get_vault_habits(_, info, username_slug, **kwargs):
+    qs = CUSTOM_USER_MODEL.objects.get(
+        username_slug=username_slug
+    ).dailyhabit_set.filter(vault=True)
+    ret_value = []
+    for obj in qs:
+        vars(obj)["is_completed"] = obj.is_completed
+        vars(obj)["is_done"] = obj.is_done
+        obj.progress = json.dumps(obj.progress)
+        ret_value.append(vars(obj))
+    return ret_value
