@@ -132,7 +132,7 @@ if not DEBUG:
         0,
         "django.contrib.auth.hashers.Argon2PasswordHasher",
     )
-    ALLOWED_HOSTS = [".habitrac.herokuapp.com"]
+    ALLOWED_HOSTS = [".habitrac.ignisda.tech"]
     DATABASE_URL = os.environ.get("DATABASE_URL")
     DATABASES = {"default": dj_database_url.parse(DATABASE_URL)}
     CORS_ORIGIN_WHITELIST = [
